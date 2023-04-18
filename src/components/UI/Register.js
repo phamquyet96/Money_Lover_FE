@@ -76,11 +76,11 @@ const Register = () => {
                                             onSubmit= {(values) => {
                                                 console.log(values)
                                                 try {
-                                                    let res = axios.post('http://localhost:8000/api/auth/register', values)
+                                                    axios.post('http://localhost:8000/api/auth/register', values)
                                                         .then(Swal.fire({
                                                             position: 'center',
                                                             icon: 'success',
-                                                            title: 'You are register success!',
+                                                            title: 'Register success!',
                                                             showConfirmButton: false,
                                                             timer: 1500
                                                         }))
