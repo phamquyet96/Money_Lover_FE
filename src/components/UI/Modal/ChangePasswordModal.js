@@ -46,7 +46,7 @@ const ChangePassword = () => {
                         <button className='flex shadow-2xl w-[500px]
                         justify-center bg-green-400 rounded-b-md hover:bg-green-300'>
                             <div className=' my-4 text-white font-roboto font-semibold'>
-                                Change Password
+                                SAVE
                             </div>
                         </button>
                     </div>
