@@ -1,26 +1,30 @@
 import {GoogleLogin, useGoogleLogin} from "@react-oauth/google";
 import axios from "axios";
 import React from "react";
-import {authActions} from "../../feature/authSlice";
-import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
+import Swal from "sweetalert2";
 
 export default function GoogleButton() {
-
-    const dispatch = useDispatch()
 
     const navigate=useNavigate();
 
     const login = useGoogleLogin({
         onSuccess: async response => {
             try {
-                axios.post('http://localhost:8000/api/auth/login/google')
+                await axios.post('http://localhost:8000/api/auth/login/google')
                     .then((res) => {
                         localStorage.setItem('accessToken', res.data.accessToken)
                         localStorage.setItem('refreshToken', res.data.refreshToken)
                         console.log("success")
-                        navigate('/dashboard')
                     })
+                    Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Login success!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    navigate('/my-wallet')
             } catch (err) {
                 console.log(err)
             }
