@@ -1,7 +1,5 @@
-import {useState} from "react";
 import React from 'react';
 import icon from '../img/icon.png'
-import {useDispatch} from "react-redux";
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import {myAxios} from "../config/axios";
@@ -14,10 +12,6 @@ import Swal from "sweetalert2";
 
 const Login = () => {
     const navigate = useNavigate();
-
-    const dispatch = useDispatch();
-
-    const [open, setOpen] = useState(false);
 
     const formik = useFormik({
         initialValues: {
@@ -39,19 +33,16 @@ const Login = () => {
                     Swal.fire({
                         position: 'center',
                         icon: 'success',
-                        title: 'You are login  success!',
+                        title: 'Login success!',
                         showConfirmButton: false,
                         timer: 1500
                     })
                     console.log(res)
                 }).then(()=>{
-                    navigate('/dashboard')
-                }
-
-            )
+                    navigate('/my-wallet')
+                })
                 .catch(err => {
                     console.log(err.message)
-                    setOpen(true)
                 })
         }
     })
