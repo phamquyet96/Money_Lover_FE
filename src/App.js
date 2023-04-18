@@ -6,12 +6,12 @@ import Login from "./components/UI/Login";
 import Register from "./components/UI/Register";
 import ForgotPassword from "./components/UI/ForgotPassword";
 import Dashboard from "./components/UI/Dashboard/Dashboard";
-import UpdateProfile from "./components/UI/UpdateProfile";
+import UpdateProfile from "./components/UI/Dashboard/UpdateProfile";
 import MyWallet from "./components/UI/Wallet/MyWallet";
 import WalletDetail from "./components/UI/Wallet/WalletDetail";
 import AccountModal from "./components/UI/Modal/AccountModal";
 import ChangePassword from "./components/UI/Modal/ChangePasswordModal";
-import Editprofile from './components/UI/Modal/EditProfile';
+import Editprofile from './components/UI/Dashboard/UpdateProfile';
 
 function App() {
   return (

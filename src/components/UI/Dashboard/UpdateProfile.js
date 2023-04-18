@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import MenuLeft from "../Dashboard/MenuLeft";
-import NavBar from "../Dashboard/Navbar";
-function EditProfile() {
+import MenuLeft from "./MenuLeft";
+import NavBar from "./Navbar";
+function UpdateProfile() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
@@ -73,4 +73,4 @@ function EditProfile() {
   );
 }
 
-export default EditProfile;
+export default UpdateProfile;
