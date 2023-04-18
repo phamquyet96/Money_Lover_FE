@@ -1,14 +1,11 @@
 import React from 'react';
-import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-import IconButton from "@mui/material/IconButton";
-import Modal from "@mui/material/Modal";
 import MenuLeft from "../Dashboard/MenuLeft";
-import Example from "../Dashboard/Navbar";
+import NavBar from "../Dashboard/Navbar";
 
 const AccountModal = () => {
     return (
         <>
-        <Example/>
+        <NavBar/>
         <div className='flex bg-custom-gray'>
             <MenuLeft/>
             <div className='w-[100vw] h-[100vh] flex justify-center'>
