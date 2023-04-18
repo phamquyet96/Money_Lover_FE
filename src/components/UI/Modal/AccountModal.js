@@ -4,6 +4,7 @@ import IconButton from "@mui/material/IconButton";
 import Modal from "@mui/material/Modal";
 import MenuLeft from "../Dashboard/MenuLeft";
 import Example from "../Dashboard/Navbar";
+import ChangePassword from "./ChangePasswordModal";
 
 const AccountModal = () => {
     return (
@@ -57,10 +58,7 @@ const AccountModal = () => {
                                     profile
                                 </button>
                                 <div></div>
-                                <button
-                                    className='bg-white shadow-xl hover:bg-gray-100 rounded-md hover text-orange-400'>Change
-                                    password
-                                </button>
+                                <ChangePassword/>
                                 <div></div>
                             </div>
                         </div>

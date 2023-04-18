@@ -32,7 +32,6 @@ const AddWalletModal = () => {
                         </div>
                         <div className="pl-5 pt-5 relative flex content-center mx-auto">
                             <div className="border-2 w-[103px] h-[64px] rounded-lg">
-
                             </div>
                             <div className="ml-8 h-[64px] border rounded-lg hover:border-gray-600 border-gray-300">
                                 <p className='text-left text-xs mt-1 font-light ml-3'>Wallet Name</p>
