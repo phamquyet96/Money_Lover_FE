@@ -10,6 +10,7 @@ import UpdateProfile from "./components/UI/UpdateProfile";
 import MyWallet from "./components/UI/Wallet/MyWallet";
 import WalletDetail from "./components/UI/Wallet/WalletDetail";
 import AccountModal from "./components/UI/Modal/AccountModal";
+import ChangePassword from "./components/UI/Modal/ChangePasswordModal";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/my-wallet" element={<MyWallet/>}></Route>
         <Route path="/wallet-detail" element={<WalletDetail/>}></Route>
         <Route path="/account" element={<AccountModal/>}></Route>
+        <Route path="/change-password" element={<ChangePassword/>}></Route>
 
       </Routes>
   );
