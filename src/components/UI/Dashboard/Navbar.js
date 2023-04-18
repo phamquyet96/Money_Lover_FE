@@ -9,7 +9,7 @@ import logo from '../../img/ic_category_all.png';
 
 
 
-export default function Example() {
+export default function NavBar() {
     const [openNav, setOpenNav] = React.useState(false);
 
     React.useEffect(() => {
