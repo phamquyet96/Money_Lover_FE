@@ -2,8 +2,12 @@ import React from 'react';
 import MenuLeft from "../Dashboard/MenuLeft";
 import NavBar from "../Dashboard/Navbar";
 import ChangePassword from "./ChangePasswordModal";
+// import {useSelector} from "react-redux";
 
-const AccountModal = () => { 
+const AccountModal = () => {
+  // const user = useSelector((state) => state.auth.currentUser);
+
+
     return (
       <>
         <NavBar />
@@ -40,7 +44,7 @@ const AccountModal = () => {
                       </div>
                     </div>
                     <div className="text-xs mt-1 text-gray-400">
-                      <span>accEmail@gmail.com</span>
+                      <span>accName@gmail.com</span>
                     </div>
                   </div>
                 </div>
@@ -54,10 +58,10 @@ const AccountModal = () => {
                     <div></div>
 
                     <a
-                      href="/edit-profile"
+                      href="/update-profile"
                       class=" bg-white shadow-xl hover:bg-gray-100 rounded-md hover text-orange-400"
                     >
-                      Edit profile
+                      Update profile
                     </a>
 
                     <div></div>
