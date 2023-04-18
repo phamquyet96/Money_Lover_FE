@@ -46,7 +46,7 @@ export default function NavBar() {
                     <div className="flex">
                         <Typography
                             as="a"
-                            href="#"
+                            href="/dashboard"
                             className="mr-4 cursor-pointer py-1.5 font-medium "
                         >
                             <img className="mx-auto w-[13rem]"

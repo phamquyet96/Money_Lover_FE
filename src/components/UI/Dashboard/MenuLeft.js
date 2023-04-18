@@ -14,7 +14,7 @@ import AdUnitsOutlinedIcon from "@mui/icons-material/AdUnitsOutlined";
 import AssessmentOutlinedIcon from "@mui/icons-material/AssessmentOutlined";
 import SavingsOutlinedIcon from "@mui/icons-material/SavingsOutlined";
 import * as React from "react";
-import BasicModal from "../Modal";
+import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 
 
 function MenuLeft() {
@@ -53,13 +53,11 @@ function MenuLeft() {
                     >
                         Menu
                     </MenuItem>
-
                     <SubMenu icon={<MenuOutlinedIcon />} label="Profile">
-                        <MenuItem>
-                            <BasicModal/>
+                        <MenuItem href='/account' icon={<PeopleOutlinedIcon />}>
+                            Account
                         </MenuItem>
-
-                        <MenuItem icon={<AccountBalanceWalletOutlinedIcon />}>
+                        <MenuItem href='/my-wallet' icon={<AccountBalanceWalletOutlinedIcon />}>
                             Wallet
                         </MenuItem>
                         <MenuItem icon={<WidgetsOutlinedIcon />}>Category</MenuItem>
