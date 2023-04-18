@@ -3,7 +3,6 @@ import MenuLeft from "../Dashboard/MenuLeft";
 import NavBar from "../Dashboard/Navbar";
 import ChangePassword from "./ChangePasswordModal";
 
-
 const AccountModal = () => {
     return (
         <>
