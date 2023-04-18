@@ -1,7 +1,4 @@
 import React from 'react';
-import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-import IconButton from "@mui/material/IconButton";
-import Modal from "@mui/material/Modal";
 import MenuLeft from "../Dashboard/MenuLeft";
 import NavBar from "../Dashboard/Navbar";
 import ChangePassword from "./ChangePasswordModal";
