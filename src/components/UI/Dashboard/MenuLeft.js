@@ -21,6 +21,8 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import BasicModal from "../Modal";
+import AccountModal from "../Modal/AccountModal";
+import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 
 
 function MenuLeft() {
@@ -64,13 +66,11 @@ function MenuLeft() {
                     >
                         Menu
                     </MenuItem>
-
                     <SubMenu icon={<MenuOutlinedIcon />} label="Profile">
-                        <MenuItem>
-                            <BasicModal/>
+                        <MenuItem href='/account' icon={<PeopleOutlinedIcon />}>
+                            Account
                         </MenuItem>
-
-                        <MenuItem icon={<AccountBalanceWalletOutlinedIcon />}>
+                        <MenuItem href='/my-wallet' icon={<AccountBalanceWalletOutlinedIcon />}>
                             Wallet
                         </MenuItem>
                         <MenuItem icon={<WidgetsOutlinedIcon />}>Category</MenuItem>
@@ -86,44 +86,44 @@ function MenuLeft() {
                 </Menu>
             </Sidebar>
 
-            <Container maxWidth="sm">
-                <div
-                    style={{
-                        backgroundColor: "white",
-                        height: "30em",
-                        display: "flex",
-                        justifyContent: "center",
-                    }}
-                >
-                    <Box sx={{ width: "100%", typography: "body1" }}>
-                        <TabContext value={value}>
-                            <Box
-                                className="flex justify-center"
-                                sx={{
-                                    borderBottom: 1,
-                                    borderColor: "divider",
-                                    color: "success.main",
-                                }}
-                            >
-                                <TabList
-                                    onChange={handleChange}
-                                    aria-label="lab API tabs example"
-                                    value={value}
-                                    textColor="success"
-                                    // indicatorColor="success"
-                                >
-                                    <Tab label="Last month" value="1" />
-                                    <Tab label="This month" value="2" />
-                                    <Tab label="Plan for future" value="3" />
-                                </TabList>
-                            </Box>
-                            <TabPanel value="1"></TabPanel>
-                            <TabPanel value="2"></TabPanel>
-                            <TabPanel value="3"></TabPanel>
-                        </TabContext>
-                    </Box>
-                </div>
-            </Container>
+            {/*<Container maxWidth="sm">*/}
+            {/*    <div*/}
+            {/*        style={{*/}
+            {/*            backgroundColor: "white",*/}
+            {/*            height: "30em",*/}
+            {/*            display: "flex",*/}
+            {/*            justifyContent: "center",*/}
+            {/*        }}*/}
+            {/*    >*/}
+                    {/*<Box sx={{ width: "100%", typography: "body1" }}>*/}
+                    {/*    <TabContext value={value}>*/}
+                    {/*        <Box*/}
+                    {/*            className="flex justify-center"*/}
+                    {/*            sx={{*/}
+                    {/*                borderBottom: 1,*/}
+                    {/*                borderColor: "divider",*/}
+                    {/*                color: "success.main",*/}
+                    {/*            }}*/}
+                    {/*        >*/}
+                    {/*            <TabList*/}
+                    {/*                onChange={handleChange}*/}
+                    {/*                aria-label="lab API tabs example"*/}
+                    {/*                value={value}*/}
+                    {/*                textColor="success"*/}
+                    {/*                // indicatorColor="success"*/}
+                    {/*            >*/}
+                    {/*                <Tab label="Last month" value="1" />*/}
+                    {/*                <Tab label="This month" value="2" />*/}
+                    {/*                <Tab label="Plan for future" value="3" />*/}
+                    {/*            </TabList>*/}
+                    {/*        </Box>*/}
+                    {/*        <TabPanel value="1"></TabPanel>*/}
+                    {/*        <TabPanel value="2"></TabPanel>*/}
+                    {/*        <TabPanel value="3"></TabPanel>*/}
+                    {/*    </TabContext>*/}
+            {/*        /!*</Box>*!/*/}
+            {/*    </div>*/}
+            {/*</Container>*/}
         </div>
     );
 }

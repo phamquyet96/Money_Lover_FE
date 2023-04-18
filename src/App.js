@@ -9,6 +9,7 @@ import Dashboard from "./components/UI/Dashboard/Dashboard";
 import UpdateProfile from "./components/UI/UpdateProfile";
 import MyWallet from "./components/UI/Wallet/MyWallet";
 import WalletDetail from "./components/UI/Wallet/WalletDetail";
+import AccountModal from "./components/UI/Modal/AccountModal";
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
         <Route path="/dashboard" element={<Dashboard/>}></Route>
         <Route path="/my-wallet" element={<MyWallet/>}></Route>
         <Route path="/wallet-detail" element={<WalletDetail/>}></Route>
+        <Route path="/account" element={<AccountModal/>}></Route>
+
       </Routes>
   );
 }

@@ -9,7 +9,7 @@ import logo from '../../img/ic_category_all.png';
 
 
 
-export default function Example() {
+export default function NavBar() {
     const [openNav, setOpenNav] = React.useState(false);
 
     React.useEffect(() => {
@@ -46,7 +46,7 @@ export default function Example() {
                     <div className="flex">
                         <Typography
                             as="a"
-                            href="#"
+                            href="/dashboard"
                             className="mr-4 cursor-pointer py-1.5 font-medium "
                         >
                             <img className="mx-auto w-[13rem]"
