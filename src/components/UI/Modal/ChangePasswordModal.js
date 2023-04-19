@@ -71,16 +71,16 @@ const ChangePassword = () => {
         },
     });
 
-    const handleClickShowPassword = (name) => {
-        setShowPassword({
-            ...showPassword,
-            [name]: !showPassword[name],
-        });
-    };
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
+    // const handleClickShowPassword = (name) => {
+    //     setShowPassword({
+    //         ...showPassword,
+    //         [name]: !showPassword[name],
+    //     });
+    // };
+    //
+    // const handleClickOpen = () => {
+    //     setOpen(true);
+    // };
 
     const handleClose = () => {
         setConfirmMessage({
