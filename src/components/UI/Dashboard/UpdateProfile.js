@@ -101,11 +101,22 @@ const UpdateProfile = () => {
                     </div>
                     <div className='h-auto shadow-2xl bg-white justify-center border-b-2'>
                         <div className='grid grid-cols-2 gap-4 pt-8 flex justify-between p-8'>
-                            <div>dsada</div>
+                            <div className='flex-col justify-center'>
+                                <div className='flex justify-center h-32 w-full'>
+                                    <div className='rounded-full w-28 h-28 bg-gray-100'>
+                                        <img src="" alt=""></img>
+                                        </div>
+                                </div>
+                                <div className='flex justify-center mx-auto'>
+                                    <input type="file" className='h-10 border'/>
+                                </div>
+                            </div>
                             <div className='grid grid-rows-2 gap-6'>
                                 <div className=''>
                                     <label className='text-left font-roboto'>Name</label>
-                                    <input className="border h-12 p-2 outline-none w-full text-xl rounded"/>
+                                    <input
+                                        className="border h-12 p-2 outline-none w-full text-xl rounded placeholder-gray-400 placeholder:italic"
+                                        placeholder='Enter new name'/>
                                 </div>
                                 <div className=''>
                                     <label className='text-left font-roboto'>Email</label>
@@ -114,13 +125,14 @@ const UpdateProfile = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='flex shadow-2xl w-[800px]
-                        justify-center bg-white rounded-b-md '>
-                        <button className=' my-4  w-20 bg-green-400 text-white font-roboto font-semibold'>
-                            SAVE
+                    <div className='flex shadow-2xl w-[800px] bg-white rounded-b-md gap-2'>
+                        <button
+                            className=' ml-5 my-4 h-10 w-20 bg-green-500 hover:bg-green-600 rounded-lg text-white font-roboto font-semibold'>
+                            Save
                         </button>
-                        <button className=''>
-                            DECLINE
+                        <button
+                            className=' my-4 h-10 w-20 rounded-lg border hover:text-black text-gray-500 bg-white hover:bg-gray-100 font-roboto font-semibold'>
+                            Decline
                         </button>
                     </div>
                 </div>
