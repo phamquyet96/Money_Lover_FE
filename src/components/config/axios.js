@@ -19,9 +19,6 @@ const refreshToken = async () => {
 }
 
 
-export const axiosJWT = axios.create({
-    baseURL: `http://localhost:${PORT}/api`
-});
 // axiosJWT.interceptors.request.use(
 //     async (config) => {
 //         let currentDate = new Date();
