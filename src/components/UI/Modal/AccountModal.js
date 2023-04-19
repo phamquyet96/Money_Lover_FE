@@ -1,9 +1,36 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import MenuLeft from "../Dashboard/MenuLeft";
 import NavBar from "../Dashboard/Navbar";
 import ChangePassword from "./ChangePasswordModal";
+import {useNavigate} from "react-router-dom";
+import {axiosJWT} from "../../config/axios";
+import {useDispatch, useSelector} from "react-redux";
+import {loggedOut} from "../../../feature/authSlice";
+
 
 const AccountModal = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const user = useSelector((state) => state.auth.currentUser);
+    console.log(user)
+
+
+    const Logout = async () => {
+        navigate("/");
+        try {
+            await axiosJWT.get("/auth/logout", {
+                headers: {
+                    authorization: localStorage.getItem('accessToken'),
+                }
+            });
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
+            dispatch(loggedOut);
+            navigate("/");
+        }catch (err) {
+            console.error(err);
+        }
+    }
     return (
         <>
         <NavBar/>
@@ -21,6 +48,7 @@ const AccountModal = () => {
                             <div></div>
                             <div></div>
                             <button
+                                onClick={Logout}
                                 className='text-green-400 font-roboto font-semibold h-[40px] w-[100px] rounded-lg hover:bg-green-100'>SIGN
                                 OUT
                             </button>
@@ -36,9 +64,9 @@ const AccountModal = () => {
                             </div>
                             <div className='w-fit mb-4 h-fit ml-8 font-roboto'>
                                 <div className='flex flex-row items-center'>
-                                    <div className='text-md mt-2'><span>accName</span></div>
+                                    <div className='text-md mt-2'><span>name</span></div>
                                 </div>
-                                <div className='text-xs mt-1 text-gray-400'><span>accEmail@gmail.com</span>
+                                <div className='text-xs mt-1 text-gray-400'><span>{user.email}</span>
                                 </div>
                             </div>
                         </div>

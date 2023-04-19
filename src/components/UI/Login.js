@@ -7,10 +7,14 @@ import {GoogleOAuthProvider} from "@react-oauth/google";
 import {useNavigate} from "react-router-dom";
 import GoogleButton from "../Share/GoogleButton";
 import Swal from "sweetalert2";
+import {type} from "@testing-library/user-event/dist/type";
+import {useDispatch} from "react-redux";
+import {loggedIn} from "../../feature/authSlice";
 
 
 
 const Login = () => {
+    let dispatch = useDispatch()
     const navigate = useNavigate();
 
     const formik = useFormik({
@@ -43,7 +47,8 @@ const Login = () => {
                     } = res.data;
                     localStorage.setItem('accessToken', `Bearer ${accessToken}`);
                     localStorage.setItem('refreshToken', `Bearer ${refreshToken}`);
-                    console.log(res)
+                    // console.log(values);
+                    dispatch(loggedIn(values));
                 }).then(()=>{
                     navigate('/my-wallet')
                 })
