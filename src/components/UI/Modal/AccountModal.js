@@ -12,9 +12,6 @@ const AccountModal = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const user = useSelector((state) => state.auth.currentUser);
-    console.log(user)
-
-
     const Logout = async () => {
         navigate("/");
         try {
@@ -31,6 +28,23 @@ const AccountModal = () => {
             console.error(err);
         }
     }
+    const Delete = async () => {
+        navigate("/");
+        try {
+            await axiosJWT.post("/auth/delete", {
+                headers: {
+                    authorization: localStorage.getItem('accessToken'),
+                }
+            });
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
+            dispatch();
+            navigate("/");
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <>
         <NavBar/>
@@ -64,7 +78,7 @@ const AccountModal = () => {
                             </div>
                             <div className='w-fit mb-4 h-fit ml-8 font-roboto'>
                                 <div className='flex flex-row items-center'>
-                                    <div className='text-md mt-2'><span>name</span></div>
+                                    <div className='text-md mt-2'><span>{user.name}</span></div>
                                 </div>
                                 <div className='text-xs mt-1 text-gray-400'><span>{user.email}</span>
                                 </div>
