@@ -37,6 +37,12 @@ const Login = () => {
                         showConfirmButton: false,
                         timer: 1500
                     })
+                    const {
+                        accessToken,
+                        refreshToken
+                    } = res.data;
+                    localStorage.setItem('accessToken', `Bearer ${accessToken}`);
+                    localStorage.setItem('refreshToken', `Bearer ${refreshToken}`);
                     console.log(res)
                 }).then(()=>{
                     navigate('/my-wallet')
