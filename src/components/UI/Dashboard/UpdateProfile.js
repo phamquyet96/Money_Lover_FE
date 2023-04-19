@@ -8,7 +8,6 @@ const UpdateProfile = () => {
   const cloudName='money-lover';
   const uploadPreset='ypxhljuq';
 
-
   const user = useSelector((state) => state.auth.currentUser);
 
   const handleNameChange = (event) => {
@@ -49,7 +48,7 @@ const UpdateProfile = () => {
                 <div className='flex-col justify-center'>
                   <div className='flex justify-center h-32 w-full'>
                     <div className='rounded-full w-28 h-28 bg-gray-100'>
-                      <img src={image} alt="" className="w-fit"></img>
+                      <img src={image} alt=""></img>
                     </div>
                   </div>
                   <div className='flex justify-center mx-auto'>
