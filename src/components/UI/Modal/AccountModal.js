@@ -7,7 +7,6 @@ import ChangePassword from "./ChangePasswordModal";
 const AccountModal = () => {
   // const user = useSelector((state) => state.auth.currentUser);
 
-
     return (
       <>
         <NavBar />
@@ -56,14 +55,12 @@ const AccountModal = () => {
                   </div>
                   <div className="flex grid grid-cols-5 flex-row justify-center mb-3">
                     <div></div>
-
-                    <a
-                      href="/update-profile"
-                      class=" bg-white shadow-xl hover:bg-gray-100 rounded-md hover text-orange-400"
+                    <div><a
+                        href="/update-profile"
+                        className=" bg-white shadow-xl hover:bg-gray-100 rounded-md hover text-orange-400"
                     >
                       Update profile
-                    </a>
-
+                    </a></div>
                     <div></div>
                     <ChangePassword />
                     <div></div>
