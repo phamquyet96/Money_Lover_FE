@@ -53,11 +53,9 @@ function UpdateProfile() {
                onClick={()=>{setImageCrop(true)}} src={profileFinal.length ? profileFinal : flag} alt=""/>
           <Dialog visible={imageCrop}
                   onHide={()=>{setImageCrop(false)}}>
-          <div className=" align-items-center confirmation-content">
+          <div className=" align-items-center">
             <Avatar width={500} height={400} onCrop={onCrop} onClose={onClose} src={src} backgroundColor={"#474649"} shadingColor={"#474649"}/>
-            <div className="flex flex-column align-items-center">
-              <Button onClick={saveImage} label="Save" style={{width:"6rem",height:"3rem",backgroundColor:"gray",borderRadius:"2px solid red"}}/>
-            </div>
+            <Button onClick={saveImage} label="Save" style={{display:"flex",width:"6rem",height:"3rem",backgroundColor:"gray",justifyContent:"center",borderRadius:"2px solid red"}}/>
           </div>
           </Dialog>
           <InputText type="file" style={{display:"none"}} onChange={(event)=>{
@@ -67,8 +65,7 @@ function UpdateProfile() {
             }else{
               setImage(null)
             }
-          }
-          }></InputText>
+          }}/>
         </div>
         <div className="max-w-md mx-auto">
           <div className="text-center mb-6">
@@ -102,7 +99,7 @@ function UpdateProfile() {
               type="email"
               value={user.email}
               disabled="true"
-              onChange={handleEmailChange}
+              // onChange={handleEmailChange}
             />
           </div>
           <div className="mt-6">
