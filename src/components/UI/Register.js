@@ -13,6 +13,9 @@ const Register = () => {
     const navigate=useNavigate();
 
     const SignupSchema= Yup.object().shape({
+        name: Yup.string()
+            .min(2, 'Name is not empty')
+            .required('Name is required'),
         email: Yup.string()
             .email('Invalid email address')
             .required('Email is required'),
@@ -70,7 +73,7 @@ const Register = () => {
                                             account</h2>
                                         <Formik
                                             initialValues= {
-                                                { email: '', password: ''}
+                                                { name:'',email: '', password: ''}
                                             }
                                             validationSchema={SignupSchema}
                                             onSubmit= {(values) => {
@@ -99,6 +102,15 @@ const Register = () => {
                                                   handleChange,
                                               }) => (
                                                     <form onSubmit={handleSubmit}  className="space-y-6">
+                                                        <div>
+                                                            <input type="text" name="name" id="name"
+                                                                   placeholder="Name" onChange={handleChange}
+                                                                   value={values.name}
+                                                                   autoComplete='current-password'
+                                                                   className="w-full font-roboto bg-gray-100 py-2 px-4 rounded-[10px] focus:outline-none focus:ring focus:ring-green-600 "/>
+                                                            {errors.name && touched.name && (
+                                                                <p style={{color: 'red'}}>{errors.name}</p>)}
+                                                        </div>
                                                         <div>
                                                             <input type="email" name="email" id="email" placeholder="Email"
                                                                    onChange={handleChange}

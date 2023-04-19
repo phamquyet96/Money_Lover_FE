@@ -7,10 +7,13 @@ import {GoogleOAuthProvider} from "@react-oauth/google";
 import {useNavigate} from "react-router-dom";
 import GoogleButton from "../Share/GoogleButton";
 import Swal from "sweetalert2";
+import {useDispatch} from "react-redux";
+import {loggedIn} from "../../feature/authSlice";
 
 
 
 const Login = () => {
+    let dispatch = useDispatch()
     const navigate = useNavigate();
 
     const formik = useFormik({
