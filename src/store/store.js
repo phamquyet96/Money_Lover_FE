@@ -1,4 +1,4 @@
-import {configureStore,getDefaultMiddleware} from "@reduxjs/toolkit";
+import {configureStore} from "@reduxjs/toolkit";
 import authSlice from "../feature/authSlice";
 import { persistReducer, persistStore } from 'redux-persist';
 import autoMergeLevel2 from "reduxjs-toolkit-persist/lib/stateReconciler/autoMergeLevel2";
