@@ -13,7 +13,7 @@ const AccountModal = () => {
     const navigate = useNavigate();
     const user = useSelector((state) => state.auth.currentUser);
     const Logout = async () => {
-        navigate("/");
+        navigate("/auth/logout");
         try {
             await axiosJWT.get("/auth/logout", {
                 headers: {
@@ -23,7 +23,7 @@ const AccountModal = () => {
             localStorage.removeItem("accessToken");
             localStorage.removeItem("refreshToken");
             dispatch(loggedOut);
-            navigate("/");
+            navigate("/auth/logout");
         }catch (err) {
             console.error(err);
         }
