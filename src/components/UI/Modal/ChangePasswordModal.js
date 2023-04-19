@@ -1,6 +1,97 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {useFormik} from "formik";
+import UserService from "../../../services/user.service";
 
 const ChangePassword = () => {
+    const [showPassword, setShowPassword] = useState({
+        oldPassword: false,
+        newPassword: false,
+        confirmPassword: false,
+    });
+    const [open, setOpen] = useState(false);
+
+    const [confirmMessage, setConfirmMessage] = useState({
+        status: "",
+        visible: false,
+        message: "",
+    });
+    const checkConfirmPassword = () => {
+        let passwordMatch =
+            formik.values.newPassword !== formik.values.confirmPassword;
+        let passwordInserted =
+            formik.values.newPassword !== "" || formik.values.confirmPassword !== "";
+        if (passwordMatch && passwordInserted) {
+            setConfirmMessage({
+                status: "danger",
+                visible: true,
+                message: "Password not matches",
+            });
+            return false;
+        } else {
+            setConfirmMessage({
+                status: "",
+                visible: false,
+                message: "",
+            });
+
+            return true;
+        }
+    };
+
+    const formik = useFormik({
+        initialValues: {
+            oldPassword: "",
+            newPassword: "",
+            confirmPassword: "",
+        },
+        onSubmit: (values, actions) => {
+            let data = {
+                oldPassword: values.oldPassword,
+                newPassword: values.confirmPassword,
+            };
+            console.log(values);
+            let result = checkConfirmPassword();
+            console.log(result);
+            if (result === true) {
+                UserService.changePassword(data)
+                    .then(() => {
+                        handleClose();
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                        setConfirmMessage({
+                            status: "danger",
+                            visible: true,
+                            message: err,
+                        });
+                    });
+
+            }
+            actions.resetForm();
+        },
+    });
+
+    const handleClickShowPassword = (name) => {
+        setShowPassword({
+            ...showPassword,
+            [name]: !showPassword[name],
+        });
+    };
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setConfirmMessage({
+            status: "",
+            visible: false,
+            message: "",
+        });
+        setOpen(false);
+    };
+
+
     return (
         <>
             <button type="button" data-modal-target="changePasswordModal" data-modal-toggle="changePasswordModal"
@@ -31,19 +122,38 @@ const ChangePassword = () => {
                             <div className='grid grid-rows-3 gap-4 pt-8 mx-auto justify-center pb-8'>
                                 <div className='grid grid-cols-2'>
                                     <span className='p-1 text-center'>Old Password:</span>
-                                    <input className='border rounded p-1 hover:border-gray-400'/>
+                                    <input className='border rounded p-1 hover:border-gray-400' name='oldPassword' type='password'
+                                           value={formik.values.password}
+                                           onChange={formik.handleChange}
+                                           error={
+                                               formik.touched.oldPassword &&
+                                               Boolean(formik.errors.oldPassword)}/>
                                 </div>
                                 <div className='grid grid-cols-2'>
                                     <span className='p-1 text-center'>New Password:</span>
-                                    <input className='border rounded p-1 hover:border-gray-400'/>
+                                    <input className='border rounded p-1 hover:border-gray-400' name='newPassword'
+                                           value={formik.values.newPassword}
+                                           onChange={formik.handleChange}
+                                           error={
+                                               formik.touched.newPassword &&
+                                               Boolean(formik.errors.newPassword)
+                                           }/>
                                 </div>
                                 <div className='grid grid-cols-2'>
                                     <span className='p-1 text-center'>Re Password:</span>
-                                    <input className='border rounded p-1 hover:border-gray-400'/>
+                                    <input className='border rounded p-1 hover:border-gray-400' name='confirmPassword'
+                                           value={formik.values.confirmPassword}
+                                           onChange={formik.handleChange}
+                                           error={
+                                               formik.touched.confirmPassword &&
+                                               Boolean(formik.errors.confirmPassword)
+                                           }/>
                                 </div>
                             </div>
                         </div>
-                        <button className='flex shadow-2xl w-[500px]
+                        <button type='submit'
+                                onClick={formik.handleSubmit}
+                                className='flex shadow-2xl w-[500px]
                         justify-center bg-green-400 rounded-b-md hover:bg-green-300'>
                             <div className=' my-4 text-white font-roboto font-semibold'>
                                 SAVE
