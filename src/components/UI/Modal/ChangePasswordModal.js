@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {useFormik} from "formik";
 import UserService from "../../../services/user.service";
+import Swal from "sweetalert2";
 
 const ChangePassword = () => {
     const [showPassword, setShowPassword] = useState({
@@ -37,6 +38,15 @@ const ChangePassword = () => {
             return true;
         }
     };
+    const handleClose = () => {
+        setConfirmMessage({
+            status: "",
+            visible: false,
+            message: "",
+        });
+        setOpen(false);
+    };
+
 
     const formik = useFormik({
         initialValues: {
@@ -56,6 +66,13 @@ const ChangePassword = () => {
                 UserService.changePassword(data)
                     .then(() => {
                         handleClose();
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Change password success!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
                     })
                     .catch((err) => {
                         console.log(err)
@@ -82,24 +99,16 @@ const ChangePassword = () => {
     //     setOpen(true);
     // };
 
-    const handleClose = () => {
-        setConfirmMessage({
-            status: "",
-            visible: false,
-            message: "",
-        });
-        setOpen(false);
-    };
 
 
     return (
         <>
-            <button type="button" data-modal-target="changePasswordModal" data-modal-toggle="changePasswordModal"
+            <button type="button" onClick={()=> setOpen(true)}
                     className="rounded bg-white text-orange-400">
                 Change Password
             </button>
-            <div id="changePasswordModal" tabIndex="-1" aria-hidden="true"
-                 className="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] h-full">
+            {open ? (<div id="changePasswordModal"
+                          className={`fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] h-full`}>
                 <div className='w-[100vw] h-[100vh] flex justify-center'>
                     <div className='shadow-2xl bg-white rounded-md w-[500px] h-[64px] mt-10'>
                         <div className='border-b rounded-t-md bg-white w-[500px] h-[64px] flex '>
@@ -161,7 +170,8 @@ const ChangePassword = () => {
                         </button>
                     </div>
                 </div>
-            </div>
+            </div>) : ''}
+
         </>
     );
 };

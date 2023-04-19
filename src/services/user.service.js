@@ -1,4 +1,3 @@
-import {axiosJWT} from "../components/config/axios";
 import {myAxios} from "../components/config/axios";
 import axios from "axios";
 
