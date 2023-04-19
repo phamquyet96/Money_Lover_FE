@@ -13,7 +13,7 @@ const AccountModal = () => {
     const navigate = useNavigate();
     const user = useSelector((state) => state.auth.currentUser);
     const Logout = async () => {
-        navigate("/");
+        navigate("/auth/logout");
         try {
             await axiosJWT.get("/auth/logout", {
                 headers: {
@@ -23,7 +23,7 @@ const AccountModal = () => {
             localStorage.removeItem("accessToken");
             localStorage.removeItem("refreshToken");
             dispatch(loggedOut);
-            navigate("/");
+            navigate("/auth/logout");
         }catch (err) {
             console.error(err);
         }
@@ -85,33 +85,52 @@ const AccountModal = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='h-auto shadow-2xl bg-white gap-2 content-center flex-col border-b-2'>
-                        <div className='flex flex-col bg-orange-400 justify-center pb-4 pl-8 '>
-                            <div className='text-white flex justify-center mt-3.5 mb-3.5'>
-                                <span>You may adjust all of your information here!</span>
-                            </div>
-                            <div className='flex grid grid-cols-5 flex-row justify-center mb-3'>
-                                <div></div>
-                                <button
-                                    className='bg-white shadow-xl hover:bg-gray-100 rounded-md hover text-orange-400'>Edit
-                                    profile
-                                </button>
-                                <div></div>
-                                <ChangePassword/>
-                                <div></div>
-                            </div>
-                        </div>
+                  </div>
+                  <div className="w-fit mb-4 h-fit ml-8 font-roboto">
+                    <div className="flex flex-row items-center">
+                      <div className="text-md mt-2">
+                        <span>accName</span>
+                      </div>
                     </div>
-                    <div className='flex shadow-2xl
-                        justify-center bg-gray-200 rounded-b-md hover:bg-gray-300'>
-                        <div className=' my-4 text-gray-400 font-roboto font-semibold'>
-                            <button>DELETE ACCOUNT</button>
-                        </div>
+                    <div className="text-xs mt-1 text-gray-400">
+                      <span>accEmail@gmail.com</span>
                     </div>
+                  </div>
                 </div>
+              </div>
+              <div className="h-auto shadow-2xl bg-white gap-2 content-center flex-col border-b-2">
+                <div className="flex flex-col bg-orange-400 justify-center pb-4 pl-8 ">
+                  <div className="text-white flex justify-center mt-3.5 mb-3.5">
+                    <span>You may adjust all of your information here!</span>
+                  </div>
+                  <div className="flex grid grid-cols-5 flex-row justify-center mb-3">
+                    <div></div>
+
+                    <a
+                      href="/edit-profile"
+                      class=" bg-white shadow-xl hover:bg-gray-100 rounded-md hover text-orange-400"
+                    >
+                      Edit profile
+                    </a>
+
+                    <div></div>
+                    <ChangePassword />
+                    <div></div>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="flex shadow-2xl
+                        justify-center bg-gray-200 rounded-b-md hover:bg-gray-300"
+              >
+                <div className=" my-4 text-gray-400 font-roboto font-semibold">
+                  <button>DELETE ACCOUNT</button>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
-            </>
+      </>
     );
 };
 
