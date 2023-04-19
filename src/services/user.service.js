@@ -8,5 +8,10 @@ class UserService {
             }
         });
     }
+
+    static verifyEmail(token){
+        let param=token.join("/");
+        return myAxios.post("/auth/verify",{token:param})
+    }
 }
 export default UserService;
