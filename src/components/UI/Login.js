@@ -46,6 +46,7 @@ const Login = () => {
                     } = res.data;
                     localStorage.setItem('accessToken', `${accessToken}`);
                     localStorage.setItem('refreshToken', `${refreshToken}`);
+                    dispatch(loggedIn(values))
                     console.log(res)
                 }).then(()=>{
                     navigate('/my-wallet')
