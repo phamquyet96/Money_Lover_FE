@@ -82,7 +82,7 @@ const AccountModal = () => {
                                 <div></div>
                                 <button
                                     onClick={Logout}
-                                    className='text-green-400 font-roboto font-semibold h-[40px] w-[100px] rounded-lg hover:bg-green-100'>SIGN
+className='text-green-400 font-roboto font-semibold h-[40px] w-[100px] rounded-lg hover:bg-green-100'>SIGN
                                     OUT
                                 </button>
                                 <div></div>
