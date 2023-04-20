@@ -51,5 +51,5 @@ export const walletSlice = createSlice({
     }
 })
 
-export const {getWallets,changeCurrentWallet,resetWallet,resetCurrentWallet,changeWallets} = walletSlice.actions;
+export const walletActions = walletSlice.actions;
 export default walletSlice;

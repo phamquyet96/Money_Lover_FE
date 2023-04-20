@@ -11,7 +11,7 @@ import MyWallet from "./components/UI/Wallet/MyWallet";
 import WalletDetail from "./components/UI/Wallet/WalletDetail";
 import AccountModal from "./components/UI/Modal/AccountModal";
 import ChangePassword from "./components/UI/Modal/ChangePasswordModal";
-import ButtonAddTransaction from "./components/UI/Dashboard/AddTransaction/ButtonAddTransaction";
+import AddTransactionForm from "./components/UI/Dashboard/AddTransaction/AddTransactionForm";
 
 function App() {
   return (
@@ -27,7 +27,7 @@ function App() {
         <Route path="/wallet-detail" element={<WalletDetail/>}></Route>
         <Route path="/account" element={<AccountModal/>}></Route>
         <Route path="/change-password" element={<ChangePassword/>}></Route>
-        <Route path="/transaction" element={<ButtonAddTransaction/>}></Route>
+        <Route path="/transaction" element={<AddTransactionForm/>}></Route>
           <Route path="/account/:id" element={<AccountModal/>}></Route>
       </Routes>
   );
