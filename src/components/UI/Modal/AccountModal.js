@@ -59,7 +59,7 @@ const AccountModal = () => {
 
                     <a
                       href="/update-profile"
-                      class=" bg-white shadow-xl hover:bg-gray-100 rounded-md hover text-orange-400"
+                      className=" bg-white hover:bg-gray-100 rounded-md hover text-orange-400 flex justify-center"
                     >
                       Update profile
                     </a>
