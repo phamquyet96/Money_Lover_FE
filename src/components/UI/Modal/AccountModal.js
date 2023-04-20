@@ -20,11 +20,11 @@ const AccountModal = () => {
 
 
     useEffect(() => {
-        axios.get('http://localhost:8000/api/user/account/' + id, { headers: { 'Authorization': `Bearer ${localStorage.getItem("accessToken")}`}})
+        axios.get('http://localhost:8000/api/user/account/' + id, {headers: {'Authorization': `Bearer ${localStorage.getItem("accessToken")}`}})
             .then(res => setData(res.data))
             .catch(err => console.error(err))
 
-    },[])
+    }, [])
 
     const Logout = async () => {
         try {
@@ -55,7 +55,7 @@ const AccountModal = () => {
                 position: 'center',
                 icon: 'success',
                 title: 'Delete success!',
-                showConfirmButton: false,
+                showConfirmButton: true,
                 timer: 1500
             });
             navigate("/auth/login");
@@ -82,7 +82,7 @@ const AccountModal = () => {
                                 <div></div>
                                 <button
                                     onClick={Logout}
-className='text-green-400 font-roboto font-semibold h-[40px] w-[100px] rounded-lg hover:bg-green-100'>SIGN
+                                    className='text-green-400 font-roboto font-semibold h-[40px] w-[100px] rounded-lg hover:bg-green-100'>SIGN
                                     OUT
                                 </button>
                                 <div></div>
@@ -111,8 +111,9 @@ className='text-green-400 font-roboto font-semibold h-[40px] w-[100px] rounded-l
                                 </div>
                                 <div className="flex grid grid-cols-5 flex-row justify-center mb-3">
                                     <div></div>
-                                    <button className='bg-white shadow-xl hover:bg-gray-100 rounded-md hover text-orange-400'>
-                                    <a href="/update-profile">Edit profile</a>
+                                    <button
+                                        className='bg-white shadow-xl hover:bg-gray-100 rounded-md hover text-orange-400'>
+                                        <a href="/update-profile">Edit profile</a>
                                     </button>
                                     <div></div>
                                     <ChangePassword/>
