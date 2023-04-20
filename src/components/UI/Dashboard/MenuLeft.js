@@ -15,10 +15,23 @@ import AssessmentOutlinedIcon from "@mui/icons-material/AssessmentOutlined";
 import SavingsOutlinedIcon from "@mui/icons-material/SavingsOutlined";
 import * as React from "react";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
+import {useParams} from "react-router-dom";
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 
 function MenuLeft() {
     const { collapseSidebar, toggleSidebar, toggled } = useProSidebar();
+
+    const [Data, setData] = useState([])
+
+
+    useEffect(() => {
+        axios.get('http://localhost:8000/api/user/id/', { headers: { 'Authorization': `Bearer ${localStorage.getItem("accessToken")}`}})
+            .then(res => setData(res.data.user))
+            .catch(err => console.error(err))
+
+    },[])
 
     const toggle = () => {
         toggleSidebar();
@@ -54,7 +67,7 @@ function MenuLeft() {
                         Menu
                     </MenuItem>
                     <SubMenu icon={<MenuOutlinedIcon />} label="Profile">
-                        <MenuItem href='/account' icon={<PeopleOutlinedIcon />}>
+                        <MenuItem href={`/account/${Data.id}`} icon={<PeopleOutlinedIcon />}>
                             Account
                         </MenuItem>
                         <MenuItem href='/my-wallet' icon={<AccountBalanceWalletOutlinedIcon />}>

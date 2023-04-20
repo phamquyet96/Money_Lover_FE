@@ -21,13 +21,14 @@ function App() {
         <Route path="/auth/login" element={<Login/>}></Route>
         <Route path="/auth/register" element={<Register/>}></Route>
         <Route path="/forgot-password" element={<ForgotPassword/>}></Route>
-        <Route path="/update-profile" element={<UpdateProfile/>}></Route>
+        <Route path="/update-profile/:id" element={<UpdateProfile/>}></Route>
         <Route path="/dashboard" element={<Dashboard/>}></Route>
         <Route path="/my-wallet" element={<MyWallet/>}></Route>
         <Route path="/wallet-detail" element={<WalletDetail/>}></Route>
         <Route path="/account" element={<AccountModal/>}></Route>
         <Route path="/change-password" element={<ChangePassword/>}></Route>
         <Route path="/transaction" element={<ButtonAddTransaction/>}></Route>
+          <Route path="/account/:id" element={<AccountModal/>}></Route>
       </Routes>
   );
 }

@@ -9,7 +9,6 @@ import GoogleButton from "../Share/GoogleButton";
 import Swal from "sweetalert2";
 import {useDispatch} from "react-redux";
 import {loggedIn} from "../../feature/authSlice";
-import axios from "axios";
 
 
 
@@ -27,7 +26,6 @@ const Login = () => {
             password: Yup.string()
                 .required('Password is required'),
         }), onSubmit: values => {
-            console.log(values  )
             const config = {
                 headers: {
                     "Content-Type": "multipart/form-data",
@@ -48,13 +46,12 @@ const Login = () => {
                     } = res.data;
                     localStorage.setItem('accessToken', `${accessToken}`);
                     localStorage.setItem('refreshToken', `${refreshToken}`);
-                    dispatch(loggedIn(values))
+                    dispatch(loggedIn(values));
                 }).then(()=>{
-                    navigate('/my-wallet')
-                })
+                navigate('/my-wallet')
+            })
                 .catch(err => {
-
-                    console.log(1, err.message)
+                    console.log(err.message)
                 })
         }
     })
