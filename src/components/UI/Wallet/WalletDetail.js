@@ -1,9 +1,29 @@
-import React from 'react';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
+import React, { useEffect } from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import iconWallet from "../../img/iconWallet.png";
 
+import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
 const WalletDetail = () => {
+
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const [Data, setData] = useState([])
+    const user=useSelector((state)=>state.auth.currentUser)
+
+
+    useEffect(() => {
+        axios.get('http://localhost:8000/api/wallet/info/' + id, { headers: { 'Authorization': `Bearer ${localStorage.getItem("accessToken")}` } })
+            .then(res => setData(res.data))
+            .catch(err => console.error(err))
+    }, [])
+
     return (
         <>
             <div className='h-screen bg-custom-gray justify-center'>
@@ -14,7 +34,7 @@ const WalletDetail = () => {
                                 <div className="w-fit flex content-center">
                                     <a href='/my-wallet'>
                                         <FontAwesomeIcon className='mt-5 mr-8 cursor-pointer' icon={faArrowLeft} size="lg"
-                                                         style={{color: "#595959",}}/>
+                                            style={{ color: "#595959", }} />
                                     </a>
                                     <p className='w-fit h-fit text-xl mt-4 font-semibold font-roboto'>My Wallets</p>
                                 </div>
@@ -27,7 +47,7 @@ const WalletDetail = () => {
                         <div
                             className='border-b rounded-t-md bg-white w-[665px] h-[64px] grid grid-cols-2 gap-2 content-center'>
                             <div>
-                                <p className='text-left w-fit h-fit ml-5 mt-2 font-roboto'>Wallet details</p>
+                                <p className='text-left w-fit h-fit ml-5 mt-2 font-roboto'>Wallet {Data.name}</p>
                             </div>
                             <div className='grid grid-cols-6 items-end'>
                                 <div></div>
@@ -41,13 +61,13 @@ const WalletDetail = () => {
                         <div className='h-[102px] shadow-2xl bg-white grid grid-cols-6 gap-2 content-center border-b-2'>
                             <div className=' flex justify-center'>
                                 <img className='w-12'
-                                     src={iconWallet}
-                                     alt={iconWallet}
+                                    src={iconWallet}
+                                    alt={iconWallet}
                                 />
                             </div>
                             <div>
-                                <p className='font-roboto font-semibold'>Wallet Name</p>
-                                <p className='text-gray-400'>Amount</p>
+                                <p className='font-roboto font-semibold'>{Data.name}</p>
+                                <p className='text-gray-400'>+{Data.includeTotal}vnd</p>
                             </div>
                         </div>
                         <div className='h-auto shadow-2xl bg-white gap-2 content-center flex-col border-b-2'>
@@ -62,12 +82,11 @@ const WalletDetail = () => {
                                 </div>
                                 <div className='w-fit mb-4 h-fit ml-5 font-roboto'>
                                     <div className='flex flex-row items-center'>
-                                        <div className='text-sm'><span>accName</span></div>
                                         <div
                                             className='ml-1 pl-1 text-xs px-1 py-1 h-[20px] bg-orange-400 rounded-md flex flex-row items-center text-white '>Owner
                                         </div>
                                     </div>
-                                    <div className='text-xs text-gray-400'><span>accEmail@gmail.com</span></div>
+                                    <div className='text-xs text-gray-400'><span>{user.email}</span></div>
                                 </div>
                             </div>
                         </div>

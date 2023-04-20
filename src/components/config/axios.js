@@ -19,7 +19,7 @@ const refreshToken = async () => {
 }
 
 
-// axiosJWT.interceptors.request.use(
+// myAxios.interceptors.request.use(
 //     async (config) => {
 //         let currentDate = new Date();
 //         const decodedToken = jwt_decode(localStorage.getItem('accessToken'));
