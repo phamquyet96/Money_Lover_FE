@@ -1,120 +1,108 @@
-import React, { useState } from "react";
+import React, {useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import axios from "axios";
 import MenuLeft from "./MenuLeft";
-import NavBar from "./Navbar";
-import { InputText } from 'primereact/inputtext';
-import flag from "../../img/Flag.svg"
-import {Button} from "primereact/button";
-import { Dialog } from 'primereact/dialog';
-import Avatar from "react-avatar-edit";
-import {useSelector} from "react-redux";
-function UpdateProfile() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [profile, setProfile] = useState([]);
-  const [image, setImage] = useState("");
-  const [view, setView] = useState(false);
-  const [imageCrop, setImageCrop] = useState(false);
-  const [src, setSrc] = useState(false);
+import Navbar from "./Navbar"
+import Swal from "sweetalert2";
 
+const UpdateProfile = () => {
+  const cloudName='money-lover';
+  const uploadPreset='ypxhljuq';
+  const [open,setOpen]=useState(true);
+  const dispatch=useDispatch();
   const user = useSelector((state) => state.auth.currentUser);
 
-  const profileFinal=profile.map((item)=>item.view)
-
-  const onClose=()=>{
-    setView(null)
+  const [data,setData]=useState({
+    name:'',
+    image:'',
+    email:user.email
+  })
+  const handleSave=async ()=>{
+    await axios.put('http://localhost:8000/api/user/update-profile',data)
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Update profile success!',
+      showConfirmButton: false,
+      timer: 1500
+    })
   }
-  const onCrop=(view)=>{
-    setView(view)
+
+  function handleFile(event){
+    const file=event.target.files[0];
+    const formData=new FormData();
+    formData.append('file',file);
+    formData.append("upload_preset",uploadPreset);
+    axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,formData)
+        .then(res=>setData({...data,image:res.data.secure_url}))
+        .catch(err=>console.log(err))
   }
-  const saveImage=()=>{
-    setProfile([...profile,{view}]);
-    setImageCrop(false)
-  }
-  const handleNameChange = (event) => {
-    setName(event.target.value);
-  };
-
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handleSaveClick = () => {
-    // Save the name and email data
-  };
-
   return (
-    <>
-      <NavBar />
-      <br/>
-      <div className="flex">
-        <MenuLeft />
-        <div className="mx-auto justify-content-center align-items-center">
-          <img style={{width:"200px",height:"200px",borderRadius:"50%",objectFit:"cover",border:"4px solid green"}}
-               onClick={()=>{setImageCrop(true)}} src={profileFinal.length ? profileFinal : flag} alt=""/>
-          <Dialog visible={imageCrop}
-                  onHide={()=>{setImageCrop(false)}}>
-          <div className=" align-items-center">
-            <Avatar width={500} height={400} onCrop={onCrop} onClose={onClose} src={src} backgroundColor={"#474649"} shadingColor={"#474649"}/>
-            <Button onClick={saveImage} label="Save" style={{display:"flex",width:"6rem",height:"3rem",backgroundColor:"gray",justifyContent:"center",borderRadius:"2px solid red"}}/>
-          </div>
-          </Dialog>
-          <InputText type="file" style={{display:"none"}} onChange={(event)=>{
-            const file=event.target.files[0];
-            if(file && file.type.substring(0,5)==="image"){
-                setImage(file)
-            }else{
-              setImage(null)
-            }
-          }}/>
+      <>
+        <div>
+          <Navbar/>
         </div>
-        <div className="max-w-md mx-auto">
-          <div className="text-center mb-6">
-            <h1 className="text-2xl font-bold">Update Profile</h1>
-          </div>
-          <div>
-            <label
-              className="block text-gray-700 font-bold mb-2"
-              htmlFor="name"
-            >
-              Name
-            </label>
-            <input
-              className="w-full px-4 py-2 rounded-lg shadow-sm focus:outline-none focus:shadow-outline text-gray-600 font-medium"
-              id="name"
-              type="text"
-              value={name}
-              onChange={handleNameChange}
-            />
-          </div>
-          <div className="mt-4">
-            <label
-              className="block text-gray-700 font-bold mb-2"
-              htmlFor="email"
-            >
-              Email
-            </label>
-            <input
-              className="w-full px-4 py-2 rounded-lg shadow-sm focus:outline-none focus:shadow-outline text-gray-600 font-medium"
-              id="email"
-              type="email"
-              value={user.email}
-              disabled="true"
-              // onChange={handleEmailChange}
-            />
-          </div>
-          <div className="mt-6">
-            <span
-              href="#"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-              onClick={handleSaveClick}
-            >
-              Save
-            </span>
-          </div>
+        <div className="flex">
+          <MenuLeft/>
+          {open ? (<div className='w-[100vw] h-[100vh] flex justify-center'>
+            <div className='shadow-2xl bg-white rounded-md w-[800px] h-[64px] mt-10'>
+              <div className='border-b rounded-t-md bg-white w-[800px] h-[64px] flex '>
+                <div className="flex items-start w-[800px] justify-between p-4 border-b rounded-t">
+                  <h3 className="text-xl ml-2 font-semibold text-gray-900 ">
+                    Profile Update
+                  </h3>
+                  <button type="button" onClick={()=>setOpen(false)}
+                          className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex dark:hover:bg-gray-600 dark:hover:text-white"
+                          data-modal-hide="changePasswordModal">
+                    <svg aria-hidden="true" className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd"
+                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                            clipRule="evenodd"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div className='h-auto shadow-2xl bg-white justify-center border-b-2'>
+                <div className='grid grid-cols-2 gap-4 pt-8 flex justify-between p-8'>
+                  <div className='flex-col justify-center'>
+                    <div className='flex justify-center h-32 w-full'>
+                      <div className='rounded-full w-28 h-28 bg-gray-100'>
+                        <img src={data.image} alt="" className="w-28 h-28 rounded-full"></img>
+                      </div>
+                    </div>
+                    <div className='flex justify-center mx-auto'>
+                      <input type="file" className='h-10 border' onChange={handleFile}/>
+                    </div>
+                  </div>
+                  <div className='grid grid-rows-2 gap-6'>
+                    <div className=''>
+                      <label className='text-left font-roboto'>Name</label>
+                      <input
+                          className="border h-12 p-2 outline-none w-full text-xl rounded placeholder-gray-400 placeholder:italic"
+                          placeholder='Enter new name' id="name" type="text" value={user.name} onChange={(event)=>setData({...data,name:event.target.value})}/>
+                    </div>
+                    <div className=''>
+                      <label className='text-left font-roboto'>Email</label>
+                      <input disabled className='border h-12 w-full rounded' id="email" type="email" value={user.email}/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className='flex shadow-2xl w-[800px] bg-white rounded-b-md gap-2'>
+                <button onClick={()=>{handleSave()}}
+                    className=' ml-5 my-4 h-10 w-20 bg-green-500 hover:bg-green-600 rounded-lg text-white font-roboto font-semibold'>
+                  Save
+                </button>
+                <button onClick={()=>setOpen(false)}
+                        className=' my-4 h-10 w-20 rounded-lg border hover:text-black text-gray-500 bg-white hover:bg-gray-100 font-roboto font-semibold'>
+                  Decline
+                </button>
+              </div>
+            </div>
+          </div>): "" }
         </div>
-    </div>
-    </>
+      </>
   );
-}
+};
 
 export default UpdateProfile;
