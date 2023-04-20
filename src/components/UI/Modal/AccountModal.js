@@ -3,11 +3,7 @@ import MenuLeft from "../Dashboard/MenuLeft";
 import NavBar from "../Dashboard/Navbar";
 import ChangePassword from "./ChangePasswordModal";
 import {useNavigate} from "react-router-dom";
-<<<<<<< HEAD
 import { myAxios} from "../../config/axios";
-=======
-import {myAxios} from "../../config/axios";
->>>>>>> f24bb964743764e5d418f85e259af8c9cce619b3
 import {useDispatch, useSelector} from "react-redux";
 import {loggedOut} from "../../../feature/authSlice";
 
@@ -74,11 +70,7 @@ const AccountModal = () => {
                             </div>
                         </div>
                         <div className='h-auto shadow-2xl bg-white gap-2 content-center flex-col border-b-2'>
-<<<<<<< HEAD
 <div className='flex flex-row pt-8 justify-center pb-4 pl-8 '>
-=======
-                            <div className='flex flex-row pt-8 justify-center pb-4 pl-8 '>
->>>>>>> f24bb964743764e5d418f85e259af8c9cce619b3
                                 <div>
                                     <div
                                         className='w-[60px] h-[60px] rounded-full table-cell align-middle bg-blue-500 text-center text-white text-3xl '>M
@@ -101,11 +93,7 @@ const AccountModal = () => {
                                 <div className="flex grid grid-cols-5 flex-row justify-center mb-3">
                                     <div></div>
                                     <button className='bg-white shadow-xl hover:bg-gray-100 rounded-md hover text-orange-400'>
-<<<<<<< HEAD
                                     <a href="/update-profile">Edit profile</a>
-=======
-                                        <a href="/update-profile">Edit profile</a>
->>>>>>> f24bb964743764e5d418f85e259af8c9cce619b3
                                     </button>
                                     <div></div>
                                     <ChangePassword/>

@@ -15,7 +15,7 @@ const WalletDetail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [Data, setData] = useState([])
-    const user=useSelector((state)=>state.auth.currentUser)
+    const user = useSelector((state) => state.auth.currentUser)
 
 
     useEffect(() => {
@@ -47,14 +47,16 @@ const WalletDetail = () => {
                         <div
                             className='border-b rounded-t-md bg-white w-[665px] h-[64px] grid grid-cols-2 gap-2 content-center'>
                             <div>
-                                <p className='text-left w-fit h-fit ml-5 mt-2 font-roboto'>Wallet {Data.name}</p>
+                                <p className='text-left w-[10rem] h-fit ml-5 mt-2 font-roboto '>Wallet {Data.name}</p>
                             </div>
                             <div className='grid grid-cols-6 items-end'>
                                 <div></div>
                                 <div></div>
                                 <button className='text-rose-400 font-roboto h-[40px] w-[80px] font-semibold rounded-lg hover:bg-rose-100'>DELETE</button>
                                 <div></div>
-                                <button className='text-green-400 font-roboto font-semibold h-[40px] w-[80px] rounded-lgd hover:bg-green-100'>EDIT</button>
+                                <button className='text-green-400 font-roboto font-semibold h-[40px] w-[80px] rounded-lgd hover:bg-green-100'>
+                                    <Link className='text-decoration-none btn btn-sm btn-success' to={`/update/${Data.id}`}>Update</Link>
+                                </button>
                                 <div></div>
                             </div>
                         </div>
@@ -65,7 +67,7 @@ const WalletDetail = () => {
                                     alt={iconWallet}
                                 />
                             </div>
-                            <div>
+                            <div className='w-[20rem]'>
                                 <p className='font-roboto font-semibold'>{Data.name}</p>
                                 <p className='text-gray-400'>+{Data.includeTotal}vnd</p>
                             </div>
