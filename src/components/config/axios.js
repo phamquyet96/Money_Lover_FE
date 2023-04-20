@@ -19,10 +19,7 @@ const refreshToken = async () => {
 }
 
 
-export const axiosJWT = axios.create({
-    baseURL: `http://localhost:${PORT}/api`
-});
-// axiosJWT.interceptors.request.use(
+// myAxios.interceptors.request.use(
 //     async (config) => {
 //         let currentDate = new Date();
 //         const decodedToken = jwt_decode(localStorage.getItem('accessToken'));

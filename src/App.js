@@ -13,10 +13,10 @@ import AccountModal from "./components/UI/Modal/AccountModal";
 import ChangePassword from "./components/UI/Modal/ChangePasswordModal";
 import Category from './components/UI/Category/Category';
 
+
 function App() {
   return (
       <Routes>
-
         <Route path="/" element={<HomePage/>}></Route>
         <Route path="/auth/logout" element={<Logout/>}></Route>
         <Route path="/auth/login" element={<Login/>}></Route>
@@ -29,7 +29,6 @@ function App() {
         <Route path="/account" element={<AccountModal/>}></Route>
         <Route path="/change-password" element={<ChangePassword/>}></Route>
         <Route path="/category" element={<Category/>}></Route>
-
       </Routes>
   );
 }
