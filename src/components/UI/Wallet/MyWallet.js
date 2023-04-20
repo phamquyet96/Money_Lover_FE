@@ -5,7 +5,7 @@ import MyWalletDetail from "./MyWalletDetail";
 const MyWallet = () => {
     return (
         <>
-            <div className='h-screen bg-custom-gray justify-center'>
+            <div className='bg-custom-gray'>
                 <WalletHeader/>
                 <MyWalletDetail/>
             </div>

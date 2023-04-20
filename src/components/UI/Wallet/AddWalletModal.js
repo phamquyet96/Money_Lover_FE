@@ -24,8 +24,6 @@ const AddWalletModal = () => {
             })
         },
       });
-
-
     return (
         <>
             <button type="button" data-modal-target="defaultModal" data-modal-toggle="defaultModal"
