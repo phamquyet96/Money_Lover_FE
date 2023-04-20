@@ -88,19 +88,6 @@ const ChangePassword = () => {
         },
     });
 
-    // const handleClickShowPassword = (name) => {
-    //     setShowPassword({
-    //         ...showPassword,
-    //         [name]: !showPassword[name],
-    //     });
-    // };
-    //
-    // const handleClickOpen = () => {
-    //     setOpen(true);
-    // };
-
-
-
     return (
         <>
             <button type="button" onClick={()=> setOpen(true)}
