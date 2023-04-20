@@ -7,6 +7,7 @@ import {myAxios} from "../../config/axios";
 import {useDispatch, useSelector} from "react-redux";
 import {deleteUser, loggedOut} from "../../../feature/authSlice";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 
 const AccountModal = () => {
@@ -42,7 +43,7 @@ const AccountModal = () => {
     }
     const Delete = async () => {
         try {
-            await myAxios.delete("/user/account/:id", {
+            await myAxios.delete(`/user/account/${id}`, {
                 headers: {
                     authorization: "Bearer " + localStorage.getItem('accessToken'),
                 }
@@ -50,6 +51,13 @@ const AccountModal = () => {
             localStorage.removeItem("accessToken");
             localStorage.removeItem("refreshToken");
             dispatch(deleteUser);
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Delete success!',
+                showConfirmButton: false,
+                timer: 1500
+            });
             navigate("/auth/login");
         } catch (error) {
             console.log(error)
