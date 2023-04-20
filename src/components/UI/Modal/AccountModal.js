@@ -1,23 +1,40 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import MenuLeft from "../Dashboard/MenuLeft";
 import NavBar from "../Dashboard/Navbar";
 import ChangePassword from "./ChangePasswordModal";
+<<<<<<< HEAD
 import {useNavigate} from "react-router-dom";
 import { myAxios} from "../../config/axios";
+=======
+import {useNavigate, useParams} from "react-router-dom";
+import {myAxios} from "../../config/axios";
+>>>>>>> a87123662b5a41f484be44e3d7c04acb3346cdd4
 import {useDispatch, useSelector} from "react-redux";
-import {loggedOut} from "../../../feature/authSlice";
+import {deleteUser, loggedOut} from "../../../feature/authSlice";
+import axios from "axios";
 
 
 const AccountModal = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const user = useSelector((state) => state.auth.currentUser);
+
+    const {id} = useParams();
+    const [Data, setData] = useState([])
+
+
+    useEffect(() => {
+        axios.get('http://localhost:8000/api/user/account/' + id, { headers: { 'Authorization': `Bearer ${localStorage.getItem("accessToken")}`}})
+            .then(res => setData(res.data))
+            .catch(err => console.error(err))
+
+    },[])
+
     const Logout = async () => {
-        navigate("/auth/logout");
         try {
             await myAxios.get("/auth/logout", {
                 headers: {
-                    authorization: localStorage.getItem('accessToken'),
+                    authorization: "Bearer " + localStorage.getItem('accessToken'),
                 }
             });
             localStorage.removeItem("accessToken");
@@ -29,17 +46,16 @@ const AccountModal = () => {
         }
     }
     const Delete = async () => {
-        navigate("/");
         try {
-            await myAxios.post("/auth/delete", {
+            await myAxios.delete("/user/account/:id", {
                 headers: {
-                    authorization: localStorage.getItem('accessToken'),
+                    authorization: "Bearer " + localStorage.getItem('accessToken'),
                 }
             });
             localStorage.removeItem("accessToken");
             localStorage.removeItem("refreshToken");
-            dispatch();
-            navigate("/");
+            dispatch(deleteUser);
+            navigate("/auth/login");
         } catch (error) {
             console.log(error)
         }
@@ -63,7 +79,7 @@ const AccountModal = () => {
                                 <div></div>
                                 <button
                                     onClick={Logout}
-                                    className='text-green-400 font-roboto font-semibold h-[40px] w-[100px] rounded-lg hover:bg-green-100'>SIGN
+className='text-green-400 font-roboto font-semibold h-[40px] w-[100px] rounded-lg hover:bg-green-100'>SIGN
                                     OUT
                                 </button>
                                 <div></div>
@@ -78,9 +94,9 @@ const AccountModal = () => {
                                 </div>
                                 <div className='w-fit mb-4 h-fit ml-8 font-roboto'>
                                     <div className='flex flex-row items-center'>
-                                        <div className='text-md mt-2'><span>{user.name}</span></div>
+                                        <div className='text-md mt-2'><span>{Data.name}</span></div>
                                     </div>
-                                    <div className='text-xs mt-1 text-gray-400'><span>{user.email}</span>
+                                    <div className='text-xs mt-1 text-gray-400'><span>{Data.email}</span>
                                     </div>
                                 </div>
                             </div>
@@ -103,7 +119,7 @@ const AccountModal = () => {
                         </div>
                         <div className="flex shadow-2xl justify-center bg-gray-200 rounded-b-md hover:bg-gray-300">
                             <div className=" my-4 text-gray-400 font-roboto font-semibold">
-                                <button>DELETE ACCOUNT</button>
+                                <button onClick={Delete}>DELETE ACCOUNT</button>
                             </div>
                         </div>
                     </div>

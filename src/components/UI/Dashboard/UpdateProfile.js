@@ -4,6 +4,7 @@ import axios from "axios";
 import MenuLeft from "./MenuLeft";
 import Navbar from "./Navbar"
 import Swal from "sweetalert2";
+import {myAxios} from "../../config/axios";
 
 const UpdateProfile = () => {
   const cloudName='money-lover';
@@ -18,7 +19,12 @@ const UpdateProfile = () => {
     email:user.email
   })
   const handleSave=async ()=>{
-    await axios.put('http://localhost:8000/api/user/update-profile',data)
+
+    await myAxios.put(' /user/update-profile',data,{
+      headers: {
+        authorization: "Bearer "+ localStorage.getItem('accessToken')
+      }
+    })
     Swal.fire({
       position: 'center',
       icon: 'success',
@@ -106,3 +112,4 @@ const UpdateProfile = () => {
 };
 
 export default UpdateProfile;
+
