@@ -2,8 +2,13 @@ import React, {useEffect, useState} from 'react';
 import MenuLeft from "../Dashboard/MenuLeft";
 import NavBar from "../Dashboard/Navbar";
 import ChangePassword from "./ChangePasswordModal";
+<<<<<<< HEAD
+import {useNavigate} from "react-router-dom";
+import { myAxios} from "../../config/axios";
+=======
 import {useNavigate, useParams} from "react-router-dom";
 import {myAxios} from "../../config/axios";
+>>>>>>> a87123662b5a41f484be44e3d7c04acb3346cdd4
 import {useDispatch, useSelector} from "react-redux";
 import {deleteUser, loggedOut} from "../../../feature/authSlice";
 import axios from "axios";
@@ -89,7 +94,7 @@ const AccountModal = () => {
                             </div>
                         </div>
                         <div className='h-auto shadow-2xl bg-white gap-2 content-center flex-col border-b-2'>
-                            <div className='flex flex-row pt-8 justify-center pb-4 pl-8 '>
+<div className='flex flex-row pt-8 justify-center pb-4 pl-8 '>
                                 <div>
                                     <div
                                         className='w-[60px] h-[60px] rounded-full table-cell align-middle bg-blue-500 text-center text-white text-3xl '>M
