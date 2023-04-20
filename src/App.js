@@ -24,7 +24,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard/>}></Route>
         <Route path="/my-wallet" element={<MyWallet/>}></Route>
         <Route path="/wallet-detail" element={<WalletDetail/>}></Route>
-        <Route path="/account" element={<AccountModal/>}></Route>
+        <Route path="/account/:id" element={<AccountModal/>}></Route>
         <Route path="/change-password" element={<ChangePassword/>}></Route>
       </Routes>
   );
