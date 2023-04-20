@@ -32,20 +32,20 @@ const WalletEdit = () => {
             })
         },
     });
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        axios.get('http://localhost:8000/api/wallet/info/' + id, { headers: { 'Authorization': `Bearer ${localStorage.getItem("accessToken")}` } })
+            .then(res => setData(res.data))
+            .catch(err => console.error(err))
+    }, [])
+
 
     return (
         <>
-            <button type="button" data-modal-target="defaultModal" data-modal-toggle="defaultModal"
-                className="font-roboto ml-8 mt-3.5 bg-button-green h-[32px] w-[146] text-white shadow-xl rounded-lg hover:bg-green-400 font-semibold text-l px-3 py-2 text-center inline-flex items-center">
-                <svg aria-hidden="true" className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                        d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
-                </svg>
-                Connect wallet
-            </button>
 
-            <div id="defaultModal" tabIndex="-1" aria-hidden="true"
-                className="fixed top-2 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+
+            <div id="defaultModal" tabIndex="-1"
+                className="fixed top-2 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
                 <div className="relative shadow-2xl bottom-50 w-fit max-w-2xl h-fit">
                     <div className=" bg-white rounded-lg shadow">
                         <div className="flex items-start justify-between p-4 border-b rounded-t">
@@ -71,11 +71,11 @@ const WalletEdit = () => {
                                 <div className="ml-8 h-[64px] border rounded-lg hover:border-gray-600 border-gray-300">
                                     <p className='text-left text-xs mt-1 font-light ml-3'>Wallet Name</p>
                                     <div className='w-[328px] h-[48px] rounded-lg'>
-                                        <input style={{ border: 'none', outline: 'none' }} type="walletName" name="name" id="walletName"
+                                        <input style={{ border: 'none', outline: 'none' }} type="text" name="name" id="walletName"
                                             className="text-black text-xl rounded-lg w-full pt-1 pl-3 placeholder-gray-300"
                                             placeholder="Your wallet name?"
-                                            onChange={formik.handleChange}
-                                            value={formik.values.name}
+                                            onChange={e=>formik.handleChange({...data,name:e.target.value})}
+                                            value={data.name}
                                             required />
                                     </div>
                                 </div>
@@ -87,12 +87,11 @@ const WalletEdit = () => {
                                 <div className="ml-8 h-[64px] border rounded-lg hover:border-gray-600 border-gray-300">
                                     <p className='text-left text-xs mt-1 font-light ml-3'>Initial Balance</p>
                                     <div className='w-[176px] h-[48px] rounded-lg'>
-                                        <input style={{ border: 'none', outline: 'none', }} type="a" name="initialBalance" id="balance"
+                                        <input style={{ border: 'none', outline: 'none', }} type="text" name="initialBalance" id="balance"
                                             className="text-black text-xl rounded-lg w-full pt-1 pl-3 "
                                             placeholder="0"
-
-                                            onChange={formik.handleChange}
-                                            value={formik.values.initialBalance}
+                                            onChange={e=>formik.handleChange({...data,initialBalance:e.target.value})}
+                                            value={data.initialBalance}
                                             required />
                                     </div>
                                 </div>

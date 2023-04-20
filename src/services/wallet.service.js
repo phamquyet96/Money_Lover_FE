@@ -9,7 +9,6 @@ class WalletService {
             }
         })
     };
-
     static async updateWallet(data) {
         return myAxios.post('/wallet/update', data, {
             headers: {
