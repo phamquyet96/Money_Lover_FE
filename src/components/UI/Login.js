@@ -26,6 +26,7 @@ const Login = () => {
             password: Yup.string()
                 .required('Password is required'),
         }), onSubmit: values => {
+            console.log(values)
             const config = {
                 headers: {
                     "Content-Type": "multipart/form-data",
