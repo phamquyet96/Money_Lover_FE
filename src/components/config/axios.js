@@ -17,8 +17,6 @@ const refreshToken = async () => {
         console.log(err);
     }
 }
-
-
 // myAxios.interceptors.request.use(
 //     async (config) => {
 //         let currentDate = new Date();

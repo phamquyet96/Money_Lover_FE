@@ -68,7 +68,7 @@ export default function NavBar() {
                             size="sm"
                             className="hidden lg:inline-block bg-green-500"
                         >
-                            <span>Add Transaction</span>
+                            <span>ADD TRANSACTION</span>
                         </Button>
                         <IconButton
                             variant="text"
