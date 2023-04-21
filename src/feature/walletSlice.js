@@ -47,9 +47,14 @@ export const walletSlice = createSlice({
             })
             allWallet[0] = value
             state.wallets = [...others, ...allWallet]
+        },
+        deleteWallet(state, action) {
+            const id = action.payload;
+            state.wallets = state.wallets.filter(wallet => wallet.id !== id);
+            return state;
         }
     }
 })
 
-export const walletActions = walletSlice.actions;
+export const {deleteWallet} = walletSlice.actions;
 export default walletSlice;
