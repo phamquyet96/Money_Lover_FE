@@ -20,7 +20,6 @@ const MyWalletDetail = () => {
 
     return (
         <>
-
             <div className=' w-[100vw] flex justify-center'>
                 <div className='group inline-block'>
                     {data.map((value, index) => (
@@ -39,7 +38,7 @@ const MyWalletDetail = () => {
                                     </div>
                                     <div>
                                         <p className='font-roboto font-semibold w-[10rem]'>{value.name}</p>
-                                        <p className='text-gray-400 w-[10rem]'>+{value.include_total}vnd</p>
+                                        <p className='text-gray-400 w-[10rem]'>+{value.include_total} </p>
                                     </div>
                                 </div>
                             </Link>

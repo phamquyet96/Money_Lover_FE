@@ -8,10 +8,15 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {myAxios} from "../../config/axios";
+import Swal from "sweetalert2";
+import {deleteWallet} from "../../../feature/walletSlice";
+
 
 const WalletDetail = () => {
 
+    const dispatch = useDispatch()
     const { id } = useParams();
     const navigate = useNavigate();
     const [Data, setData] = useState([])
@@ -23,6 +28,28 @@ const WalletDetail = () => {
             .then(res => setData(res.data))
             .catch(err => console.error(err))
     }, [])
+
+    const deleteWalletDetail = async () => {
+        try {
+            await myAxios.delete(`/wallet/${id}`, {
+                headers: {
+                    authorization: "Bearer " + localStorage.getItem('accessToken'),
+                }
+            });
+            dispatch(deleteWallet);
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Delete success!',
+                showConfirmButton: true,
+                timer: 1500
+            });
+            navigate("/my-wallet");
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
 
     return (
         <>
@@ -42,7 +69,7 @@ const WalletDetail = () => {
                         </div>
                     </div>
                 </div>
-                <div className='w-[100vw] h-[100vh] flex justify-center'>
+                <div className='w-[100vw] flex justify-center'>
                     <div className='shadow-2xl bg-white rounded-md w-[665px] h-[64px] mt-10'>
                         <div
                             className='border-b rounded-t-md bg-white w-[665px] h-[64px] grid grid-cols-2 gap-2 content-center'>
@@ -52,7 +79,7 @@ const WalletDetail = () => {
                             <div className='grid grid-cols-6 items-end'>
                                 <div></div>
                                 <div></div>
-                                <button className='text-rose-400 font-roboto h-[40px] w-[80px] font-semibold rounded-lg hover:bg-rose-100'>DELETE</button>
+                                <button className='text-rose-400 font-roboto h-[40px] w-[80px] font-semibold rounded-lg hover:bg-rose-100' onClick={deleteWalletDetail}>DELETE</button>
                                 <div></div>
                                 <button className='text-green-400 font-roboto font-semibold h-[40px] w-[80px] rounded-lgd hover:bg-green-100'>
                                     <Link className='text-decoration-none btn btn-sm btn-success' to={`/update/${Data.id}`}>Update</Link>
@@ -69,7 +96,7 @@ const WalletDetail = () => {
                             </div>
                             <div className='w-[20rem]'>
                                 <p className='font-roboto font-semibold'>{Data.name}</p>
-                                <p className='text-gray-400'>+{Data.includeTotal}vnd</p>
+                                <p className='text-gray-400'>+{Data.includeTotal}</p>
                             </div>
                         </div>
                         <div className='h-auto shadow-2xl bg-white gap-2 content-center flex-col border-b-2'>

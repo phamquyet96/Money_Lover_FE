@@ -8,6 +8,9 @@ import {Provider} from "react-redux";
 import store, {persistor} from "./store/store";
 import {PersistGate} from "redux-persist/integration/react";
 import { ProSidebarProvider } from "react-pro-sidebar";
+import { Carousel, initTE } from "tw-elements";
+initTE({ Carousel });
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

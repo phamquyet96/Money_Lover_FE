@@ -2,6 +2,7 @@ import React from 'react';
 import { useFormik } from 'formik';
 import WalletService from '../../../services/wallet.service';
 import Swal from "sweetalert2";
+import iconWallet from "../../img/iconWallet.png";
 
 const AddWalletModal = () => {
 
@@ -58,6 +59,12 @@ const AddWalletModal = () => {
                         <form onSubmit={formik.handleSubmit}>
                         <div className="pl-5 pt-5 relative flex content-center mx-auto">
                             <div className="border-2 w-[103px] h-[64px] rounded-lg">
+                                <div className=' flex justify-center mt-1.5'>
+                                    <img className='w-12'
+                                         src={iconWallet}
+                                         alt={iconWallet}
+                                    />
+                                </div>
                             </div>
                             <div className="ml-8 h-[64px] border rounded-lg hover:border-gray-600 border-gray-300">
                                 <p className='text-left text-xs mt-1 font-light ml-3'>Wallet Name</p>
@@ -72,8 +79,18 @@ const AddWalletModal = () => {
                             </div>
                         </div>
                         <div className="p-5 mx-auto relative flex content-center">
-                            <div className='border-2 w-[256px] h-[64px] rounded-lg'>
-
+                            <div className='border hover:border-gray-600 w-[256px] h-[64px] rounded-lg'>
+                                <p className='text-left text-xs mt-1 font-light ml-3'>Currency</p>
+                                <div className='w-[256px] h-[48px] rounded-lg'>
+                                    <select style={{border:'none', outline:'none'}} name="currency" id="currency"
+                                           className="text-black text-xl rounded-lg w-full pt-1 pl-3 placeholder-gray-300"
+                                           onChange={formik.handleChange}
+                                           value={formik.values.currency}
+                                           required>
+                                        <option>Vietnamdong</option>
+                                        <option>US Dollar</option>
+                                    </select>
+                                </div>
                             </div>
                             <div className="ml-8 h-[64px] border rounded-lg hover:border-gray-600 border-gray-300">
                                 <p className='text-left text-xs mt-1 font-light ml-3'>Initial Balance</p>
@@ -81,7 +98,7 @@ const AddWalletModal = () => {
                                     <input style={{border:'none', outline:'none',}} type="a" name="initialBalance" id="balance"
                                            className="text-black text-xl rounded-lg w-full pt-1 pl-3 "
                                            placeholder="0"
-                                           
+
                                            onChange={formik.handleChange}
                                            value={formik.values.initialBalance}
                                            required/>
