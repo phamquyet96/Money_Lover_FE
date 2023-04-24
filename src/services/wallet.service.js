@@ -1,4 +1,4 @@
-import {myAxios} from "../components/config/axios";
+import { myAxios } from "../components/config/axios";
 
 
 class WalletService {
