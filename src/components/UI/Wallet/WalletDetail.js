@@ -7,24 +7,63 @@ import {useDispatch, useSelector} from 'react-redux';
 import Swal from "sweetalert2";
 import {walletActions} from "../../../feature/walletSlice";
 import WalletService from "../../../services/wallet.service";
+import {myAxios} from "../../config/axios";
 
 const WalletDetail = () => {
 
-    const [Data, setData] = useState([])
+    // const [Data, setData] = useState([])
+    // const dispatch = useDispatch()
+    // const {id} = useParams();
+    // const navigate = useNavigate();
+    // const user = useSelector((state) => state.auth.currentUser)
+    //
+    // useEffect(() => {
+    //     WalletService.getDetailWallet(id)
+    //         .then(res => setData(res.data))
+    //         .catch(err => console.error(err))
+    // }, [])
+    //
+    // const deleteWalletDetail = async () => {
+    //     WalletService.deleteWallet(id,{ headers: { 'Authorization': `Bearer ${localStorage.getItem("accessToken")}` } }).then(() => {
+    //         dispatch(walletActions.deleteWallet());
+    //         Swal.fire({
+    //             position: 'center',
+    //             icon: 'success',
+    //             title: 'Delete wallet success!',
+    //             showConfirmButton: true,
+    //             timer: 1500
+    //         });
+    //         navigate("/my-wallet");
+    //     }).catch(err => {
+    //         Swal.fire({
+    //             position: 'center',
+    //             icon: 'error',
+    //             title: 'Delete wallet error!',
+    //             showConfirmButton: true,
+    //             timer: 1500
+    //         });
+    //     })
+    // }
     const dispatch = useDispatch()
-    const {id} = useParams();
+    const { id } = useParams();
     const navigate = useNavigate();
+    const [Data, setData] = useState([])
     const user = useSelector((state) => state.auth.currentUser)
 
+
     useEffect(() => {
-        WalletService.getDetailWallet(id)
+        myAxios.get('/wallet/info/' + id, { headers: { 'Authorization': `Bearer ${localStorage.getItem("accessToken")}` } })
             .then(res => setData(res.data))
             .catch(err => console.error(err))
     }, [])
 
     const deleteWalletDetail = async () => {
-        WalletService.deleteWallet(id).then(() => {
-            dispatch(walletActions.deleteWallet());
+        try {
+            await myAxios.delete(`/wallet/${id}`, {
+                headers: {
+                    authorization: "Bearer " + localStorage.getItem('accessToken'),
+                }
+            });
             Swal.fire({
                 position: 'center',
                 icon: 'success',
@@ -32,20 +71,17 @@ const WalletDetail = () => {
                 showConfirmButton: true,
                 timer: 1500
             });
+            dispatch(walletActions.deleteWallet());
             navigate("/my-wallet");
-        }).catch(err => {
-            Swal.fire({
-                position: 'center',
-                icon: 'error',
-                title: 'Delete wallet error!',
-                showConfirmButton: true,
-                timer: 1500
-            });
-        })
+        } catch (error) {
+            console.log(error)
+        }
+
     }
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        WalletService.updateWallet(Data)
+        myAxios.put('/wallet/update',  Data, { headers: { 'Authorization': `Bearer ${localStorage.getItem("accessToken")}` } })
             .then(res => {
                 Swal.fire({
                     position: 'center',
@@ -56,16 +92,31 @@ const WalletDetail = () => {
                 });
                 dispatch(walletActions.changeCurrentWallet())
                 navigate('/my-wallet')
-            }).catch(err => {
-            Swal.fire({
-                position: 'center',
-                icon: 'error',
-                title: 'Update wallet error!',
-                showConfirmButton: true,
-                timer: 1500
-            });
-        })
+            })
     }
+    // const handleSubmit = (event) => {
+    //     event.preventDefault();
+    //     WalletService.updateWallet(Data, { headers: { 'Authorization': `Bearer ${localStorage.getItem("accessToken")}` } })
+    //         .then(res => {
+    //             Swal.fire({
+    //                 position: 'center',
+    //                 icon: 'success',
+    //                 title: 'Update wallet success!',
+    //                 showConfirmButton: true,
+    //                 timer: 1500
+    //             });
+    //             dispatch(walletActions.changeCurrentWallet())
+    //             navigate('/my-wallet')
+    //         }).catch(err => {
+    //         Swal.fire({
+    //             position: 'center',
+    //             icon: 'error',
+    //             title: 'Update wallet error!',
+    //             showConfirmButton: true,
+    //             timer: 1500
+    //         });
+    //     })
+    // }
 
 
     return (
@@ -159,9 +210,9 @@ const WalletDetail = () => {
                                             data-modal-hide="delete-modal">
                                         <svg aria-hidden="true" className="w-5 h-5" fill="currentColor"
                                              viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd"
+                                            <path fillRule="evenodd"
                                                   d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                                  clip-rule="evenodd"></path>
+                                                  clipRule="evenodd"></path>
                                         </svg>
                                         <span className="sr-only">Close modal</span>
                                     </button>
@@ -170,7 +221,7 @@ const WalletDetail = () => {
                                              className="mx-auto mb-4 text-gray-400 w-14 h-14 dark:text-gray-200"
                                              fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                              xmlns="http://www.w3.org/2000/svg">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                                                   d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                         </svg>
                                         <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are
@@ -237,10 +288,7 @@ const WalletDetail = () => {
                                                 <input style={{border: 'none', outline: 'none',}} type="number"
                                                        name="includeTotal"
                                                        className="text-black text-xl rounded-lg w-full pt-1 pl-3 "
-                                                       value={Data?.includeTotal?.toLocaleString('en-US', {
-                                                           style: 'decimal',
-                                                           currency: 'VND',
-                                                       })}
+                                                       value={Data?.includeTotal}
                                                        onChange={e => setData({...Data, includeTotal: e.target.value})}
                                                        required/>
                                             </div>
