@@ -1,26 +1,32 @@
-import React, {useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import MenuLeft from "./MenuLeft";
 import Navbar from "./Navbar"
 import Swal from "sweetalert2";
 import {myAxios} from "../../config/axios";
+import {useNavigate, useParams} from "react-router-dom";
 
 const UpdateProfile = () => {
   const cloudName='money-lover';
   const uploadPreset='ypxhljuq';
   const [open,setOpen]=useState(true);
-  const dispatch=useDispatch();
-  const user = useSelector((state) => state.auth.currentUser);
+  const navigate=useNavigate();
 
+  const {id} = useParams();
   const [data,setData]=useState({
     name:'',
     image:'',
-    email:user.email
+    email:''
   })
+  useEffect(() => {
+    axios.get('http://localhost:8000/api/user/account/' + id, { headers: { 'Authorization': `Bearer ${localStorage.getItem("accessToken")}`}})
+        .then(res => setData(res.data))
+        .catch(err => console.error(err))
+
+  },[])
   const handleSave=async ()=>{
 
-    await myAxios.put(' /user/update-profile',data,{
+    await myAxios.put('/user/update-profile/'+id,data,{
       headers: {
         authorization: "Bearer "+ localStorage.getItem('accessToken')
       }
@@ -32,6 +38,8 @@ const UpdateProfile = () => {
       showConfirmButton: false,
       timer: 1500
     })
+    setOpen(false);
+    navigate("/dashboard")
   }
 
   function handleFile(event){
@@ -85,11 +93,11 @@ const UpdateProfile = () => {
                       <label className='text-left font-roboto'>Name</label>
                       <input
                           className="border h-12 p-2 outline-none w-full text-xl rounded placeholder-gray-400 placeholder:italic"
-                          placeholder='Enter new name' id="name" type="text" value={user.name} onChange={(event)=>setData({...data,name:event.target.value})}/>
+                          placeholder='Enter new name' id="name" type="text" value={data.name} onChange={(event)=>setData({...data,name:event.target.value})}/>
                     </div>
                     <div className=''>
                       <label className='text-left font-roboto'>Email</label>
-                      <input disabled className='border h-12 w-full rounded' id="email" type="email" value={user.email}/>
+                      <input readOnly="" className='border h-12 w-full rounded' id="email" type="email" value={data.email} />
                     </div>
                   </div>
                 </div>
@@ -112,4 +120,3 @@ const UpdateProfile = () => {
 };
 
 export default UpdateProfile;
-

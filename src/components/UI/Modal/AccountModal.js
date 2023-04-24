@@ -29,13 +29,8 @@ const AccountModal = () => {
 
     const Logout = async () => {
         try {
-            await myAxios.get("/auth/logout", {
-                headers: {
-                    authorization: "Bearer " + localStorage.getItem('accessToken'),
-                }
-            });
-            localStorage.removeItem("accessToken");
-            localStorage.removeItem("refreshToken");
+            await myAxios.get("/auth/logout");
+            localStorage.clear()
             dispatch(loggedOut);
             navigate("/auth/logout");
         } catch (err) {
@@ -93,7 +88,7 @@ const AccountModal = () => {
                             <div className='flex flex-row pt-8 justify-center pb-4 pl-8 '>
                                 <div>
                                     <div
-                                        className='w-[60px] h-[60px] rounded-full table-cell align-middle bg-blue-500 text-center text-white text-3xl '>M
+                                        className='w-[60px] h-[60px] rounded-full table-cell align-middle bg-blue-500 text-center text-white text-3xl '>{Data.name?.split("",1)}
                                     </div>
                                 </div>
                                 <div className='w-fit mb-4 h-fit ml-8 font-roboto'>
@@ -114,7 +109,7 @@ const AccountModal = () => {
                                     <div></div>
                                     <button
                                         className='bg-white shadow-xl hover:bg-gray-100 rounded-md hover text-orange-400'>
-                                        <a href="/update-profile">Edit profile</a>
+                                        <a href={`/update-profile/${id}`}>Edit profile</a>
                                     </button>
                                     <div></div>
                                     <ChangePassword/>
@@ -126,7 +121,7 @@ const AccountModal = () => {
                             <div className=" my-4 text-gray-400 font-roboto font-semibold">
                                 <button
                                     data-modal-target="popup-modal" data-modal-toggle="popup-modal"
-                                         >DELETE ACCOUNT</button>
+                                >DELETE ACCOUNT</button>
                             </div>
                         </div>
                         <div id="popup-modal" tabIndex="-1"

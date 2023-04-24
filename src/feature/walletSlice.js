@@ -56,5 +56,5 @@ export const walletSlice = createSlice({
     }
 })
 
-export const {deleteWallet} = walletSlice.actions;
+export const {walletActions} = walletSlice.actions;
 export default walletSlice;
