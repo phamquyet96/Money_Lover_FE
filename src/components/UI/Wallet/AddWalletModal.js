@@ -98,9 +98,11 @@ const AddWalletModal = () => {
                                         <input style={{border:'none', outline:'none',}} type="a" name="initialBalance" id="balance"
                                                className="text-black text-xl rounded-lg w-full pt-1 pl-3 "
                                                placeholder="0"
-
                                                onChange={formik.handleChange}
-                                               value={formik.values.initialBalance}
+                                               value={formik.values.initialBalance.toLocaleString('en-US', {
+                                                   style: 'decimal',
+                                                   currency: 'USD',
+                                               })}
                                                required/>
                                     </div>
                                 </div>
