@@ -20,6 +20,8 @@ function App() {
         <Route path="/auth/logout" element={<Logout/>}></Route>
         <Route path="/auth/login" element={<Login/>}></Route>
         <Route path="/auth/register" element={<Register/>}></Route>
+
+
         <Route path="/forgot-password" element={<ForgotPassword/>}></Route>
         <Route path="/update-profile/:id" element={<UpdateProfile/>}></Route>
         <Route path="/dashboard" element={<Dashboard/>}></Route>
@@ -29,6 +31,8 @@ function App() {
         <Route path="/change-password" element={<ChangePassword/>}></Route>
         <Route path="/transaction" element={<AddTransactionForm/>}></Route>
           <Route path="/account/:id" element={<AccountModal/>}></Route>
+
+
       </Routes>
   );
 }

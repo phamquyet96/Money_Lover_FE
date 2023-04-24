@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {myAxios} from "../../config/axios";
 import Swal from "sweetalert2";
-import {deleteWallet} from "../../../feature/walletSlice";
+import {walletActions} from "../../../feature/walletSlice";
 
 
 const WalletDetail = () => {
@@ -36,7 +36,7 @@ const WalletDetail = () => {
                     authorization: "Bearer " + localStorage.getItem('accessToken'),
                 }
             });
-            dispatch(deleteWallet);
+            dispatch(walletActions.deleteWallet());
             Swal.fire({
                 position: 'center',
                 icon: 'success',
@@ -131,7 +131,7 @@ const WalletDetail = () => {
                                 <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
                                     <button type="button"
                                             className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
-                                            data-modal-hide="popup-modal">
+                                            data-modal-hide="delete-modal">
                                         <svg aria-hidden="true" className="w-5 h-5" fill="currentColor"
                                              viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd"
