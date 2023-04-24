@@ -1,5 +1,5 @@
 import './App.css';
-import {Redirect, Route, Routes, useNavigate} from "react-router-dom";
+import {Navigate, Route, Routes, useNavigate} from "react-router-dom";
 import HomePage from "./components/UI/HomePage";
 import Logout from "./components/UI/Logout";
 import Login from "./components/UI/Login";
@@ -17,14 +17,8 @@ import {useEffect} from "react";
 
 function App() {
 
-    const auth = useSelector(state => state.auth)
-    const navigate = useNavigate()
+    const auth = useSelector(state => state.auth);
 
-    useEffect(() => {
-        if (!auth.isLoggedIn) {
-            navigate('/')
-        }
-    }, [auth.isLoggedIn])
 
 
     return (
@@ -33,7 +27,7 @@ function App() {
             <Route path="/auth/login" element={<Login/>}></Route>
             <Route path="/auth/register" element={<Register/>}></Route>
 
-                { auth.isLoggedIn && (
+                {/*{ auth.isLoggedIn ? (*/}
                     <>
                             <Route path="/auth/logout" element={<Logout/>}></Route>
                             <Route path="/forgot-password" element={<ForgotPassword/>}></Route>
@@ -46,7 +40,7 @@ function App() {
                             <Route path="/transaction" element={<AddTransactionForm/>}></Route>
                             <Route path="/account/:id" element={<AccountModal/>}></Route>
                     </>
-                )  }
+                {/*): <Route path="*" element={<Navigate to="/auth/login" replace />} />}*/}
 
         </Routes>
     );

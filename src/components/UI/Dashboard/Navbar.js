@@ -6,6 +6,7 @@ import {
 } from "@material-tailwind/react";
 import logo from '../../img/ic_category_all.png';
 import AddTransactionModal from "./AddTransaction/AddTransactionModal";
+import {Link} from "react-router-dom";
 
 
 
@@ -44,19 +45,22 @@ export default function NavBar() {
             <Navbar className="sticky inset-0 z-10 h-[62px] max-w-full rounded-none py-2 px-4 lg:px-8 ">
                 <div className="flex items-center justify-between text-blue-gray-900">
                     <div className="flex">
+
                         <Typography
-                            as="a"
-                            href="/dashboard"
                             className="mr-4 cursor-pointer py-1.5 font-medium "
                         >
-                            <img className="mx-auto w-[13rem]"
-                                 src={logo}
-                                 alt=''
-                                 style={{ width: 27, height: 28 }}
-                            />
+                            <Link to={"/dashboard"}>
+                                <img className="mx-auto w-[13rem]"
+                                     src={logo}
+                                     alt=''
+                                     style={{ width: 27, height: 28 }}
+                                />
+                            </Link>
+
                         </Typography>
+
                         <div className="flex-col text-black" >
-                            <span href="#" >Total</span>
+                            <span>Total</span>
                             <br/>
                             <span>$</span>
                         </div>
