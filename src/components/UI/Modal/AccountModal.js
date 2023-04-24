@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {deleteUser, loggedOut} from "../../../feature/authSlice";
 import axios from "axios";
 import Swal from "sweetalert2";
+import UpdateProfileModal from "./UpdateProfileModal";
 
 
 
@@ -21,7 +22,7 @@ const AccountModal = () => {
 
 
     useEffect(() => {
-        axios.get('http://localhost:8000/api/user/account/' + id, {headers: {'Authorization': `Bearer ${localStorage.getItem("accessToken")}`}})
+        myAxios.get('/user/account/' + id, {headers: {'Authorization': `Bearer ${localStorage.getItem("accessToken")}`}})
             .then(res => setData(res.data))
             .catch(err => console.error(err))
 
@@ -107,10 +108,7 @@ const AccountModal = () => {
                                 </div>
                                 <div className="flex grid grid-cols-5 flex-row justify-center mb-3">
                                     <div></div>
-                                    <button
-                                        className='bg-white shadow-xl hover:bg-gray-100 rounded-md hover text-orange-400'>
-                                        <a href={`/update-profile/${id}`}>Edit profile</a>
-                                    </button>
+                                    <UpdateProfileModal/>
                                     <div></div>
                                     <ChangePassword/>
                                     <div></div>
