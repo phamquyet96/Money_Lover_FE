@@ -17,6 +17,14 @@ const WalletDetail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [Data, setData] = useState([])
+
+    useEffect(() => {
+        myAxios.get('/wallet/info/' + id, { headers: { 'Authorization': `Bearer ${localStorage.getItem("accessToken")}` } })
+            .then(res =>
+                setData(res.data))
+            .catch(err => console.error(err))
+    }, [])
+
     const deleteWalletDetail = async () => {
         try {
             await myAxios.delete(`/wallet/${id}`, {
@@ -56,6 +64,31 @@ const WalletDetail = () => {
                 navigate('/my-wallet')
             })
     }
+    // const handleSubmit = (event) => {
+    //     event.preventDefault();
+    //     WalletService.updateWallet(Data, { headers: { 'Authorization': `Bearer ${localStorage.getItem("accessToken")}` } })
+    //         .then(res => {
+    //             Swal.fire({
+    //                 position: 'center',
+    //                 icon: 'success',
+    //                 title: 'Update wallet success!',
+    //                 showConfirmButton: true,
+    //                 timer: 1500
+    //             });
+    //             dispatch(walletActions.changeCurrentWallet())
+    //             navigate('/my-wallet')
+    //         }).catch(err => {
+    //         Swal.fire({
+    //             position: 'center',
+    //             icon: 'error',
+    //             title: 'Update wallet error!',
+    //             showConfirmButton: true,
+    //             timer: 1500
+    //         });
+    //     })
+    // }
+
+
     return (
         <>
             <div className='h-screen bg-custom-gray justify-center'>
