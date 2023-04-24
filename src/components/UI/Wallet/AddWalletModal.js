@@ -80,9 +80,9 @@ const AddWalletModal = () => {
                                                     />
                                                 </div>
                                             </div>
-                                            <div className="ml-8 h-[64px] border rounded-lg hover:border-gray-600 border-gray-300">
+                                            <div className="mx-5 h-[64px] border rounded-lg hover:border-gray-600 border-gray-300">
                                                 <p className='text-left text-xs mt-1 font-light ml-3'>Wallet Name</p>
-                                                <div className='w-[328px] h-[48px] rounded-lg'>
+                                                <div className='w-[320px] h-[48px] rounded-lg'>
                                                     <input style={{border:'none', outline:'none'}} type="walletName" name="name" id="walletName"
                                                            className="text-black text-xl rounded-lg w-full pt-1 pl-3 placeholder-gray-300"
                                                            placeholder="Your wallet name?"
@@ -95,7 +95,7 @@ const AddWalletModal = () => {
                                         <div className="p-5 mx-auto relative flex content-center">
                                             <div className='border hover:border-gray-600 w-[256px] h-[64px] rounded-lg'>
                                                 <p className='text-left text-xs mt-1 font-light ml-3'>Currency</p>
-                                                <div className='w-[256px] h-[48px] rounded-lg'>
+                                                <div className='w-[240px] h-[48px] rounded-lg'>
                                                     <select style={{border:'none', outline:'none'}} name="currency" id="currency"
                                                             className="text-black text-xl rounded-lg w-full pt-1 pl-3 placeholder-gray-300"
                                                             onChange={formik.handleChange}
@@ -106,7 +106,7 @@ const AddWalletModal = () => {
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div className="ml-8 h-[64px] border rounded-lg hover:border-gray-600 border-gray-300">
+                                            <div className="mx-5 h-[64px] border rounded-lg hover:border-gray-600 border-gray-300">
                                                 <p className='text-left text-xs mt-1 font-light ml-3'>Initial Balance</p>
                                                 <div className='w-[176px] h-[48px] rounded-lg'>
                                                     <input style={{border:'none', outline:'none',}} type="a" name="initialBalance" id="balance"

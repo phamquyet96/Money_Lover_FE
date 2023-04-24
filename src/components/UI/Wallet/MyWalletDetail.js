@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from "react";
 import { useState } from 'react';
-import {Link, useNavigate, useParams} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import iconWallet from '../../img/iconWallet.png';
 import {myAxios} from "../../config/axios";
 
@@ -12,7 +12,10 @@ const MyWalletDetail = () => {
 
     useEffect(() => {
         myAxios.get('/wallet')
-            .then(res => setData(res.data))
+            .then(res => {
+                console.log(res.data)
+                setData(res.data)
+            })
             .catch(err => console.error(err))
     }, [navigate])
 
