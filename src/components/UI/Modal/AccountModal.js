@@ -29,13 +29,8 @@ const AccountModal = () => {
 
     const Logout = async () => {
         try {
-            await myAxios.get("/auth/logout", {
-                headers: {
-                    authorization: "Bearer " + localStorage.getItem('accessToken'),
-                }
-            });
-            localStorage.removeItem("accessToken");
-            localStorage.removeItem("refreshToken");
+            await myAxios.get("/auth/logout");
+            localStorage.clear()
             dispatch(loggedOut);
             navigate("/auth/logout");
         } catch (err) {

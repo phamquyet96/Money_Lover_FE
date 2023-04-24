@@ -7,16 +7,15 @@ let initialState = {
 
 export const authSlice = createSlice({
     name: 'auth',
-    initialState: initialState,
+    initialState,
     reducers: {
         loggedIn: (state, action) => {
             state.isLoggedIn = true;
             state.currentUser = {email : action.payload.email,name : action.payload.name}
             return state
         },
-        loggedOut: (state) => {
-            state = initialState
-            return state
+        loggedOut: (state, action) => {
+            state.isLoggedIn = false;
         },
         updateUser: (state, action) => {
             state.currentUser = {...state.currentUser, image: action.payload}
@@ -39,4 +38,4 @@ export const authSlice = createSlice({
 })
 
 export const {loggedIn, loggedOut, updateUser, deleteUser} = authSlice.actions;
-export default authSlice;
+export default authSlice.reducer;
