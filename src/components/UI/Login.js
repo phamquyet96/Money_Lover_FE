@@ -25,11 +25,6 @@ const Login = () => {
             password: Yup.string()
                 .required('Password is required'),
         }), onSubmit: values => {
-            // const config = {
-            //     headers: {
-            //         "Content-Type": "multipart/form-data",
-            //     },
-            // };
             myAxios.post('/auth/login', values)
                 .then((res) => {
                     Swal.fire({
