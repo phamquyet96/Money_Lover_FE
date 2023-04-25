@@ -25,7 +25,6 @@ function App() {
             <Route path="/" element={<HomePage/>}></Route>
             <Route path="/auth/login" element={<Login/>}></Route>
             <Route path="/auth/register" element={<Register/>}></Route>
-
                 {/*{ auth.isLoggedIn ? (*/}
                     <>
                             <Route path="/auth/logout" element={<Logout/>}></Route>
@@ -39,7 +38,6 @@ function App() {
                             <Route path="/account/:id" element={<AccountModal/>}></Route>
                     </>
                 {/*): <Route path="*" element={<Navigate to="/auth/login" replace />} />}*/}
-
         </Routes>
     );
 }

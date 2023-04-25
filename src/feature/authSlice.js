@@ -11,15 +11,13 @@ export const authSlice = createSlice({
     reducers: {
         loggedIn: (state, action) => {
             state.isLoggedIn = true;
-            state.currentUser = {email : action.payload.email,name : action.payload.name}
-            return state
+            state.currentUser = {email : action.payload.email}
         },
         loggedOut: (state, action) => {
             state.isLoggedIn = false;
         },
         updateUser: (state, action) => {
             state.currentUser = {...state.currentUser, image: action.payload}
-            return state
         },
         deleteUser: (state, action) => {
             const userId = action.payload;
@@ -31,8 +29,6 @@ export const authSlice = createSlice({
             if (state.currentUser && state.currentUser.id === userId) {
                 state = initialState;
             }
-            return state;
-
         }
     }
 })

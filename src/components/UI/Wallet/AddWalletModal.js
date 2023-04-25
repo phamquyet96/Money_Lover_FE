@@ -109,8 +109,8 @@ const AddWalletModal = () => {
                                             <div className="mx-5 h-[64px] border rounded-lg hover:border-gray-600 border-gray-300">
                                                 <p className='text-left text-xs mt-1 font-light ml-3'>Initial Balance</p>
                                                 <div className='w-[176px] h-[48px] rounded-lg'>
-                                                    <input style={{border:'none', outline:'none',}} type="a" name="initialBalance" id="balance"
-                                                           className="text-black text-xl rounded-lg w-full pt-1 pl-3 "
+                                                    <input type="number" name="initialBalance" id="balance"
+                                                           className="text-black border-none outline-none !important focus:ring-0 text-xl rounded-lg w-full pt-1 pl-3 "
                                                            placeholder="0"
                                                            onChange={formik.handleChange}
                                                            value={formik.values.initialBalance.toLocaleString('en-US', {
