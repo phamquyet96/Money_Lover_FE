@@ -32,10 +32,9 @@ function App() {
                             <Route path="/dashboard" element={<Dashboard/>}></Route>
                             <Route path="/my-wallet" element={<MyWallet/>}></Route>
                             <Route path="/wallet-detail/:id" element={<WalletDetail/>}></Route>
-                            <Route path="/account/:id" element={<AccountModal/>}></Route>
+                            <Route path="/account/profile" element={<AccountModal/>}></Route>
                             <Route path="/change-password" element={<ChangePassword/>}></Route>
                             <Route path="/transaction" element={<AddTransactionForm/>}></Route>
-                            <Route path="/account/:id" element={<AccountModal/>}></Route>
                     </>
                 {/*): <Route path="*" element={<Navigate to="/auth/login" replace />} />}*/}
         </Routes>
