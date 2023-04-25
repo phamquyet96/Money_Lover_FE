@@ -113,10 +113,7 @@ const AddWalletModal = () => {
                                                            className="text-black border-none outline-none !important focus:ring-0 text-xl rounded-lg w-full pt-1 pl-3 "
                                                            placeholder="0"
                                                            onChange={formik.handleChange}
-                                                           value={formik.values.initialBalance.toLocaleString('en-US', {
-                                                               style: 'decimal',
-                                                               currency: 'USD',
-                                                           })}
+                                                           value={formik.values.initialBalance}
                                                            required/>
                                                 </div>
                                             </div>
