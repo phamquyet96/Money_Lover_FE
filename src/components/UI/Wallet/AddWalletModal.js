@@ -83,8 +83,8 @@ const AddWalletModal = () => {
                                             <div className="mx-5 h-[64px] border rounded-lg hover:border-gray-600 border-gray-300">
                                                 <p className='text-left text-xs mt-1 font-light ml-3'>Wallet Name</p>
                                                 <div className='w-[320px] h-[48px] rounded-lg'>
-                                                    <input style={{border:'none', outline:'none'}} type="walletName" name="name" id="walletName"
-                                                           className="text-black text-xl rounded-lg w-full pt-1 pl-3 placeholder-gray-300"
+                                                    <input type="text" name="name" id="walletName"
+                                                           className="text-black text-xl rounded-lg border-none outline-none focus:ring-0 w-full pt-1 pl-3 placeholder-gray-300"
                                                            placeholder="Your wallet name?"
                                                            onChange={formik.handleChange}
                                                            value={formik.values.name}
@@ -96,8 +96,8 @@ const AddWalletModal = () => {
                                             <div className='border hover:border-gray-600 w-[256px] h-[64px] rounded-lg'>
                                                 <p className='text-left text-xs mt-1 font-light ml-3'>Currency</p>
                                                 <div className='w-[240px] h-[48px] rounded-lg'>
-                                                    <select style={{border:'none', outline:'none'}} name="currency" id="currency"
-                                                            className="text-black text-xl rounded-lg w-full pt-1 pl-3 placeholder-gray-300"
+                                                    <select name="currency" id="currency"
+                                                            className="text-black text-xl rounded-lg border-none outline-none focus:ring-0 w-full pt-1 pl-3 placeholder-gray-300"
                                                             onChange={formik.handleChange}
                                                             value={formik.values.currency}
                                                             required>

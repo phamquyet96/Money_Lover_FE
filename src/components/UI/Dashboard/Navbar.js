@@ -7,11 +7,21 @@ import {
 import logo from '../../img/ic_category_all.png';
 import AddTransactionModal from "./AddTransaction/AddTransactionModal";
 import {Link} from "react-router-dom";
+import {myAxios} from "../../config/axios";
 
 
 
 export default function NavBar() {
     const [openNav, setOpenNav] = useState(false);
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        myAxios.get('/wallet')
+            .then(res => {
+                setData(res.data[0])
+            })
+            .catch(err => console.error(err))
+    }, [])
 
     useEffect(() => {
         window.addEventListener(
@@ -34,8 +44,6 @@ export default function NavBar() {
                  className="h-8 w-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
             </svg>
-
-
         </ul>
     );
 
@@ -62,7 +70,9 @@ export default function NavBar() {
                         <div className="flex-col text-black" >
                             <span>Total</span>
                             <br/>
-                            <span>$</span>
+                            <span>+{data.include_total.toLocaleString('en-US', {
+                                style: 'decimal',
+                                currency: 'USD',})} VND</span>
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
