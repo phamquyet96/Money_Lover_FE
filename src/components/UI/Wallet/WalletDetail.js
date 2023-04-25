@@ -92,7 +92,7 @@ const WalletDetail = () => {
                                         <FontAwesomeIcon className='mt-5 mr-8 cursor-pointer' icon={faArrowLeft}
                                                          size="lg"
                                                          style={{color: "#595959",}}/>
-                                        </Link>
+                                    </Link>
                                     <p className='w-fit h-fit text-xl mt-4 font-semibold font-roboto'>My Wallets</p>
                                 </div>
                             </div>
