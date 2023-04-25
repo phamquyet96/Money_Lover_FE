@@ -70,7 +70,7 @@ export default function NavBar() {
                         <div className="flex-col text-black" >
                             <span>Total</span>
                             <br/>
-                            <span>+{data?.initial_balance?.toLocaleString('en-US', {
+                            <span className='text-l font-roboto font-semibold italic'>+{data?.initial_balance?.toLocaleString('en-US', {
                                 style: 'decimal',
                                 currency: 'USD',})} VND</span>
                         </div>

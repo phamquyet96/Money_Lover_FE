@@ -3,7 +3,6 @@ import { useFormik } from 'formik';
 import WalletService from '../../../services/wallet.service';
 import Swal from "sweetalert2";
 import iconWallet from "../../img/iconWallet.png";
-import {useNavigate} from "react-router-dom";
 
 const AddWalletModal = ({ statusWallet }) => {
   const [showModal, setShowModal] = useState(false);
@@ -14,7 +13,6 @@ const AddWalletModal = ({ statusWallet }) => {
       initialBalance: "",
     },
     onSubmit: (values) => {
-      // goi api
       WalletService.addWallet(values).then((res) => {
         Swal.fire({
           position: "center",
