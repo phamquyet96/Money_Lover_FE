@@ -38,7 +38,7 @@ function App() {
                 <Route path="/account/:id" element={<AccountModal/>}></Route>
                 <Route path="/change-password" element={<ChangePassword/>}></Route>
                 <Route path="/transaction" element={<AddTransactionForm/>}></Route>
-                <Route path="/account/:id" element={<AccountModal/>}></Route>
+                <Route path="/account/profile" element={<AccountModal/>}></Route>
             </>
             {/*): <Route path="*" element={<Navigate to="/auth/login" replace />} />}*/}
 

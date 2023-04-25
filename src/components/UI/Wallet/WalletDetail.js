@@ -2,80 +2,40 @@ import React, {useState ,useEffect} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 import iconWallet from "../../img/iconWallet.png";
-<<<<<<< HEAD
-
-import { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
-import {myAxios} from "../../config/axios";
-import Swal from "sweetalert2";
-import {deleteWallet} from "../../../feature/walletSlice";
-
-
-const WalletDetail = () => {
-
-    const dispatch = useDispatch()
-    const { id } = useParams();
-    const navigate = useNavigate();
-=======
 import {useParams, useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import Swal from "sweetalert2";
-import {walletActions} from "../../../feature/walletSlice";
+import {deleteWallet, changeCurrentWallet} from "../../../feature/walletSlice";
 import WalletService from "../../../services/wallet.service";
 
 const WalletDetail = () => {
 
->>>>>>> a42a7131ffa7b67343bda00e483f460d308eb6da
     const [Data, setData] = useState([])
     const dispatch = useDispatch()
     const {id} = useParams();
     const navigate = useNavigate();
-    const user = useSelector((state) => state.auth.currentUser)
+    const user = useSelector((state) => state.auth.currentUser);
 
     useEffect(() => {
         WalletService.getDetailWallet(id)
             .then(res => setData(res.data))
             .catch(err => console.error(err))
-    }, [])
+    }, [id])
 
     const deleteWalletDetail = async () => {
-<<<<<<< HEAD
         try {
-            await myAxios.delete(`/wallet/${id}`, {
-                headers: {
-                    authorization: "Bearer " + localStorage.getItem('accessToken'),
-                }
-            });
-            dispatch(deleteWallet);
-            Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: 'Delete success!',
-=======
-        WalletService.deleteWallet(id).then(() => {
-            dispatch(walletActions.deleteWallet());
+            await WalletService.deleteWallet(id);
+            dispatch(deleteWallet());
             Swal.fire({
                 position: 'center',
                 icon: 'success',
                 title: 'Delete wallet success!',
->>>>>>> a42a7131ffa7b67343bda00e483f460d308eb6da
                 showConfirmButton: true,
                 timer: 1500
             });
             navigate("/my-wallet");
-<<<<<<< HEAD
-        } catch (error) {
-            console.log(error)
-        }
-
-    }
-
-=======
-        }).catch(err => {
+        } catch (err) {
+            console.log(err);
             Swal.fire({
                 position: 'center',
                 icon: 'error',
@@ -83,7 +43,7 @@ const WalletDetail = () => {
                 showConfirmButton: true,
                 timer: 1500
             });
-        })
+        }
     }
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -96,7 +56,7 @@ const WalletDetail = () => {
                     showConfirmButton: true,
                     timer: 1500
                 });
-                dispatch(walletActions.changeCurrentWallet())
+                dispatch(changeCurrentWallet())
                 navigate('/my-wallet')
             }).catch(err => {
             Swal.fire({
@@ -110,7 +70,6 @@ const WalletDetail = () => {
     }
 
 
->>>>>>> a42a7131ffa7b67343bda00e483f460d308eb6da
     return (
         <>
             <div className='h-screen bg-custom-gray justify-center'>
@@ -135,23 +94,19 @@ const WalletDetail = () => {
                         <div
                             className='border-b rounded-t-md bg-white w-[665px] h-[64px] grid grid-cols-2 gap-2 content-center'>
                             <div>
-                                <p className='text-left w-[10rem] h-fit ml-5 mt-2 font-roboto '>Wallet {Data.name}</p>
+                                <p className='text-left w-[10rem] h-fit ml-5 mt-2 font-roboto text-xl'>Wallet Details</p>
                             </div>
                             <div className='grid grid-cols-6 items-end'>
                                 <div></div>
                                 <div></div>
-<<<<<<< HEAD
-                                <button className='text-rose-400 font-roboto h-[40px] w-[80px] font-semibold rounded-lg hover:bg-rose-100' onClick={deleteWalletDetail}>DELETE</button>
-=======
                                 <button
                                     className='text-rose-400 font-roboto h-[40px] w-[80px] font-semibold rounded-lg hover:bg-rose-100'
                                     data-modal-target="delete-modal" data-modal-toggle="delete-modal">DELETE
                                 </button>
->>>>>>> a42a7131ffa7b67343bda00e483f460d308eb6da
                                 <div></div>
                                 <button
                                     className='text-green-400 font-roboto h-[40px] w-[80px] font-semibold rounded-lg hover:bg-green-100'
-                                    data-modal-target="defaultModal" data-modal-toggle="defaultModal">UPDATE
+                                    data-modal-target="updateModal" data-modal-toggle="updateModal">UPDATE
                                 </button>
                                 <div></div>
                             </div>
@@ -165,18 +120,14 @@ const WalletDetail = () => {
                             </div>
                             <div className='w-[20rem]'>
                                 <p className='font-roboto font-semibold'>{Data.name}</p>
-<<<<<<< HEAD
-                                <p className='text-gray-400'>+{Data.includeTotal}</p>
-=======
                                 <p className='text-gray-400'>+{Data?.includeTotal?.toLocaleString('en-US', {
                                     style: 'decimal',
                                     currency: 'USD',
                                 })} VND</p>
->>>>>>> a42a7131ffa7b67343bda00e483f460d308eb6da
                             </div>
                         </div>
                         <div className='h-auto shadow-2xl bg-white gap-2 content-center flex-col border-b-2'>
-                            <div className='pt-2 pb-2.5 pl-8 '>
+                            <div className='pt-2 pl-9 '>
                                 <span>User</span>
                             </div>
                             <div className='flex flex-row pt-4 pb-4 pl-8 '>
@@ -225,7 +176,7 @@ const WalletDetail = () => {
                                                   d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                         </svg>
                                         <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are
-                                            you sure you want to delete this account?</h3>
+                                            you sure you want to delete this wallet?</h3>
                                         <button data-modal-hide="delete-modal" type="button"
                                                 onClick={deleteWalletDetail}
                                                 className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
@@ -240,7 +191,7 @@ const WalletDetail = () => {
                             </div>
                         </div>
                     </div>
-                    <div id="defaultModal" tabIndex="-1" aria-hidden="true"
+                    <div id="updateModal" tabIndex="-1" aria-hidden="true"
                          className="fixed top-2 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
                         <div className="relative shadow-2xl bottom-50 w-fit max-w-2xl h-fit">
                             <div className=" bg-white rounded-lg shadow">
@@ -250,7 +201,7 @@ const WalletDetail = () => {
                                     </h3>
                                     <button type="button"
                                             className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                                            data-modal-hide="defaultModal">
+                                            data-modal-hide="updateModal">
                                         <svg aria-hidden="true" className="w-5 h-5" fill="currentColor"
                                              viewBox="0 0 20 20"
                                              xmlns="http://www.w3.org/2000/svg">
@@ -264,13 +215,19 @@ const WalletDetail = () => {
                                 <form onSubmit={handleSubmit}>
                                     <div className="pl-5 pt-5 relative flex content-center mx-auto">
                                         <div className="border-2 w-[103px] h-[64px] rounded-lg">
+                                            <div className=' flex justify-center mt-1.5'>
+                                                <img className='w-12'
+                                                     src={iconWallet}
+                                                     alt={iconWallet}
+                                                />
+                                            </div>
                                         </div>
                                         <div
                                             className="ml-8 h-[64px] border rounded-lg hover:border-gray-600 border-gray-300">
                                             <p className='text-left text-xs mt-1 font-light ml-3'>Wallet Name</p>
                                             <div className='w-[328px] h-[48px] rounded-lg'>
-                                                <input style={{border: 'none', outline: 'none'}} type="tex" name="name"
-                                                       className="text-black text-xl rounded-lg w-full pt-1 pl-3 placeholder-gray-300"
+                                                <input  type="text" name="name"
+                                                       className="text-black border-none outline-none focus:ring-0 !important text-xl rounded-lg w-full pt-1 pl-3 placeholder-gray-300"
                                                        value={Data.name}
                                                        onChange={e => setData({...Data, name: e.target.value})}
                                                        required/>
@@ -279,15 +236,22 @@ const WalletDetail = () => {
                                     </div>
                                     <div className="p-5 mx-auto relative flex content-center">
                                         <div className='border-2 w-[256px] h-[64px] rounded-lg'>
-
+                                            <p className='text-left text-xs mt-1 font-light ml-3'>Currency</p>
+                                            <div className='w-[240px] h-[48px] rounded-lg'>
+                                                <select name="currency" id="currency"
+                                                        className="text-black text-xl border-none outline-none !important focus:ring-0 rounded-lg w-full pt-1 pl-3 placeholder-gray-300">
+                                                    <option>Vietnamdong</option>
+                                                    <option>US Dollar</option>
+                                                </select>
+                                            </div>
                                         </div>
                                         <div
                                             className="ml-8 h-[64px] border rounded-lg hover:border-gray-600 border-gray-300">
                                             <p className='text-left text-xs mt-1 font-light ml-3'>Initial Balance</p>
                                             <div className='w-[176px] h-[48px] rounded-lg'>
-                                                <input style={{border: 'none', outline: 'none',}} type="number"
+                                                <input type="number"
                                                        name="includeTotal"
-                                                       className="text-black text-xl rounded-lg w-full pt-1 pl-3 "
+                                                       className="text-black border-none outline-none focus:ring-0 !important text-xl rounded-lg w-full pt-1 pl-3 "
                                                        value={Data?.includeTotal?.toLocaleString('en-US', {
                                                            style: 'decimal',
                                                            currency: 'VND',
@@ -299,11 +263,11 @@ const WalletDetail = () => {
                                     </div>
                                     <div
                                         className="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
-                                        <button data-modal-hide="defaultModal" type="submit"
+                                        <button data-modal-hide="updateModal" type="submit"
                                                 className="text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                                             Save
                                         </button>
-                                        <button data-modal-hide="defaultModal" type="button"
+                                        <button data-modal-hide="updateModal" type="button"
                                                 className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">Decline
                                         </button>
                                     </div>

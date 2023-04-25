@@ -4,11 +4,6 @@ import UserService from "../../../services/user.service";
 import Swal from "sweetalert2";
 
 const ChangePassword = () => {
-    const [showPassword, setShowPassword] = useState({
-        oldPassword: false,
-        newPassword: false,
-        confirmPassword: false,
-    });
     const [open, setOpen] = useState(false);
 
     const [confirmMessage, setConfirmMessage] = useState({
@@ -60,9 +55,7 @@ const ChangePassword = () => {
                 newPassword: values.confirmPassword,
             };
             console.log(values);
-            let result = checkConfirmPassword();
-            console.log(result);
-            if (result === true) {
+            if (checkConfirmPassword()) {
                 UserService.changePassword(data)
                     .then(() => {
                         handleClose();
@@ -119,7 +112,7 @@ const ChangePassword = () => {
                                 <div className='grid grid-cols-2'>
                                     <span className='p-1 text-center'>Old Password:</span>
                                     <input className='border rounded p-1 hover:border-gray-400' name='oldPassword' type='password'
-                                           value={formik.values.password}
+                                           value={formik.values.oldPassword}
                                            onChange={formik.handleChange}
                                            error={
                                                formik.touched.oldPassword &&

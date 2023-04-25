@@ -15,25 +15,25 @@ let initialState = {
 
 export const walletSlice = createSlice({
     name: 'wallet',
-    initialState: initialState,
+    initialState,
     reducers: {
-        getWallets(state, action) {
+        getWallets: (state, action) => {
             state = {...state, wallets: action.payload}
             return state
         },
-        changeCurrentWallet(state, action) {
+        changeCurrentWallet: (state, action) => {
             state = {...state, currentWallet: action.payload}
             return state
         },
-        resetWallet(state) {
+        resetWallet: (state) => {
             state = initialState
             return state
         },
-        resetCurrentWallet(state) {
+        resetCurrentWallet: (state) => {
             state = {...state, currentWallet: initialState.currentWallet}
             return state
         },
-        changeWallets(state, action) {
+        changeWallets (state, action) {
             const id = +action.payload.walletId
             const value = action.payload.walletInfo
             let allWallet = [];
@@ -48,7 +48,7 @@ export const walletSlice = createSlice({
             allWallet[0] = value
             state.wallets = [...others, ...allWallet]
         },
-        deleteWallet(state, action) {
+        deleteWallet: (state, action) => {
             const id = action.payload;
             state.wallets = state.wallets.filter(wallet => wallet.id !== id);
             return state;
@@ -56,5 +56,5 @@ export const walletSlice = createSlice({
     }
 })
 
-export const {walletActions} = walletSlice.actions;
-export default walletSlice;
+export const {deleteWallet, changeCurrentWallet} = walletSlice.actions;
+export default walletSlice.reducer;
