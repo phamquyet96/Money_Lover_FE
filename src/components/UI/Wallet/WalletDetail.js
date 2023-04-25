@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 import iconWallet from "../../img/iconWallet.png";
-import {useParams, useNavigate} from 'react-router-dom';
+import {useParams, useNavigate, Link} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import Swal from "sweetalert2";
 import { changeCurrentWallet} from "../../../feature/walletSlice";
@@ -88,11 +88,11 @@ const WalletDetail = () => {
                         <div className="w-full h-[62px] bg-white shadow">
                             <div className="mx-52 h-[62px] flex ">
                                 <div className="w-fit flex content-center">
-                                    <a href='/my-wallet'>
+                                    <Link to={'/my-wallet'}>
                                         <FontAwesomeIcon className='mt-5 mr-8 cursor-pointer' icon={faArrowLeft}
                                                          size="lg"
                                                          style={{color: "#595959",}}/>
-                                    </a>
+                                        </Link>
                                     <p className='w-fit h-fit text-xl mt-4 font-semibold font-roboto'>My Wallets</p>
                                 </div>
                             </div>
@@ -104,7 +104,7 @@ const WalletDetail = () => {
                         <div
                             className='border-b rounded-t-md bg-white w-[665px] h-[64px] grid grid-cols-2 gap-2 content-center'>
                             <div>
-                                <p className='text-left w-[10rem] h-fit ml-5 mt-2 font-roboto '>Wallet {Data.name}</p>
+                                <p className='text-left w-[10rem] h-fit ml-5 mt-2 text-xl font-roboto '>Wallet details</p>
                             </div>
                             <div className='grid grid-cols-6 items-end'>
                                 <div></div>
@@ -138,8 +138,8 @@ const WalletDetail = () => {
                             </div>
                         </div>
                         <div className='h-auto shadow-2xl bg-white gap-2 content-center flex-col border-b-2'>
-                            <div className='pt-2 pb-2.5 pl-8 '>
-                                <span>User</span>
+                            <div className='pt-3 pl-9 '>
+                                <span className=''>User</span>
                             </div>
                             <div className='flex flex-row pt-4 pb-4 pl-8 '>
                                 <div>

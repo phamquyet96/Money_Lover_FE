@@ -26,10 +26,8 @@ function MenuLeft() {
     const toggle = () => {
         toggleSidebar();
         if (toggled) {
-            console.log(true);
             collapseSidebar();
         } else {
-            console.log(false);
             collapseSidebar();
         }
     };
@@ -56,29 +54,28 @@ function MenuLeft() {
                     >
                         Menu
                     </MenuItem>
-                    <SubMenu icon={<MenuOutlinedIcon />} label="Profile">
-                        <Link to={'/account/profile'}>
-                            <MenuItem icon={<PeopleOutlinedIcon />}>
-                                Account
-                            </MenuItem>
-                        </Link>
-                        <Link to={'/my-wallet'}>
+
+                    <Link to={'/account/profile'}>
+                        <MenuItem icon={<PeopleOutlinedIcon />}>
+                            Account
+                        </MenuItem>
+                    </Link>
+                    <Link to={'/my-wallet'}>
                         <MenuItem icon={<AccountBalanceWalletOutlinedIcon />}>
                             Wallet
                         </MenuItem>
-                        </Link>
-                        <Link to={'/#'}>
+                    </Link>
+                    <Link to={'/#'}>
                         <MenuItem icon={<WidgetsOutlinedIcon />}>Category</MenuItem>
-                        </Link>
-                    </SubMenu>
+                    </Link>
+                    <SubMenu icon={<MenuOutlinedIcon />} label="Addon">
 
-                    <MenuItem icon={<AccountBalanceWalletOutlinedIcon />}>
-                        Transactions
-                    </MenuItem>
-                    <MenuItem icon={<AssessmentOutlinedIcon />}>Report</MenuItem>
-                    <MenuItem icon={<AdUnitsOutlinedIcon />}>Budget</MenuItem>
-                    <MenuItem icon={<ShoppingCartOutlinedIcon />}>Store</MenuItem>
-                    <MenuItem icon={<HelpOutlineOutlinedIcon />}>FAQ</MenuItem>
+                        <MenuItem icon={<AccountBalanceWalletOutlinedIcon />}>Transaction</MenuItem>
+                        <MenuItem icon={<AssessmentOutlinedIcon />}>Report</MenuItem>
+                        <MenuItem icon={<AdUnitsOutlinedIcon />}>Budget</MenuItem>
+                        <MenuItem icon={<ShoppingCartOutlinedIcon />}>Store</MenuItem>
+                        <MenuItem icon={<HelpOutlineOutlinedIcon />}>FAQ</MenuItem>
+                    </SubMenu>
                 </Menu>
             </Sidebar>
         </div>

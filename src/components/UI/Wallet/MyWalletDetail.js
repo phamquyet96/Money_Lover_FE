@@ -13,7 +13,6 @@ const MyWalletDetail = () => {
     useEffect(() => {
         myAxios.get('/wallet')
             .then(res => {
-                console.log(res.data)
                 setData(res.data)
             })
             .catch(err => console.error(err))
