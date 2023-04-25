@@ -4,7 +4,12 @@ import {faArrowLeft} from '@fortawesome/free-solid-svg-icons'
 import AddWalletModal from "./AddWalletModal";
 import {Link} from "react-router-dom";
 
-const WalletHeader = () => {
+const WalletHeader = ({status}) => {
+
+    const getStatusModal = (e) => {
+        status(e);
+    }
+
     return (
         <>
             <div className="w-full h-[62px] text-center">
@@ -17,7 +22,7 @@ const WalletHeader = () => {
                                                      style={{color: "#595959",}}/>
                                 </Link>
                                 <p className='w-fit h-fit text-xl mt-4 font-semibold font-roboto'>My Wallets</p>
-                                <AddWalletModal />
+                                <AddWalletModal statusWallet={getStatusModal} />
                             </div>
                         </div>
                     </div>

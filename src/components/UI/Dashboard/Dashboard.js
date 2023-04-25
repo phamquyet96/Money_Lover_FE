@@ -7,19 +7,29 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import Container from "@mui/material/Container";
-import {useLayoutEffect, useRef, useState} from "react";
+import {useEffect, useLayoutEffect, useRef, useState} from "react";
 import {Link} from "react-router-dom";
 import iconWallet from "../../img/iconWallet.png";
+import {myAxios} from "../../config/axios";
 
 
 function Dashboard() {
     let myNumber = 1000;
     const [value, setValue] = useState("2");
     const [maxWidth, setMaxWidth] = useState(150);
+    const [data, setData] = useState([]);
     const incomeRef = useRef(null);
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
+    useEffect(() => {
+        myAxios.get('/wallet')
+            .then(res => {
+                setData(res.data[0])
+            })
+            .catch(err => console.error(err))
+    }, [])
 
     useLayoutEffect(() => {
         const incomeNumberDiv = incomeRef.current;

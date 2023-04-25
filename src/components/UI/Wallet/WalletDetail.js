@@ -132,7 +132,7 @@ const WalletDetail = () => {
                             </div>
                             <div className='w-[20rem]'>
                                 <p className='font-roboto font-semibold'>{Data.name}</p>
-                                <p className='text-gray-400'>+{Data?.includeTotal?.toLocaleString('en-US', {
+                                <p className='text-gray-400'>+{Data.initialBalance?.toLocaleString('en-US', {
                                     style: 'decimal',
                                     currency: 'USD',
                                 })} VND</p>
@@ -258,12 +258,12 @@ const WalletDetail = () => {
                                             <div className='w-[176px] h-[48px] rounded-lg'>
                                                 <input
                                                     type="number"
-                                                    name="includeTotal"
+                                                    name="balance"
                                                     className="text-black text-xl border-none outline-none focus:ring-0 rounded-lg w-full pt-1 pl-3 "
-                                                    value={Data?.includeTotal}
+                                                    value={Data?.initialBalance}
                                                     onChange={e => setData({
                                                         ...Data,
-                                                        includeTotal: e.target.value
+                                                        initialBalance: e.target.value
                                                     })}
                                                     required/>
                                             </div>
