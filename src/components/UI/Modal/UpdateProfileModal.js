@@ -18,7 +18,7 @@ const UpdateProfileModal = () => {
     })
     useEffect(() => {
         myAxios.get('/user/account/' + id, {headers: {'Authorization': `Bearer ${localStorage.getItem("accessToken")}`}})
-            .then(res => setData(res.data))
+            .then(res => console.log(res.data))
             .catch(err => console.error(err))
 
     }, [])
