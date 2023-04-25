@@ -1,29 +1,10 @@
 import {configureStore} from "@reduxjs/toolkit";
-import authSlice from "../feature/authSlice";
-import { persistReducer, persistStore } from 'redux-persist';
-import autoMergeLevel2 from "reduxjs-toolkit-persist/lib/stateReconciler/autoMergeLevel2";
-import {combineReducers} from "@reduxjs/toolkit";
-import storage from 'redux-persist/lib/storage';
-import logger from 'redux-logger'
+import authReducer from "../feature/authSlice";
 
-const persistConfig = {
-    key: 'root',
-    storage,
-    stateReconciler: autoMergeLevel2,
-    blacklist: ['time', 'reportTime']
-}
-
-const reducer = combineReducers({
-    auth: authSlice.reducer,
+export const store = configureStore({
+    reducer: {
+        auth: authReducer,
+    },
 })
-
-const persistedReducer = persistReducer(persistConfig, reducer)
-
-const store = configureStore({
-    reducer: persistedReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
-})
-
-export const persistor = persistStore(store)
 
 export default store

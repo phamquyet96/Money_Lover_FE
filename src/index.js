@@ -13,15 +13,15 @@ import "react-datepicker/dist/react-datepicker.css";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
+        {/*<PersistGate loading={null} persistor={persistor}>*/}
             <BrowserRouter>
-                <React.StrictMode>
+                {/*<React.StrictMode>*/}
                     <ProSidebarProvider>
                         <App/>
                     </ProSidebarProvider>
-                </React.StrictMode>
+                {/*</React.StrictMode>*/}
             </BrowserRouter>
-        </PersistGate>
+        {/*</PersistGate>*/}
     </Provider>
 )
 
