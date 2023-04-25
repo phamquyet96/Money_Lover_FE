@@ -6,9 +6,9 @@ import {useNavigate, useParams} from "react-router-dom";
 import {myAxios} from "../../config/axios";
 import {useDispatch, useSelector} from "react-redux";
 import {deleteUser, loggedOut} from "../../../feature/authSlice";
-import axios from "axios";
 import Swal from "sweetalert2";
 import UserService from "../../../services/user.service";
+import UpdateProfileModal from "./UpdateProfileModal";
 
 
 
@@ -24,6 +24,7 @@ const AccountModal = () => {
             setUser(res.data.data)
         })
     },[])
+
 
     const Logout = async () => {
         try {
@@ -81,7 +82,7 @@ const AccountModal = () => {
                             <div className='flex flex-row pt-8 justify-center pb-4 pl-8 '>
                                 <div>
                                     <div
-                                        className='w-[60px] h-[60px] rounded-full table-cell align-middle bg-blue-500 text-center text-white text-3xl '>{Data.name?.split("",1)}
+                                        className='w-[60px] h-[60px] rounded-full table-cell align-middle bg-blue-500 text-center text-white text-3xl '>{user.name?.split("",1)}
                                     </div>
                                 </div>
                                 <div className='w-fit mb-4 h-fit ml-8 font-roboto'>
@@ -100,10 +101,7 @@ const AccountModal = () => {
                                 </div>
                                 <div className="flex grid grid-cols-5 flex-row justify-center mb-3">
                                     <div></div>
-                                    <button
-                                        className='bg-white shadow-xl hover:bg-gray-100 rounded-md hover text-orange-400'>
-                                        <a href={`/update-profile/`}>Edit profile</a>
-                                    </button>
+                                    <UpdateProfileModal/>
                                     <div></div>
                                     <ChangePassword/>
                                     <div></div>

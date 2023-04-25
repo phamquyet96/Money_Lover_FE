@@ -52,7 +52,7 @@ export const walletSlice = createSlice({
             const id = action.payload;
             state.wallets = state.wallets.filter(wallet => wallet.id !== id);
             return state;
-        }
+        },
     }
 })
 

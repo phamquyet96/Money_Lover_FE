@@ -62,11 +62,14 @@ function MenuLeft() {
                                 Account
                             </MenuItem>
                         </Link>
-
-                        <MenuItem href='/my-wallet' icon={<AccountBalanceWalletOutlinedIcon />}>
+                        <Link to={'/my-wallet'}>
+                        <MenuItem icon={<AccountBalanceWalletOutlinedIcon />}>
                             Wallet
                         </MenuItem>
+                        </Link>
+                        <Link to={'/#'}>
                         <MenuItem icon={<WidgetsOutlinedIcon />}>Category</MenuItem>
+                        </Link>
                     </SubMenu>
 
                     <MenuItem icon={<AccountBalanceWalletOutlinedIcon />}>

@@ -6,7 +6,6 @@ import Login from "./components/UI/Login";
 import Register from "./components/UI/Register";
 import ForgotPassword from "./components/UI/ForgotPassword";
 import Dashboard from "./components/UI/Dashboard/Dashboard";
-import UpdateProfile from "./components/UI/Dashboard/UpdateProfile";
 import MyWallet from "./components/UI/Wallet/MyWallet";
 import WalletDetail from "./components/UI/Wallet/WalletDetail";
 import AccountModal from "./components/UI/Modal/AccountModal";
@@ -26,22 +25,19 @@ function App() {
             <Route path="/" element={<HomePage/>}></Route>
             <Route path="/auth/login" element={<Login/>}></Route>
             <Route path="/auth/register" element={<Register/>}></Route>
-
-            {/*{ auth.isLoggedIn ? (*/}
-            <>
-                <Route path="/auth/logout" element={<Logout/>}></Route>
-                <Route path="/forgot-password" element={<ForgotPassword/>}></Route>
-                <Route path="/update-profile/:id" element={<UpdateProfile/>}></Route>
-                <Route path="/dashboard" element={<Dashboard/>}></Route>
-                <Route path="/my-wallet" element={<MyWallet/>}></Route>
-                <Route path="/wallet-detail/:id" element={<WalletDetail/>}></Route>
-                <Route path="/account/:id" element={<AccountModal/>}></Route>
-                <Route path="/change-password" element={<ChangePassword/>}></Route>
-                <Route path="/transaction" element={<AddTransactionForm/>}></Route>
-                <Route path="/account/profile" element={<AccountModal/>}></Route>
-            </>
-            {/*): <Route path="*" element={<Navigate to="/auth/login" replace />} />}*/}
-
+                {/*{ auth.isLoggedIn ? (*/}
+                    <>
+                            <Route path="/auth/logout" element={<Logout/>}></Route>
+                            <Route path="/forgot-password" element={<ForgotPassword/>}></Route>
+                            <Route path="/dashboard" element={<Dashboard/>}></Route>
+                            <Route path="/my-wallet" element={<MyWallet/>}></Route>
+                            <Route path="/wallet-detail/:id" element={<WalletDetail/>}></Route>
+                            <Route path="/account/:id" element={<AccountModal/>}></Route>
+                            <Route path="/change-password" element={<ChangePassword/>}></Route>
+                            <Route path="/transaction" element={<AddTransactionForm/>}></Route>
+                            <Route path="/account/:id" element={<AccountModal/>}></Route>
+                    </>
+                {/*): <Route path="*" element={<Navigate to="/auth/login" replace />} />}*/}
         </Routes>
     );
 }
