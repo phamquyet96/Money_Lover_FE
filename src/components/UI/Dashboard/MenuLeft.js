@@ -16,8 +16,6 @@ import SavingsOutlinedIcon from "@mui/icons-material/SavingsOutlined";
 import * as React from "react";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import {Link, useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
-import UserService from "../../../services/user.service";
 
 
 function MenuLeft() {
@@ -26,10 +24,8 @@ function MenuLeft() {
     const toggle = () => {
         toggleSidebar();
         if (toggled) {
-            console.log(true);
             collapseSidebar();
         } else {
-            console.log(false);
             collapseSidebar();
         }
     };
@@ -56,29 +52,28 @@ function MenuLeft() {
                     >
                         Menu
                     </MenuItem>
-                    <SubMenu icon={<MenuOutlinedIcon />} label="Profile">
-                        <Link to={'/account/profile'}>
-                            <MenuItem icon={<PeopleOutlinedIcon />}>
-                                Account
-                            </MenuItem>
-                        </Link>
-                        <Link to={'/my-wallet'}>
+
+                    <Link to={'/account/profile'}>
+                        <MenuItem icon={<PeopleOutlinedIcon />}>
+                            Account
+                        </MenuItem>
+                    </Link>
+                    <Link to={'/my-wallet'}>
                         <MenuItem icon={<AccountBalanceWalletOutlinedIcon />}>
                             Wallet
                         </MenuItem>
-                        </Link>
-                        <Link to={'/#'}>
+                    </Link>
+                    <Link to={'/categories'}>
                         <MenuItem icon={<WidgetsOutlinedIcon />}>Category</MenuItem>
-                        </Link>
-                    </SubMenu>
+                    </Link>
+                    <SubMenu icon={<MenuOutlinedIcon />} label="Addon">
 
-                    <MenuItem icon={<AccountBalanceWalletOutlinedIcon />}>
-                        Transactions
-                    </MenuItem>
-                    <MenuItem icon={<AssessmentOutlinedIcon />}>Report</MenuItem>
-                    <MenuItem icon={<AdUnitsOutlinedIcon />}>Budget</MenuItem>
-                    <MenuItem icon={<ShoppingCartOutlinedIcon />}>Store</MenuItem>
-                    <MenuItem icon={<HelpOutlineOutlinedIcon />}>FAQ</MenuItem>
+                        <MenuItem icon={<AccountBalanceWalletOutlinedIcon />}>Transaction</MenuItem>
+                        <MenuItem icon={<AssessmentOutlinedIcon />}>Report</MenuItem>
+                        <MenuItem icon={<AdUnitsOutlinedIcon />}>Budget</MenuItem>
+                        <MenuItem icon={<ShoppingCartOutlinedIcon />}>Store</MenuItem>
+                        <MenuItem icon={<HelpOutlineOutlinedIcon />}>FAQ</MenuItem>
+                    </SubMenu>
                 </Menu>
             </Sidebar>
         </div>

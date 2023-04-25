@@ -13,5 +13,7 @@ class UserService {
     static getProfile() {
         return myAxios.get('/user/me')
     }
-}
+    static deleteAccount() {
+        return myAxios.delete('/user/delete')
+}}
 export default UserService;
