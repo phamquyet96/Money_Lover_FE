@@ -1,12 +1,11 @@
 import {useState} from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import {useDispatch, useSelector} from "react-redux";
 import {useFormik} from "formik";
 import * as Yup from "yup";
 
 
-function AddTransactionForm({handleClose,data}){
+function AddTransactionForm(){
 
     const formik = useFormik({
         initialValues: {
@@ -105,3 +104,4 @@ function AddTransactionForm({handleClose,data}){
 
 }
 export default AddTransactionForm;
+
