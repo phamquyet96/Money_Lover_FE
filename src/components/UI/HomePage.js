@@ -4,6 +4,7 @@ import lock from "../img/lock.svg"
 import lock1 from "../img/lock1.svg"
 import lock2 from "../img/lock2.svg"
 import lock3 from "../img/lock3.svg"
+import {Link} from "react-router-dom";
 function HomePage(){
     return(
         <>
@@ -13,14 +14,14 @@ function HomePage(){
                         <nav className="flex items-center justify-between h-20 container px-48">
                             <img src={logo} className="w-48 mx-50" alt=''></img>
                             <nav className="flex justify-center space-x-3">
-                                <a href="/about"
-                                   className="font-medium px-3 py-2 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900">About Us</a>
-                                <a href="/career"
-                                   className="font-medium px-3 py-2 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900">Career</a>
+                                <Link to="/about"
+                                   className="font-medium px-3 py-2 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900">About Us</Link>
+                                <Link to="/career"
+                                   className="font-medium px-3 py-2 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900">Career</Link>
                                 <div className="flex justify-between">
                                     <img src={flag} alt='' className="w-6 h-6 my-2"></img>
-                                    <a href="/#"
-                                       className="font-medium px-3 py-2 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900">Vietnamese</a>
+                                    <Link to="/#"
+                                       className="font-medium px-3 py-2 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900">Vietnamese</Link>
                                 </div>
                             </nav>
                         </nav>
@@ -35,8 +36,8 @@ function HomePage(){
                         </p>
                         <div className='flex'>
                             <div className="flex gap-x-4 my-9 ml-auto mr-auto">
-                                <a href='/auth/register' ><button className=" text-green-500 rounded-lg border border-green-500 text-16 mb-4 w-[194px] h-[48px]">Sign Up</button></a>
-                                <a href='/auth/login' ><button className="text-white rounded-lg text-16 bg-green-500 mb-4 w-[194px] h-[48px]">Sign In</button></a>
+                                <Link to='/auth/register' ><button className=" text-green-500 rounded-lg border border-green-500 text-16 mb-4 w-[194px] h-[48px]">Sign Up</button></Link>
+                                <Link to='/auth/login' ><button className="text-white rounded-lg text-16 bg-green-500 mb-4 w-[194px] h-[48px]">Sign In</button></Link>
                             </div>
                         </div>
                     </div>

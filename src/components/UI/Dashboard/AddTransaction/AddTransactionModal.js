@@ -9,22 +9,19 @@ export default function AddTransactionModal() {
 
 
     useEffect(() => {
-        // myAxios.get('/type')
-        //     .then(res => {
-        //         setCates(res.data)
-        //     })
+
     }, [])
 
 
     return (
         <>
-            <Button data-modal-target="defaultModal" data-modal-toggle="defaultModal" variant="contained" color="success" onClick={()=>setShow(true)}>
+            <Button variant="contained" color="success" onClick={()=>setShow(true)}>
                 Add Transaction
             </Button>
             {
                 show ? (
                     <>
-                        <div className="fixed inset-0 z-10 overflow-y-auto">
+                        <div id="defaultModal" className="fixed inset-0 z-10 overflow-y-auto">
                             <div
                                 className="fixed inset-0 w-full h-full bg-black opacity-40"
                                 onClick={() => setShow(false)}
@@ -48,7 +45,7 @@ export default function AddTransactionModal() {
                                                 <span className="sr-only" >Close modal</span>
                                             </button>
                                         </div>
-                                        <AddTransactionForm/>
+                                        <AddTransactionForm setShow={setShow}/>
                                     </div>
                                 </div>
                             </div>

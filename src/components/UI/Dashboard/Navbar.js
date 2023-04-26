@@ -33,7 +33,6 @@ export default function NavBar() {
             "resize",
             () => window.innerWidth >= 960 && setOpenNav(false)
         );
-        console.log(wallet)
     }, []);
 
     const changeCurrentWalletMenu = (wallet) => {
@@ -82,7 +81,7 @@ export default function NavBar() {
                             <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
                                     className="text-white bg-custom-gray focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                                     type="button">
-                                {wallet.currentWallet.name }
+                                {wallet.currentWallet?.name }
                                 <svg className="w-4 h-4 ml-2" aria-hidden="true"
                                                                        fill="none" stroke="currentColor"
                                                                        viewBox="0 0 24 24"
@@ -97,10 +96,6 @@ export default function NavBar() {
                                     <div className="flex items-center justify-between mb-4">
                                         <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white">Latest
                                             Customers</h5>
-                                        <a href="#"
-                                           className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
-                                            View all
-                                        </a>
                                     </div>
                                     <div className="flow-root">
                                         <ul role="list" className="divide-y divide-gray-200 dark:divide-gray-700">
@@ -121,7 +116,9 @@ export default function NavBar() {
                                                     </div>
                                                     <div
                                                         className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                                        $320
+                                                        {wallet.currentWallet.includeTotal?.toLocaleString('en-US', {
+                                                            style: 'decimal',
+                                                            currency: 'USD',})} VND
                                                     </div>
                                                 </div>
                                             </li>
