@@ -2,12 +2,7 @@ import {useEffect, useState} from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {useFormik, Form, Formik} from "formik";
-import * as Yup from "yup";
-import {myAxios} from "../../../config/axios";
 import {useDispatch, useSelector} from "react-redux";
-import {transactionActions} from "../../../../feature/transactionSlice";
-import {changeCurrentWallet, changeWallets} from "../../../../feature/walletSlice";
-
 
 function AddTransactionForm(){
     const [startDate, setStartDate] = useState(new Date());
@@ -16,7 +11,7 @@ function AddTransactionForm(){
     const dispatch = useDispatch()
 
     useEffect(() => {
-        console.log('123')
+
     }, [])
 
 
