@@ -7,10 +7,13 @@ import {myAxios} from "../../../config/axios";
 import {useDispatch, useSelector} from "react-redux";
 import {transactionActions} from "../../../../feature/transactionSlice";
 import {changeCurrentWallet, changeWallets} from "../../../../feature/walletSlice";
+import * as walletActions from "../../../../feature/walletSlice";
 
 
 function AddTransactionForm(){
-    const time = useSelector(state => state.time)
+    const date = new Date()
+    const [startDate, setStartDate] = useState(new Date());
+    const [open,setOpen]=useState(false)
     const myWallet = useSelector(state => state.currentWallet)
     const myWallets = useSelector(state => state.wallets)
     const dispatch = useDispatch()
@@ -40,17 +43,18 @@ function AddTransactionForm(){
                 .then( async res=>{
                     if(values.walletId === myWallet.id){
                         let wallet = (await myAxios.get(`/wallet/info/${myWallet.id}`)).data
-                        let transactions = (await myAxios.get(`/transaction/${myWallet.id}`, {
-                            params: {
-                                year: time.name === 'Last Month' || time.name === 'This Month' || time.name === 'Future' ? time.value.format('MM/YYYY').split('/')[1] : time.name.split('/')[1],
-                                month: time.name === 'Last Month' || time.name === 'This Month' || time.name === 'Future' ? time.value.format('MM/YYYY').split('/')[0] : time.name.split('/')[0]
-                            }
-                        })).data
+                        let transactions = (await myAxios.get(`/transaction/${myWallet.id}`)).data
                         dispatch(changeCurrentWallet(wallet))
                         dispatch(transactionActions.getTrans(transactions))
                         dispatch(changeWallets({
                             walletInfo: wallet,
                             walletId: myWallet.id,
+                        }))
+                    } else {
+                        let wallet = (await myAxios.get(`/wallet/info/${values.walletId}`)).data
+                        dispatch(walletActions.changeWallets({
+                            walletInfo: wallet,
+                            walletId: values.walletId
                         }))
                     }
                 })
@@ -60,8 +64,7 @@ function AddTransactionForm(){
         },
     });
 
-    const date = new Date()
-    const [startDate, setStartDate] = useState(new Date());
+
     return(
         <>
             <form onSubmit={formik.handleSubmit}>
@@ -77,8 +80,11 @@ function AddTransactionForm(){
                                         className="w-full border-none p-5 bg-white border border-gray-200 rounded shadow-sm appearance-none text-black"
                                         id=""
                                     >
-                                                <option value="">Demo</option>
-                                                <option value="">Test</option>
+                                        {
+                                            myWallets?.map(item =>
+                                                <option value={item.id}>{item.name}</option>
+                                            )
+                                        }
                                     </select>
                                 </div>
                                 <div className="w-full sm:w-1/2 mt-2 sm:mt-0">
@@ -89,8 +95,10 @@ function AddTransactionForm(){
                                         className="w-full p-5 bg-white border border-gray-200 rounded shadow-sm appearance-none text-black"
                                         id=""
                                     >
-                                        <option value="" >Income</option>
-                                        <option value="" >Expense</option>
+                                        {myWallets?.transCates?.map(transCates =>(
+                                                       <option value={transCates.id}>{transCates.name}</option>
+                                                )
+                                        )}
 
                                     </select>
                                 </div>
@@ -108,7 +116,7 @@ function AddTransactionForm(){
                                 <div className="w-full sm:w-1/2">
                                     <p className="mb-2 font-light text-gray-700">Date</p>
                                     <DatePicker className="w-full p-5 bg-white text-black" selected={startDate}
-                                                onChange={(date) => setStartDate(date)} dateFormat="yyyy/MM/dd"/>
+                                                onChange={(date) => setStartDate(date)} dateFormat="dd/MM/yyyy"/>
                                 </div>
                                 <div className="w-full sm:w-1/2">
                                     <p className="mb-2 font-light text-gray-700">Note</p>
@@ -124,7 +132,7 @@ function AddTransactionForm(){
                         <div
                             className="flex flex-row items-center justify-end p-5 space-x-3 bg-white border-t border-gray-200 rounded-bl-lg rounded-br-lg"
                         >
-                            <button className="px-8 py-2 text-white font-semibold bg-green-500 rounded">
+                            <button onClick={()=>setOpen(false)} className="px-8 py-2 text-white font-semibold bg-green-500 rounded">
                                 Cancel
                             </button>
                             <button className="px-8 py-2 text-white font-semibold bg-blue-500 rounded">
