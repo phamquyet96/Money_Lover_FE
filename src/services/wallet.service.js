@@ -17,6 +17,10 @@ class WalletService {
     static async updateWallet(data) {
         return await myAxios.put('/wallet/update', data)
     }
+
+    static async getWalletOfUser(){
+        return await myAxios.get(`/wallet`)
+    }
 }
 
 export default WalletService;
