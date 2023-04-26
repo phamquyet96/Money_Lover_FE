@@ -35,7 +35,7 @@ const MyWalletDetail = ({statusFinal}) => {
                                     </div>
                                     <div>
                                         <p className='font-roboto font-semibold w-[15rem]'>{wallet.name}</p>
-                                        <p className='text-gray-400 w-[10rem]'>+{wallet.include_total.toLocaleString('en-US', {
+                                        <p className='text-gray-400 w-[10rem]'>+{wallet.initial_balance?.toLocaleString('en-US', {
                                             style: 'decimal',
                                             currency: 'USD',
                                         })} VND</p>
