@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import GoogleButton from "../Share/GoogleButton";
 import Swal from "sweetalert2";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 
 const Register = () => {
@@ -134,9 +134,9 @@ const Register = () => {
                                                     </div>
                                                     <div className="flex">
                                                         <p>Don’t have an account?</p>
-                                                        <a href="/auth/login"
+                                                        <Link to="/auth/login"
                                                            className='text-green-600 decoration-green-600 decoration-1 ml-2'>Sign
-                                                            In</a>
+                                                            In</Link>
                                                     </div>
                                                 </form>
                                             )}

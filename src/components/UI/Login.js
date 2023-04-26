@@ -4,7 +4,7 @@ import {useFormik} from "formik";
 import * as Yup from "yup";
 import {myAxios} from "../config/axios";
 import {GoogleOAuthProvider} from "@react-oauth/google";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import GoogleButton from "../Share/GoogleButton";
 import Swal from "sweetalert2";
 import {useDispatch} from "react-redux";
@@ -145,11 +145,11 @@ const Login = () => {
                               </p>
                             )}
                         </div>
-                        <a href="/forgot">
+                        <Link to="/forgot">
                           <p className="text-right text-green-600">
                             Forgot password
                           </p>
-                        </a>
+                        </Link>
                         <div>
                           <button
                             type="submit"
@@ -160,12 +160,12 @@ const Login = () => {
                         </div>
                         <div className="flex">
                           <p>Have you an account? </p>
-                          <a
-                            href="/auth/register"
+                          <Link
+                            to="/auth/register"
                             className="text-green-600 decoration-green-600 decoration-3 ml-2"
                           >
                             Register
-                          </a>
+                          </Link>
                         </div>
                       </form>
                     </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import icon from '../img/icon.png'
+import {Link} from "react-router-dom";
 
 const ForgotPassword = () => {
     return (
@@ -36,7 +37,7 @@ const ForgotPassword = () => {
                                             </button>
                                         </div>
                                         <div>
-                                            <p><a href='/'><p className='text-green-600 decoration-green-600 decoration-1'>Back to Login</p></a> Or <a href='/login'><p className='text-green-600 decoration-green-600 decoration-1'>Create Account</p></a></p>
+                                            <p><Link to='/auth/login'><p className='text-green-600 decoration-green-600 decoration-1'>Back to Login</p></Link> Or <Link to='/auth/register'><p className='text-green-600 decoration-green-600 decoration-1'>Create Account</p></Link></p>
                                         </div>
                                     </form>
                                 </div>

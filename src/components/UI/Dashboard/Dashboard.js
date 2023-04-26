@@ -65,8 +65,7 @@ function Dashboard() {
                                         onChange={handleChange}
                                         aria-label="lab API tabs example"
                                         value={value}
-                                        textColor="success"
-                                        // indicatorColor="success"
+                                        // textColor="success"
                                     >
                                         <Tab label="Last month" value="1"/>
                                         <Tab label="This month" value="2"/>
