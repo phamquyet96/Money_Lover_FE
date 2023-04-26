@@ -42,14 +42,14 @@ function AddTransactionForm(){
             myAxios.post('/transaction',payload)
                 .then( async res=>{
                     if(values.walletId === myWallet.id){
-                        let wallet = (await myAxios.get(`/wallet/info/${myWallet.id}`)).data
-                        let transactions = (await myAxios.get(`/transaction/${myWallet.id}`)).data
-                        dispatch(changeCurrentWallet(wallet))
-                        dispatch(transactionActions.getTrans(transactions))
-                        dispatch(changeWallets({
-                            walletInfo: wallet,
-                            walletId: myWallet.id,
-                        }))
+                        // let wallet = (await myAxios.get(`/wallet/info/${myWallet.id}`)).data
+                        // let transactions = (await myAxios.get(`/transaction/${myWallet.id}`)).data
+                        // dispatch(changeCurrentWallet(wallet))
+                        // dispatch(transactionActions.getTrans(transactions))
+                        // dispatch(changeWallets({
+                        //     walletInfo: wallet,
+                        //     walletId: myWallet.id,
+                        // }))
                     } else {
                         let wallet = (await myAxios.get(`/wallet/info/${values.walletId}`)).data
                         dispatch(walletActions.changeWallets({
