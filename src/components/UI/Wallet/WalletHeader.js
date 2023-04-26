@@ -2,8 +2,14 @@ import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons'
 import AddWalletModal from "./AddWalletModal";
+import {Link} from "react-router-dom";
 
-const WalletHeader = () => {
+const WalletHeader = ({status}) => {
+
+    const getStatusModal = (e) => {
+        status(e);
+    }
+
     return (
         <>
             <div className="w-full h-[62px] text-center">
@@ -11,12 +17,12 @@ const WalletHeader = () => {
                     <div className="w-full h-[62px] bg-white shadow">
                         <div className="mx-52 h-[62px] flex ">
                             <div className="w-fit flex">
-                                <a href="/dashboard">
+                                <Link to="/dashboard">
                                     <FontAwesomeIcon className='mt-5 mr-8 cursor-pointer' icon={faArrowLeft} size="lg"
                                                      style={{color: "#595959",}}/>
-                                </a>
+                                </Link>
                                 <p className='w-fit h-fit text-xl mt-4 font-semibold font-roboto'>My Wallets</p>
-                                <AddWalletModal />
+                                <AddWalletModal statusWallet={getStatusModal} />
                             </div>
                         </div>
                     </div>

@@ -7,8 +7,8 @@ import lock3 from "../img/lock3.svg"
 function HomePage(){
     return(
         <>
-            <div id="docusaurus">
-                <div className="fixed top-0 inset-x-0 z-50 h-20 border-none bg-transparent">
+            <div id="container">
+                <div className="container fixed top-0 inset-x-0 z-50 h-20 border-none bg-transparent">
                     <div className="z-40 w-full">
                         <nav className="flex items-center justify-between h-20 container px-48">
                             <img src={logo} className="w-48 mx-50" alt=''></img>

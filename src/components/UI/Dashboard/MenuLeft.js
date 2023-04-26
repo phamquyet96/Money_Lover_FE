@@ -13,16 +13,9 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import AdUnitsOutlinedIcon from "@mui/icons-material/AdUnitsOutlined";
 import AssessmentOutlinedIcon from "@mui/icons-material/AssessmentOutlined";
 import SavingsOutlinedIcon from "@mui/icons-material/SavingsOutlined";
-import Container from "@mui/material/Container";
 import * as React from "react";
-import Box from "@mui/material/Box";
-import Tab from "@mui/material/Tab";
-import TabContext from "@mui/lab/TabContext";
-import TabList from "@mui/lab/TabList";
-import TabPanel from "@mui/lab/TabPanel";
-import BasicModal from "../Modal";
-import AccountModal from "../Modal/AccountModal";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
+import {Link, useParams} from "react-router-dom";
 
 
 function MenuLeft() {
@@ -31,22 +24,15 @@ function MenuLeft() {
     const toggle = () => {
         toggleSidebar();
         if (toggled) {
-            console.log(true);
             collapseSidebar();
         } else {
-            console.log(false);
             collapseSidebar();
         }
     };
-    const [value, setValue] = React.useState("1");
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
-
 
     return (
         <div
+
             id="app"
             style={({ height: "100vh" }, { display: "flex", flexDirection: "row" })}
         >
@@ -66,64 +52,30 @@ function MenuLeft() {
                     >
                         Menu
                     </MenuItem>
-                    <SubMenu icon={<MenuOutlinedIcon />} label="Profile">
-                        <MenuItem href='/account' icon={<PeopleOutlinedIcon />}>
+
+                    <Link to={'/account/profile'}>
+                        <MenuItem icon={<PeopleOutlinedIcon />}>
                             Account
                         </MenuItem>
-                        <MenuItem href='/my-wallet' icon={<AccountBalanceWalletOutlinedIcon />}>
+                    </Link>
+                    <Link to={'/my-wallet'}>
+                        <MenuItem icon={<AccountBalanceWalletOutlinedIcon />}>
                             Wallet
                         </MenuItem>
+                    </Link>
+                    <Link to={'/categories'}>
                         <MenuItem icon={<WidgetsOutlinedIcon />}>Category</MenuItem>
-                    </SubMenu>
+                    </Link>
+                    <SubMenu icon={<MenuOutlinedIcon />} label="Addon">
 
-                    <MenuItem icon={<AccountBalanceWalletOutlinedIcon />}>
-                        Transactions
-                    </MenuItem>
-                    <MenuItem icon={<AssessmentOutlinedIcon />}>Report</MenuItem>
-                    <MenuItem icon={<AdUnitsOutlinedIcon />}>Budget</MenuItem>
-                    <MenuItem icon={<ShoppingCartOutlinedIcon />}>Store</MenuItem>
-                    <MenuItem icon={<HelpOutlineOutlinedIcon />}>FAQ</MenuItem>
+                        <MenuItem icon={<AccountBalanceWalletOutlinedIcon />}>Transaction</MenuItem>
+                        <MenuItem icon={<AssessmentOutlinedIcon />}>Report</MenuItem>
+                        <MenuItem icon={<AdUnitsOutlinedIcon />}>Budget</MenuItem>
+                        <MenuItem icon={<ShoppingCartOutlinedIcon />}>Store</MenuItem>
+                        <MenuItem icon={<HelpOutlineOutlinedIcon />}>FAQ</MenuItem>
+                    </SubMenu>
                 </Menu>
             </Sidebar>
-
-            {/*<Container maxWidth="sm">*/}
-            {/*    <div*/}
-            {/*        style={{*/}
-            {/*            backgroundColor: "white",*/}
-            {/*            height: "30em",*/}
-            {/*            display: "flex",*/}
-            {/*            justifyContent: "center",*/}
-            {/*        }}*/}
-            {/*    >*/}
-                    {/*<Box sx={{ width: "100%", typography: "body1" }}>*/}
-                    {/*    <TabContext value={value}>*/}
-                    {/*        <Box*/}
-                    {/*            className="flex justify-center"*/}
-                    {/*            sx={{*/}
-                    {/*                borderBottom: 1,*/}
-                    {/*                borderColor: "divider",*/}
-                    {/*                color: "success.main",*/}
-                    {/*            }}*/}
-                    {/*        >*/}
-                    {/*            <TabList*/}
-                    {/*                onChange={handleChange}*/}
-                    {/*                aria-label="lab API tabs example"*/}
-                    {/*                value={value}*/}
-                    {/*                textColor="success"*/}
-                    {/*                // indicatorColor="success"*/}
-                    {/*            >*/}
-                    {/*                <Tab label="Last month" value="1" />*/}
-                    {/*                <Tab label="This month" value="2" />*/}
-                    {/*                <Tab label="Plan for future" value="3" />*/}
-                    {/*            </TabList>*/}
-                    {/*        </Box>*/}
-                    {/*        <TabPanel value="1"></TabPanel>*/}
-                    {/*        <TabPanel value="2"></TabPanel>*/}
-                    {/*        <TabPanel value="3"></TabPanel>*/}
-                    {/*    </TabContext>*/}
-            {/*        /!*</Box>*!/*/}
-            {/*    </div>*/}
-            {/*</Container>*/}
         </div>
     );
 }

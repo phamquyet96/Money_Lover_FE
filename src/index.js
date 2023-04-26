@@ -8,19 +8,20 @@ import {Provider} from "react-redux";
 import store, {persistor} from "./store/store";
 import {PersistGate} from "redux-persist/integration/react";
 import { ProSidebarProvider } from "react-pro-sidebar";
+import "react-datepicker/dist/react-datepicker.css";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-            <BrowserRouter>
-                <React.StrictMode>
-                    <ProSidebarProvider>
-                        <App/>
-                    </ProSidebarProvider>
-                </React.StrictMode>
-            </BrowserRouter>
-        </PersistGate>
+        {/*<PersistGate loading={null} persistor={persistor}>*/}
+        <BrowserRouter>
+            {/*<React.StrictMode>*/}
+            <ProSidebarProvider>
+                <App/>
+            </ProSidebarProvider>
+            {/*</React.StrictMode>*/}
+        </BrowserRouter>
+        {/*</PersistGate>*/}
     </Provider>
 )
 
@@ -28,4 +29,3 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
-

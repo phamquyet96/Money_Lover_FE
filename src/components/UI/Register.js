@@ -13,6 +13,9 @@ const Register = () => {
     const navigate=useNavigate();
 
     const SignupSchema= Yup.object().shape({
+        name: Yup.string()
+            .min(3, 'Name is not empty')
+            .required('Name is required'),
         email: Yup.string()
             .email('Invalid email address')
             .required('Email is required'),
@@ -70,7 +73,7 @@ const Register = () => {
                                             account</h2>
                                         <Formik
                                             initialValues= {
-                                                { email: '', password: ''}
+                                                { name:'', email: '', password: ''}
                                             }
                                             validationSchema={SignupSchema}
                                             onSubmit= {(values) => {
@@ -98,36 +101,44 @@ const Register = () => {
                                                   handleSubmit,
                                                   handleChange,
                                               }) => (
-                                                    <form onSubmit={handleSubmit}  className="space-y-6">
-                                                        <div>
-                                                            <input type="email" name="email" id="email" placeholder="Email"
-                                                                   onChange={handleChange}
-                                                                   value={values.email}
-                                                                   className="w-full font-roboto border-1 bg-gray-100 py-2 px-4 rounded-[10px] focus:outline-none focus:ring focus:ring-green-600 outline-2 hover:outline-green-500 "/>
-                                                            {errors.email && touched.email && (
-                                                                <p style={{color: 'red'}}>{errors.email}</p>)}
-                                                        </div>
-                                                        <div>
-                                                            <input type="password" name="password" id="password"
-                                                                   placeholder="Password" onChange={handleChange}
-                                                                   value={values.password}
-                                                                   autoComplete='current-password'
-                                                                   className="w-full font-roboto bg-gray-100 py-2 px-4 rounded-[10px] focus:outline-none focus:ring focus:ring-green-600 "/>
-                                                            {errors.password && touched.password && (
-                                                                <p style={{color: 'red'}}>{errors.password}</p>)}
-                                                        </div>
-                                                        <div>
-                                                            <button type="submit"
-                                                                    className="w-full bg-green-500 text-white font-roboto py-2 rounded-md hover:bg-green-700 transition-colors duration-300 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-50">REGISTER
-                                                            </button>
-                                                        </div>
-                                                        <div className="flex">
-                                                            <p>Don’t have an account?</p>
-                                                            <a href="/auth/login"
-                                                               className='text-green-600 decoration-green-600 decoration-1 ml-2'>Sign
-                                                                In</a>
-                                                        </div>
-                                                    </form>
+                                                <form onSubmit={handleSubmit}  className="space-y-6">
+                                                    <div>
+                                                        <input type="text" name="name" id="name" placeholder="Name"
+                                                               onChange={handleChange}
+                                                               value={values.name}
+                                                               className="w-full font-roboto border-1 bg-gray-100 py-2 px-4 rounded-[10px] focus:outline-none focus:ring focus:ring-green-600 outline-2 hover:outline-green-500 "/>
+                                                        {errors.name && touched.name && (
+                                                            <p style={{color: 'red'}}>{errors.name}</p>)}
+                                                    </div>
+                                                    <div>
+                                                        <input type="email" name="email" id="email" placeholder="Email"
+                                                               onChange={handleChange}
+                                                               value={values.email}
+                                                               className="w-full font-roboto border-1 bg-gray-100 py-2 px-4 rounded-[10px] focus:outline-none focus:ring focus:ring-green-600 outline-2 hover:outline-green-500 "/>
+                                                        {errors.email && touched.email && (
+                                                            <p style={{color: 'red'}}>{errors.email}</p>)}
+                                                    </div>
+                                                    <div>
+                                                        <input type="password" name="password" id="password"
+                                                               placeholder="Password" onChange={handleChange}
+                                                               value={values.password}
+                                                               autoComplete='current-password'
+                                                               className="w-full font-roboto bg-gray-100 py-2 px-4 rounded-[10px] focus:outline-none focus:ring focus:ring-green-600 "/>
+                                                        {errors.password && touched.password && (
+                                                            <p style={{color: 'red'}}>{errors.password}</p>)}
+                                                    </div>
+                                                    <div>
+                                                        <button type="submit"
+                                                                className="w-full bg-green-500 text-white font-roboto py-2 rounded-md hover:bg-green-700 transition-colors duration-300 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-50">REGISTER
+                                                        </button>
+                                                    </div>
+                                                    <div className="flex">
+                                                        <p>Don’t have an account?</p>
+                                                        <a href="/auth/login"
+                                                           className='text-green-600 decoration-green-600 decoration-1 ml-2'>Sign
+                                                            In</a>
+                                                    </div>
+                                                </form>
                                             )}
                                         </Formik>
                                     </div>
