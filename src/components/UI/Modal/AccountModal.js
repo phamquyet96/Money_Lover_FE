@@ -74,7 +74,7 @@ const AccountModal = () => {
                             </div>
                         </div>
                         <div className='h-auto shadow-2xl bg-white gap-2 content-center flex-col border-b-2'>
-                            <div className='flex flex-row pt-8 justify-center pb-4 pl-8 '>
+<div className='flex flex-row pt-8 justify-center pb-4 pl-8 '>
                                 <div>
                                     <div
                                         className='w-[60px] h-[60px] rounded-full table-cell align-middle bg-blue-500 text-center text-white text-3xl '>{user.name?.split("",1)}
