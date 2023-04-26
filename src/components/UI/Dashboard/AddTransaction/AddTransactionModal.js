@@ -5,7 +5,8 @@ import AddTransactionForm from "./AddTransactionForm";
 
 export default function AddTransactionModal() {
     const [show, setShow] = useState(false);
-    const [cates, setCates] = useState([])
+    const [cates, setCates] = useState([]);
+
 
     useEffect(() => {
         // myAxios.get('/type')

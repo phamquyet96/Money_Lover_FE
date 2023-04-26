@@ -3,12 +3,13 @@ import { useEffect, useState } from "react";
 import {Link} from 'react-router-dom';
 import iconWallet from '../../img/iconWallet.png';
 import {myAxios} from "../../config/axios";
+import WalletService from "../../../services/wallet.service";
 
 const MyWalletDetail = ({statusFinal}) => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        myAxios.get('/wallet')
+        WalletService.getWalletOfUser()
             .then(res => {
                 setData(res.data)
             })
@@ -35,7 +36,7 @@ const MyWalletDetail = ({statusFinal}) => {
                                     </div>
                                     <div>
                                         <p className='font-roboto font-semibold w-[15rem]'>{wallet.name}</p>
-                                        <p className='text-gray-400 w-[10rem]'>+{wallet.initial_balance?.toLocaleString('en-US', {
+                                        <p className='text-gray-400 w-[10rem]'>+{wallet.initialBalance?.toLocaleString('en-US', {
                                             style: 'decimal',
                                             currency: 'USD',
                                         })} VND</p>

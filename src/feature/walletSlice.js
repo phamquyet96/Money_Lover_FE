@@ -1,15 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 let initialState = {
-    currentWallet: {
-        id: '',
-        name: '',
-        balance: '',
-        include_total: '',
-        active: '',
-        inflow: '',
-        outflow: ''
-    },
+    currentWallet: {},
     wallets: []
 }
 

@@ -8,17 +8,22 @@ import logo from '../../img/ic_category_all.png';
 import AddTransactionModal from "./AddTransaction/AddTransactionModal";
 import {Link} from "react-router-dom";
 import {myAxios} from "../../config/axios";
+import WalletService from "../../../services/wallet.service";
+import {useDispatch, useSelector} from "react-redux";
+import {changeCurrentWallet} from "../../../feature/walletSlice";
 
 
 
 export default function NavBar() {
     const [openNav, setOpenNav] = useState(false);
     const [data, setData] = useState([]);
-
+    const dispatch = useDispatch();
+    const wallet = useSelector(state => state.wallet)
     useEffect(() => {
-        myAxios.get('/wallet')
+        WalletService.getWalletOfUser()
             .then(res => {
-                setData(res.data[0])
+                dispatch(changeCurrentWallet(res.data[0]))
+                setData(res.data);
             })
             .catch(err => console.error(err))
     }, [])
@@ -28,7 +33,12 @@ export default function NavBar() {
             "resize",
             () => window.innerWidth >= 960 && setOpenNav(false)
         );
+        console.log(wallet)
     }, []);
+
+    const changeCurrentWalletMenu = (wallet) => {
+        dispatch(changeCurrentWallet(wallet))
+    }
 
     const navList = (
         <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
@@ -67,12 +77,83 @@ export default function NavBar() {
 
                         </Typography>
 
-                        <div className="flex-col text-black" >
-                            <span>Total</span>
-                            <br/>
-                            <span className='text-l font-roboto font-semibold italic'>+{data?.initial_balance?.toLocaleString('en-US', {
-                                style: 'decimal',
-                                currency: 'USD',})} VND</span>
+                        <div className="flex text-black" >
+
+                            <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
+                                    className="text-white bg-custom-gray focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                    type="button">
+                                {wallet.currentWallet.name }
+                                <svg className="w-4 h-4 ml-2" aria-hidden="true"
+                                                                       fill="none" stroke="currentColor"
+                                                                       viewBox="0 0 24 24"
+                                                                       xmlns="http://www.w3.org/2000/svg">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                                      d="M19 9l-7 7-7-7"></path>
+                            </svg></button>
+                            <div id="dropdown"
+                                 className="w-[400px] z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                                <div aria-labelledby="dropdownDefaultButton"
+                                    className="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                                    <div className="flex items-center justify-between mb-4">
+                                        <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white">Latest
+                                            Customers</h5>
+                                        <a href="#"
+                                           className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+                                            View all
+                                        </a>
+                                    </div>
+                                    <div className="flow-root">
+                                        <ul role="list" className="divide-y divide-gray-200 dark:divide-gray-700">
+                                            <li className="py-3 sm:py-4">
+                                                <div className="flex items-center space-x-4">
+                                                    <div className="flex-shrink-0">
+                                                        <img className="w-8 h-8 rounded-full"
+                                                             src="/docs/images/people/profile-picture-1.jpg"
+                                                             alt="Neil image"/>
+                                                    </div>
+                                                    <div className="flex-1 min-w-0">
+                                                        <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                                            Total
+                                                        </p>
+                                                        <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+
+                                                        </p>
+                                                    </div>
+                                                    <div
+                                                        className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                                        $320
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            { data.length > 0 && data.map(wallet => (
+                                                    <li key={wallet.id} className="py-3 sm:py-4" onChange={() => changeCurrentWalletMenu(wallet)}>
+                                                        <div className="flex items-center space-x-4">
+                                                            <div className="flex-shrink-0">
+                                                                <img className="w-8 h-8 rounded-full"
+                                                                     src="/docs/images/people/profile-picture-3.jpg"
+                                                                     alt="Bonnie image"/>
+                                                            </div>
+                                                            <div className="flex-1 min-w-0">
+                                                                <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                                                    {wallet.name}
+                                                                </p>
+                                                            </div>
+                                                            <div
+                                                                className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                                                {wallet.includeTotal.toLocaleString('en-US', {
+                                                                    style: 'decimal',
+                                                                    currency: 'USD',})} VND
+                                                            </div>
+                                                        </div>
+                                                    </li>
+
+                                            )) }
+
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
