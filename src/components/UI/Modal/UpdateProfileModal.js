@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import Swal from "sweetalert2";
 import {myAxios} from "../../config/axios";
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import UserService from "../../../services/user.service";
 
 const UpdateProfileModal = () => {
     const cloudName = 'money-lover';
@@ -10,21 +11,20 @@ const UpdateProfileModal = () => {
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
 
-    const {id} = useParams();
     const [data, setData] = useState({
         name: '',
         image: '',
         email: ''
     })
     useEffect(() => {
-        myAxios.get('/user/account/' + id, {headers: {'Authorization': `Bearer ${localStorage.getItem("accessToken")}`}})
-            .then(res => console.log(res.data))
-            .catch(err => console.error(err))
+        UserService.getProfile().then(res => {
+            setData(res.data.data)
+        })
 
-    }, [])
+    },[])
     const handleSave = async () => {
 
-        await myAxios.put('/user/update-profile/' + id, data, {
+        await myAxios.put(`/user/update-profile/${data.id}`, data, {
             headers: {
                 authorization: "Bearer " + localStorage.getItem('accessToken')
             }
@@ -100,7 +100,7 @@ const UpdateProfileModal = () => {
                                         <div className=''>
                                             <label className='text-left font-roboto'>Email</label>
                                             <input readOnly="" className='border h-12 w-full rounded' id="email"
-                                                   type="email" value={data.email}/>
+                                                   type="email" value={data?.email}/>
                                         </div>
                                     </div>
                                 </div>

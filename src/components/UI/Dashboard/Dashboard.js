@@ -11,6 +11,9 @@ import {useEffect, useLayoutEffect, useRef, useState} from "react";
 import {Link} from "react-router-dom";
 import iconWallet from "../../img/iconWallet.png";
 import {myAxios} from "../../config/axios";
+import {useDispatch, useSelector} from "react-redux";
+import WalletService from "../../../services/wallet.service";
+import {changeCurrentWallet} from "../../../feature/walletSlice";
 
 
 function Dashboard() {
@@ -19,18 +22,22 @@ function Dashboard() {
     const [maxWidth, setMaxWidth] = useState(150);
     const [data, setData] = useState([]);
     const incomeRef = useRef(null);
-    const [transactionModal, setTransactionModal] = useState(false)
+    const [transactionModal, setTransactionModal] = useState(false);
+    const dispatch = useDispatch();
+
+    const wallet = useSelector(state => state.wallet)
+    useEffect(() => {
+        WalletService.getWalletOfUser()
+            .then(res => {
+                dispatch(changeCurrentWallet(res.data[0]))
+                setData(res.data);
+            })
+            .catch(err => console.error(err))
+    }, [])
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
-    useEffect(() => {
-        myAxios.get('/wallet')
-            .then(res => {
-                setData(res.data[0])
-            })
-            .catch(err => console.error(err))
-    }, [])
 
     useLayoutEffect(() => {
         const incomeNumberDiv = incomeRef.current;
@@ -65,7 +72,6 @@ function Dashboard() {
                                         onChange={handleChange}
                                         aria-label="lab API tabs example"
                                         value={value}
-                                        // textColor="success"
                                     >
                                         <Tab label="Last month" value="1"/>
                                         <Tab label="This month" value="2"/>
@@ -77,15 +83,19 @@ function Dashboard() {
                                     <div className="grid gap-2">
                                         <div className="flex justify-between">
                                             <div>Inflow</div>
-                                            <div>+Income Number for this month</div>
+                                            <div className='text-inflow'>+ {wallet.currentWallet.balance?.toLocaleString('en-US', {
+                                                style: 'decimal',
+                                                currency: 'USD',})}.00đ</div>
                                         </div>
                                         <div className="flex justify-between">
                                             <div>Outflow</div>
-                                            <div ref={incomeRef}>-Outcome Number</div>
+                                            <div ref={incomeRef} className='text-rose-600'>- 0.00đ</div>
                                         </div>
                                         <div className="border-t-2 border-gray-300 ml-auto"
                                              style={{width: maxWidth}}></div>
-                                        <div className="ml-auto">Current Balance</div>
+                                        <div className="ml-auto">{wallet.currentWallet.balance?.toLocaleString('en-US', {
+                                            style: 'decimal',
+                                            currency: 'USD',})}.00đ</div>
                                         <div
                                             className="flex justify-center text-green-400 font-roboto font-semibold">VIEW
                                             REPORT FOR THIS PERIOD
