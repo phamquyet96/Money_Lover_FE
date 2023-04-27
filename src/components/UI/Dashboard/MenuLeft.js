@@ -21,13 +21,9 @@ import {Link, useParams} from "react-router-dom";
 function MenuLeft() {
     const { collapseSidebar, toggleSidebar, toggled } = useProSidebar();
 
+
     const toggle = () => {
-        toggleSidebar();
-        if (toggled) {
-            collapseSidebar();
-        } else {
-            collapseSidebar();
-        }
+        collapseSidebar();
     };
 
     return (
@@ -41,6 +37,7 @@ function MenuLeft() {
                 transitionDuration={800}
                 backgroundColor="#ffff"
                 rtl={false}
+                defaultCollapsed={true}
                 style={{ height: "100vh" }}
             >
                 <Menu>

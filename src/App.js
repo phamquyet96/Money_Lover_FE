@@ -23,27 +23,27 @@ function App() {
 
 
     return (
-      <Routes>
-        <Route path="/" element={<HomePage />}></Route>
-        <Route path="/auth/login" element={<Login />}></Route>
-        <Route path="/auth/register" element={<Register />}></Route>
-        {/*{ auth.isLoggedIn ? (*/}
-        <>
-          <Route path="/auth/logout" element={<Logout />}></Route>
-          <Route path="/forgot-password" element={<ForgotPassword />}></Route>
-          <Route path="/dashboard" element={<Dashboard />}></Route>
-          <Route path="/my-wallet" element={<MyWallet />}></Route>
-          <Route path="/wallet-detail/:id" element={<WalletDetail />}></Route>
-          <Route path="/account/profile" element={<AccountModal />}></Route>
-          <Route path="/change-password" element={<ChangePassword />}></Route>
-          <Route path="/transaction" element={<AddTransactionForm />}></Route>
+        <Routes>
+            <Route path="/" element={<HomePage />}></Route>
+            <Route path="/auth/login" element={<Login />}></Route>
+            <Route path="/auth/register" element={<Register />}></Route>
+            {/*{ auth.isLoggedIn ? (*/}
+            <>
+                <Route path="/auth/logout" element={<Logout />}></Route>
+                <Route path="/forgot-password" element={<ForgotPassword />}></Route>
+                <Route path="/dashboard" element={<Dashboard />}></Route>
+                <Route path="/my-wallet" element={<MyWallet />}></Route>
+                <Route path="/wallet-detail/:id" element={<WalletDetail />}></Route>
+                <Route path="/account/profile" element={<AccountModal />}></Route>
+                <Route path="/change-password" element={<ChangePassword />}></Route>
+                <Route path="/transaction" element={<AddTransactionForm />}></Route>
 
-          
-            <Route path="/categories" element={<ListCategory/>} />
-          
-        </>
-        {/*): <Route path="*" element={<Navigate to="/auth/login" replace />} />}*/}
-      </Routes>
+
+                <Route path="/categories" element={<ListCategory/>} />
+
+            </>
+            {/*): <Route path="*" element={<Navigate to="/auth/login" replace />} />}*/}
+        </Routes>
     );
 }
 
