@@ -6,6 +6,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {myAxios} from "../../../config/axios";
 import Swal from "sweetalert2";
 import TransactionService from "../../../../services/transaction.service";
+import Box from "@mui/material/Box";
+import TabList from "@mui/lab/TabList";
+import Tab from "@mui/material/Tab";
+import * as React from "react";
+import TabContext from "@mui/lab/TabContext";
 
 
 let date = new Date()
@@ -13,6 +18,7 @@ let dateFormat = date.toISOString().slice(0,10);
 
 function AddTransactionForm({setShow}) {
     const [startDate, setStartDate] = useState(new Date());
+    const [showModal,setShowModal]=useState(false)
     const myWallet = useSelector(state => state.wallet.currentWallet)
 
 
@@ -37,13 +43,22 @@ function AddTransactionForm({setShow}) {
                         timer: 1500,
                     })
                     setShow(false)
-                })
+                }).catch((err)=>{
+                    Swal.fire({
+                        position: "center",
+                        icon: "error",
+                        title: err.data.message,
+                        showConfirmButton: false,
+                        timer: 1500,
+                    })
+                    setShow(false)
+            }
+            )
         }})
 
     const handeChangeDate = (date) => {
         let myDate = new Date(date)
         let data = myDate.toISOString().slice(0,10);
-        console.log(121111,data)
         setStartDate(date)
         formik.setFieldValue('date', data)
     }
@@ -69,10 +84,15 @@ function AddTransactionForm({setShow}) {
                                 <select onChange={formik.handleChange}
                                         name='subcategoryId'
                                         className="w-full p-5 bg-white border border-gray-200 rounded shadow-sm appearance-none text-black"
-                                        id=""
+                                        id="modal"
+                                        onClick={()=>setShowModal(true)}
                                 >
-                                    <option value="1">Income</option>
-                                    <option value="2">Expense</option>
+                                    <option value="1">Food and Beverage</option>
+                                    <option value="2">Transportation</option>
+                                    <option value="3">Home Maintenance</option>
+                                    <option value="4">Pets</option>
+                                    <option value="5">Water Bill</option>
+                                    <option value="6">Phone Bill</option>
 
                                 </select>
                             </div>
@@ -123,3 +143,5 @@ function AddTransactionForm({setShow}) {
 }
 
 export default AddTransactionForm;
+
+

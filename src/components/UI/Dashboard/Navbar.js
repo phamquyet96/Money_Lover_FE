@@ -10,7 +10,7 @@ import {Link} from "react-router-dom";
 import {myAxios} from "../../config/axios";
 import WalletService from "../../../services/wallet.service";
 import {useDispatch, useSelector} from "react-redux";
-import {changeCurrentWallet} from "../../../feature/walletSlice";
+import {changeCurrentWallet, walletActions} from "../../../feature/walletSlice";
 
 
 
@@ -22,7 +22,7 @@ export default function NavBar() {
     useEffect(() => {
         WalletService.getWalletOfUser()
             .then(res => {
-                dispatch(changeCurrentWallet(res.data[0]))
+                dispatch(walletActions.changeCurrentWallet(res.data[0]))
                 setData(res.data);
             })
             .catch(err => console.error(err))
@@ -36,7 +36,7 @@ export default function NavBar() {
     }, []);
 
     const changeCurrentWalletMenu = (wallet) => {
-        dispatch(changeCurrentWallet(wallet))
+        dispatch(walletActions.changeCurrentWallet(wallet))
     }
 
     const navList = (
