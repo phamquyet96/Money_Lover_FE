@@ -5,7 +5,7 @@ import iconWallet from "../../img/iconWallet.png";
 import {useParams, useNavigate, Link} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import Swal from "sweetalert2";
-import {changeCurrentWallet, walletActions} from "../../../feature/walletSlice";
+import {changeCurrentWallet} from "../../../feature/walletSlice";
 import {myAxios} from "../../config/axios";
 import UserService from "../../../services/user.service";
 
@@ -67,7 +67,7 @@ const WalletDetail = () => {
                     showConfirmButton: true,
                     timer: 1500
                 });
-                dispatch(walletActions.changeCurrentWallet)
+                dispatch(changeCurrentWallet)
                 setOpenUpdate(false);
                 navigate('/my-wallet')
             }).catch(err => {

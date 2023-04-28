@@ -48,6 +48,5 @@ export const walletSlice = createSlice({
     }
 })
 
-// export const {deleteWallet, changeCurrentWallet,changeWallets} = walletSlice.actions;
-
+export const {deleteWallet, changeCurrentWallet,changeWallets} = walletSlice.actions;
 export default walletSlice.reducer;
