@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {myAxios} from "../../../config/axios";
 import Swal from "sweetalert2";
 import TransactionService from "../../../../services/transaction.service";
+import {transactionActions} from "../../../../feature/transactionSlice";
 
 
 let date = new Date()
@@ -14,7 +15,7 @@ let dateFormat = date.toISOString().slice(0,10);
 function AddTransactionForm({setShow}) {
     const [startDate, setStartDate] = useState(new Date());
     const myWallet = useSelector(state => state.wallet.currentWallet)
-
+    const dispatch = useDispatch();
 
     const formik = useFormik({
         initialValues: {
@@ -26,9 +27,9 @@ function AddTransactionForm({setShow}) {
         },
 
         onSubmit: values => {
-            console.log(values)
             TransactionService.addTransaction(values)
                 .then((res) => {
+
                     Swal.fire({
                         position: "center",
                         icon: "success",
@@ -36,14 +37,16 @@ function AddTransactionForm({setShow}) {
                         showConfirmButton: false,
                         timer: 1500,
                     })
+                    dispatch(transactionActions.changeStatusAddTransaction())
+
                     setShow(false)
+
                 })
         }})
 
     const handeChangeDate = (date) => {
         let myDate = new Date(date)
         let data = myDate.toISOString().slice(0,10);
-        console.log(121111,data)
         setStartDate(date)
         formik.setFieldValue('date', data)
     }
@@ -123,3 +126,6 @@ function AddTransactionForm({setShow}) {
 }
 
 export default AddTransactionForm;
+
+
+

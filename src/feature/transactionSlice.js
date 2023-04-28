@@ -11,7 +11,8 @@ let initialState = {
     },
     trans: [],
     incomeTrans: [],
-    expenseTrans: []
+    expenseTrans: [],
+    statusAddTransaction: false
 }
 
 export const transactionSlice = createSlice({
@@ -20,26 +21,26 @@ export const transactionSlice = createSlice({
     reducers: {
         getTrans(state, action) {
             state = {...state, trans: action.payload}
-            return state
         },
         changeCurrentTransaction(state, action) {
             state = {...state, currentTransaction: action.payload}
-            return state
+
         },
         getIncomeTrans(state, action) {
             state = {...state, incomeTrans: action.payload}
-            return state
         },
         getExpenseTrans(state, action) {
             state = {...state, expenseTrans: action.payload}
-            return state
         },
         resetTrans(state) {
             state = initialState
-            return state
+        },
+
+        changeStatusAddTransaction(state, action){
+            state = {...state, statusAddTransaction: true};
         }
     }
 })
 
 export const transactionActions = transactionSlice.actions;
-export default transactionSlice;
+export default transactionSlice.reducer;

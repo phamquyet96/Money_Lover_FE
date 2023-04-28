@@ -2,15 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 
 import AddTransactionForm from "./AddTransactionForm";
+import {useDispatch, useSelector} from "react-redux";
 
 export default function AddTransactionModal() {
     const [show, setShow] = useState(false);
-    const [cates, setCates] = useState([]);
-
-
-    useEffect(() => {
-
-    }, [])
 
 
     return (
@@ -57,3 +52,4 @@ export default function AddTransactionModal() {
         </>
     );
 }
+
