@@ -30,10 +30,10 @@ function HomePage(){
                 <div className="mainWrapper  mt-[150px]">
                     <div className="px-48">
                         <h1 className=" font-medium text-[60px] text-green-500 text-center ">Simple way</h1>
-                        <p className="flex text-40 justify-center">
+                        <div className="flex text-40 justify-center">
                             <h1 className=" font-thin text-[60px] text-dark-brown text-center px-5 ">to manage</h1>
                             <h1 className=" font-medium text-[60px] text-green-500 text-center ">personal fiances</h1>
-                        </p>
+                        </div>
                         <div className='flex'>
                             <div className="flex gap-x-4 my-9 ml-auto mr-auto">
                                 <Link to='/auth/register' ><button className=" text-green-500 rounded-lg border border-green-500 text-16 mb-4 w-[194px] h-[48px]">Sign Up</button></Link>

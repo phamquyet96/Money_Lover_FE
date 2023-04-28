@@ -10,25 +10,26 @@ import {Link} from "react-router-dom";
 import {myAxios} from "../../config/axios";
 import WalletService from "../../../services/wallet.service";
 import {useDispatch, useSelector} from "react-redux";
-import {changeCurrentWallet} from "../../../feature/walletSlice";
+import {walletActions} from "../../../feature/walletSlice";
 import icon from "../../img/iconWallet.png"
 
 
 export default function NavBar() {
     const [openNav, setOpenNav] = useState(false);
     const [data, setData] = useState([]);
-    const [openDropDown, setOpenDropDown] = useState(false);
+    const [openDropDown, setOpenDropDown] = useState(true);
     const dispatch = useDispatch();
     const wallet = useSelector(state => state.wallet);
 
     useEffect(() => {
         WalletService.getWalletOfUser()
             .then(res => {
-                dispatch(changeCurrentWallet(res.data[0]))
+                console.log(res)
+                dispatch(walletActions.changeCurrentWallet(res.data[0]))
                 setData(res.data);
             })
             .catch(err => console.error(err))
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
         window.addEventListener(
@@ -38,7 +39,8 @@ export default function NavBar() {
     }, []);
 
     const changeCurrentWalletMenu = (wallet) => {
-        dispatch(changeCurrentWallet(wallet))
+        console.log('werew')
+        dispatch(walletActions.changeCurrentWallet(wallet))
     }
 
     const navList = (
@@ -94,7 +96,6 @@ export default function NavBar() {
                         </Typography>
 
                         <div className="flex relative">
-
                             <button onClick={() => setOpenDropDown(true)}
                                     id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
                                     className="text-gray-600 flex-col bg-white outline-none font-medium rounded-lg text-sm px-2 text-center inline-flex"
@@ -111,7 +112,7 @@ export default function NavBar() {
                                     </svg>
                                 </div>
                                 <div
-                                    className='text-lg text-black font-bold italic'>+ {wallet.currentWallet.includeTotal?.toLocaleString('en-US', {
+                                    className='text-lg text-black font-bold italic'>+ {wallet.currentWallet.balance?.toLocaleString('en-US', {
                                     style: 'decimal',
                                     currency: 'USD',
                                 })} VND
@@ -143,12 +144,11 @@ export default function NavBar() {
                                                                     Total
                                                                 </p>
                                                                 <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-
                                                                 </p>
                                                             </div>
                                                             <div
                                                                 className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                                                {wallet.currentWallet.includeTotal?.toLocaleString('en-US', {
+                                                                {wallet.currentWallet.balance?.toLocaleString('en-US', {
                                                                     style: 'decimal',
                                                                     currency: 'USD',
                                                                 })} VND
@@ -156,8 +156,7 @@ export default function NavBar() {
                                                         </div>
                                                     </li>
                                                     {data.length > 0 && data.map(wallet => (
-                                                        <li key={wallet.id} className="py-3 sm:py-4"
-                                                            onChange={() => changeCurrentWalletMenu(wallet)}>
+                                                        <li key={wallet.id} className="py-3 sm:py-4">
                                                             <div className="flex items-center space-x-4">
                                                                 <div className="flex-shrink-0">
                                                                     <img className="w-8 h-8 rounded-full"
@@ -178,9 +177,7 @@ export default function NavBar() {
                                                                 </div>
                                                             </div>
                                                         </li>
-
                                                     ))}
-
                                                 </ul>
                                             </div>
                                         </div>

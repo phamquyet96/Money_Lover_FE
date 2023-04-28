@@ -6,15 +6,29 @@ import {useDispatch, useSelector} from "react-redux";
 import {myAxios} from "../../../config/axios";
 import Swal from "sweetalert2";
 import TransactionService from "../../../../services/transaction.service";
+import {transactionActions} from "../../../../feature/transactionSlice";
+import axios from "axios";
+import categoryService from "../../../../services/category.service";
+import {walletActions} from "../../../../feature/walletSlice";
 
 
 let date = new Date()
-let dateFormat = date.toISOString().slice(0,10);
+let dateFormat = date.toISOString().slice(0, 10);
 
 function AddTransactionForm({setShow}) {
     const [startDate, setStartDate] = useState(new Date());
+    const [categories, setCategories] = useState([]);
+    const [catePick, setCatePick] = useState(0);
     const myWallet = useSelector(state => state.wallet.currentWallet)
+    const dispatch = useDispatch();
 
+    useEffect(() => {
+        const getData = async () => {
+            const res = await categoryService.getAllCategory();
+            setCategories(res.data);
+        }
+        getData();
+    }, []);
 
     const formik = useFormik({
         initialValues: {
@@ -26,9 +40,9 @@ function AddTransactionForm({setShow}) {
         },
 
         onSubmit: values => {
-            console.log(values)
             TransactionService.addTransaction(values)
                 .then((res) => {
+
                     Swal.fire({
                         position: "center",
                         icon: "success",
@@ -36,18 +50,23 @@ function AddTransactionForm({setShow}) {
                         showConfirmButton: false,
                         timer: 1500,
                     })
+                    dispatch(walletActions.changeCurrentWallet(res.data.wallet))
                     setShow(false)
+
                 })
-        }})
+        }
+    })
 
     const handeChangeDate = (date) => {
         let myDate = new Date(date)
-        let data = myDate.toISOString().slice(0,10);
-        console.log(121111,data)
+        let data = myDate.toISOString().slice(0, 10);
         setStartDate(date)
         formik.setFieldValue('date', data)
     }
 
+    const handleChangeCategory = (id) => {
+        setCatePick(id);
+    }
 
     return (
         <>
@@ -66,13 +85,23 @@ function AddTransactionForm({setShow}) {
                             </div>
                             <div className="w-full sm:w-1/2 mt-2 sm:mt-0">
                                 <p className="mb-2 font-light text-gray-700">Category</p>
-                                <select onChange={formik.handleChange}
+                                <select onChange={
+                                    formik.handleChange
+
+                                }
                                         name='subcategoryId'
                                         className="w-full p-5 bg-white border border-gray-200 rounded shadow-sm appearance-none text-black"
                                         id=""
                                 >
-                                    <option value="1">Income</option>
-                                    <option value="2">Expense</option>
+                                    {categories.map((c, index) => (
+                                        <optgroup label={c.name} key={c.id}>
+                                            {c.subCategories.map(s => (
+                                                <option
+                                                        value={s.id} key={s.id}>{s.name}
+                                                </option>
+                                            ))}
+                                        </optgroup>
+                                    ))}
 
                                 </select>
                             </div>
@@ -107,7 +136,8 @@ function AddTransactionForm({setShow}) {
                     <div
                         className="flex flex-row items-center justify-end p-5 space-x-3 bg-white border-t border-gray-200 rounded-bl-lg rounded-br-lg"
                     >
-                        <button onClick={()=>setShow(false)} type="button" className="px-8 py-2 text-white font-semibold bg-green-500 rounded">
+                        <button onClick={() => setShow(false)} type="button"
+                                className="px-8 py-2 text-white font-semibold bg-green-500 rounded">
                             Cancel
                         </button>
                         <button type="submit"
@@ -123,3 +153,6 @@ function AddTransactionForm({setShow}) {
 }
 
 export default AddTransactionForm;
+
+
+
