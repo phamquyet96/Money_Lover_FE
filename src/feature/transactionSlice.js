@@ -24,7 +24,6 @@ export const transactionSlice = createSlice({
         },
         changeCurrentTransaction(state, action) {
             state = {...state, currentTransaction: action.payload}
-
         },
         getIncomeTrans(state, action) {
             state = {...state, incomeTrans: action.payload}
@@ -35,7 +34,6 @@ export const transactionSlice = createSlice({
         resetTrans(state) {
             state = initialState
         },
-
         changeStatusAddTransaction(state, action){
             state = {...state, statusAddTransaction: true};
         }

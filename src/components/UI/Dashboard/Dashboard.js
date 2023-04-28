@@ -36,12 +36,14 @@ function Dashboard() {
         startDate: formatDate(new Date(y, m, 1)),
         endDate: formatDate(new Date(y, m + 1, 0))
     })
+    const [totalMoneyOutcome, setTotalMoneyOutcome] = useState(0)
 
     const wallet = useSelector(state => state.wallet)
+
     useEffect(() => {
-        console.log(wallet)
         TransactionService.getTransaction(wallet.currentWallet.id, dateFilter.startDate, dateFilter.endDate).then(res => {
-            setData(res.data)
+            setData(res.data.transactions)
+            setTotalMoneyOutcome(res.data.totalMoneyOutcome)
         })
 
     }, [transaction])
@@ -102,7 +104,10 @@ function Dashboard() {
                                     </div>
                                     <div className="flex justify-between">
                                         <div>Outflow</div>
-                                        <div ref={incomeRef} className='text-rose-600'>- 0.00đ</div>
+                                        <div ref={incomeRef} className='text-rose-600'>- { totalMoneyOutcome.toLocaleString('en-US', {
+                                            style: 'decimal',
+                                            currency: 'USD',
+                                        }) }đ</div>
                                     </div>
                                     <div className="border-t-2 border-gray-300 ml-auto"
                                          style={{width: maxWidth}}></div>
@@ -130,17 +135,33 @@ function Dashboard() {
                                                             className="ml-1.5 rounded-full bg-gray-100 w-11 h-11"></div>
                                                         <div className="grid grid-rows-2 mt-1">
                                                             <div
-                                                                className="font-semibold text-sm">{item.subCategory.name}</div>
+                                                                className="font-semibold text-sm">{item.subCategory.name}đ</div>
                                                             <div
                                                                 className="text-gray-500 text-xs text-left">{item.date}</div>
                                                         </div>
                                                     </div>
-                                                    <div
-                                                        className="text-center grid mr-2 mt-2 font-roboto font-semibold">+- {item.money.toLocaleString('en-US', {
-                                                        style: 'decimal',
-                                                        currency: 'USD',
-                                                    })}
-                                                    </div>
+                                                    { item.subCategory.category.id == 1 ? (
+                                                        <div
+                                                            className="text-center text-green-500 grid mr-2 mt-2 font-roboto font-semibold">
+
+                                                           + {item.money.toLocaleString('en-US', {
+                                                                style: 'decimal',
+                                                                currency: 'USD',
+                                                            })}
+                                                        </div>
+                                                    ): (
+                                                        <div
+                                                            className="text-center text-red-600 grid mr-2 mt-2 font-roboto font-semibold">
+
+                                                            - {item.money.toLocaleString('en-US', {
+                                                            style: 'decimal',
+                                                            currency: 'USD',
+                                                        })}đ
+                                                        </div>
+                                                    )
+                                                    }
+
+
                                                 </div>
                                             </div>
                                         </button>
