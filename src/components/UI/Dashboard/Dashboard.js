@@ -112,7 +112,7 @@ function Dashboard() {
                                     <div className="border-t-2 border-gray-300 ml-auto"
                                          style={{width: maxWidth}}></div>
                                     <div
-                                        className="ml-auto">{wallet.currentWallet.balance?.toString().toLocaleString('en-US', {
+                                        className="ml-auto">{wallet.currentWallet.balance?.toLocaleString('en-US', {
                                         style: 'decimal',
                                         currency: 'USD',
                                     })}đ
@@ -135,7 +135,7 @@ function Dashboard() {
                                                             className="ml-1.5 rounded-full bg-gray-100 w-11 h-11"></div>
                                                         <div className="grid grid-rows-2 mt-1">
                                                             <div
-                                                                className="font-semibold text-sm">{item.subCategory.name}đ</div>
+                                                                className="font-semibold text-sm">{item.subCategory.name}</div>
                                                             <div
                                                                 className="text-gray-500 text-xs text-left">{item.date}</div>
                                                         </div>
