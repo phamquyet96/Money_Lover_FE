@@ -8,8 +8,9 @@ const myAxios = axios.create({
 myAxios.interceptors.request.use(
     async (config) => {
         let token = localStorage.getItem('accessToken');
+        console.log(token)
         if (token) {
-            myAxios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem('accessToken')
+            config.headers.Authorization = "Bearer " + token
         }
         return config
     }, (err) => {
