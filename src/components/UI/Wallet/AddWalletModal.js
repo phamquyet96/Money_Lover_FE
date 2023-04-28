@@ -23,8 +23,13 @@ const AddWalletModal = ({ statusWallet }) => {
         });
         setShowModal(false);
         statusWallet(true);
-      });
-    },
+      }) 
+      .catch((error) => {
+        console.log({ error });
+        alert(error.response.data.message);
+      }) ;
+      
+    }, 
   });
   return (
       <>
