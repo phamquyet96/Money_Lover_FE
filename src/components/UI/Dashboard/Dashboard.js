@@ -46,7 +46,7 @@ function Dashboard() {
             setTotalMoneyOutcome(res.data.totalMoneyOutcome)
         })
 
-    }, [transaction])
+    }, [wallet])
 
 
     const handleChange = (event, newValue) => {
@@ -112,17 +112,17 @@ function Dashboard() {
                                     <div className="border-t-2 border-gray-300 ml-auto"
                                          style={{width: maxWidth}}></div>
                                     <div
-                                        className="ml-auto">{wallet.currentWallet.balance?.toLocaleString('en-US', {
+                                        className="ml-auto">{wallet.currentWallet.balance?.toString().toLocaleString('en-US', {
                                         style: 'decimal',
                                         currency: 'USD',
-                                    })}.00đ
+                                    })}đ
                                     </div>
                                     <div
                                         className="flex justify-center text-green-400 font-roboto font-semibold">VIEW
                                         REPORT FOR THIS PERIOD
                                     </div>
                                 </div>
-                                <div className="">
+                                <div className="overflow-auto md:overflow-scroll h-24">
                                     <div className="left-0 right-0 h-9 mt-5 bg-gray-100"></div>
                                     {data.length > 0 && data.map((item) => (
 

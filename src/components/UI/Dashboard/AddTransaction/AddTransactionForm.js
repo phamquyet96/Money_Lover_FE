@@ -9,6 +9,7 @@ import TransactionService from "../../../../services/transaction.service";
 import {transactionActions} from "../../../../feature/transactionSlice";
 import axios from "axios";
 import categoryService from "../../../../services/category.service";
+import {walletActions} from "../../../../feature/walletSlice";
 
 
 let date = new Date()
@@ -49,8 +50,7 @@ function AddTransactionForm({setShow}) {
                         showConfirmButton: false,
                         timer: 1500,
                     })
-                    dispatch(transactionActions.changeStatusAddTransaction())
-
+                    dispatch(walletActions.changeCurrentWallet(res.data.wallet))
                     setShow(false)
 
                 })
@@ -65,11 +65,8 @@ function AddTransactionForm({setShow}) {
     }
 
     const handleChangeCategory = (id) => {
-        console.log(id, 22222)
         setCatePick(id);
     }
-
-    console.log(catePick, 111111)
 
     return (
         <>
