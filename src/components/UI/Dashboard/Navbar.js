@@ -24,6 +24,7 @@ export default function NavBar() {
     useEffect(() => {
         WalletService.getWalletOfUser()
             .then(res => {
+                console.log(res.data[0]);
                 dispatch(changeCurrentWallet(res.data[0]))
                 setData(res.data);
             })

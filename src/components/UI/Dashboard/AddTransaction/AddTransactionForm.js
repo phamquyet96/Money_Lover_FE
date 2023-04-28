@@ -79,7 +79,7 @@ function AddTransactionForm({setShow}) {
                             <div className="w-full sm:w-1/2 mt-2 sm:mt-0">
                                 <p className="mb-2 font-light text-gray-700">Amount</p>
                                 <input
-                                    type="text"
+                                    type="number"
                                     name="money" onChange={formik.handleChange}
                                     className="w-full h-full p-5 bg-white border border-gray-200 rounded shadow-sm appearance-none text-black"
 
