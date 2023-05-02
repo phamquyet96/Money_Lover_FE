@@ -15,7 +15,7 @@ import AssessmentOutlinedIcon from "@mui/icons-material/AssessmentOutlined";
 import SavingsOutlinedIcon from "@mui/icons-material/SavingsOutlined";
 import * as React from "react";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-import {Link, useParams} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 
 function MenuLeft() {
