@@ -105,10 +105,12 @@ function Dashboard() {
                                     </div>
                                     <div className="flex justify-between">
                                         <div>Outflow</div>
-                                        <div ref={incomeRef} className='text-rose-600'>- { totalMoneyOutcome.toLocaleString('en-US', {
+                                        <div ref={incomeRef}
+                                             className='text-rose-600'>- {totalMoneyOutcome.toLocaleString('en-US', {
                                             style: 'decimal',
                                             currency: 'USD',
-                                        }) }đ</div>
+                                        })}đ
+                                        </div>
                                     </div>
                                     <div className="border-t-2 border-gray-300 ml-auto"
                                          style={{width: maxWidth}}></div>
@@ -125,12 +127,13 @@ function Dashboard() {
                                 </div>
                                 <div className="overflow-y-auto h-fit">
                                     <div className="left-0 right-0 h-9 mt-5 bg-gray-100"></div>
-                                    {data.length > 0 && data.map((transaction) => (
+                                    {data.length > 0 && data.map((item) => (
 
-                                        <button key={transaction.id} className='hover:bg-green-300 w-full'
-                                                onClick={(e) =>{
-                                                    setSelectedItem(transaction)
-                                                    setShowTransactionModal(true)}}>
+                                        <button key={item.id} className='hover:bg-green-300 w-full'
+                                                onClick={(e) => {
+                                                    setSelectedItem(item)
+                                                    setShowTransactionModal(true)
+                                                }}>
                                             <div className="">
                                                 <div className="flex my-3 justify-between">
                                                     <div className="grid gap-1 grid-cols-2">
@@ -138,40 +141,35 @@ function Dashboard() {
                                                             className="ml-1.5 rounded-full bg-gray-100 w-11 h-11"></div>
                                                         <div className="grid grid-rows-2 mt-1">
                                                             <div
-                                                                className="font-semibold text-sm">{transaction.subCategory.name}</div>
+                                                                className="font-semibold text-sm">{item.subCategory.name}</div>
                                                             <div
-                                                                className="text-gray-500 text-xs text-left">{transaction.date}</div>
+                                                                className="text-gray-500 text-xs text-left">{item.date}</div>
                                                         </div>
                                                     </div>
-                                                    { transaction.subCategory.category.id == 1 ? (
+                                                    {item.subCategory.category.id == 1 ? (
                                                         <div
                                                             className="text-center text-green-500 grid mr-2 mt-2 font-roboto font-semibold">
 
-                                                           + {transaction.money.toLocaleString('en-US', {
-                                                                style: 'decimal',
-                                                                currency: 'USD',
-                                                            })}
+                                                            + {item.money.toLocaleString('en-US', {
+                                                            style: 'decimal',
+                                                            currency: 'USD',
+                                                        })}
                                                         </div>
-                                                    ): (
+                                                    ) : (
                                                         <div
                                                             className="text-center text-red-600 grid mr-2 mt-2 font-roboto font-semibold">
 
-                                                            - {transaction.money.toLocaleString('en-US', {
+                                                            - {item.money.toLocaleString('en-US', {
                                                             style: 'decimal',
                                                             currency: 'USD',
                                                         })}đ
                                                         </div>
                                                     )
                                                     }
-
-
                                                 </div>
                                             </div>
                                         </button>
-
-
                                     ))}
-
                                 </div>
                             </TabPanel>
                             <TabPanel value="3"></TabPanel>
@@ -179,7 +177,7 @@ function Dashboard() {
                     </Box>
                 </div>
             </Container>
-            {selectedItem && showTransactionModal  ? (
+            {selectedItem && showTransactionModal ? (
                     <div
                         transaction={selectedItem}>
                         <div
@@ -243,7 +241,7 @@ function Dashboard() {
                                         </div>
                                     </div>
                                     <div className='grid mt-6 ml-40'>
-                                        { selectedItem.subCategory.category.id == 1 ? (
+                                        {selectedItem.subCategory.category.id == 1 ? (
                                             <div
                                                 className="text-left text-green-500 grid mr-2 mt-2 text-4xl font-roboto font-semibold">
                                                 + {selectedItem.money.toLocaleString('en-US', {
@@ -251,7 +249,7 @@ function Dashboard() {
                                                 currency: 'USD',
                                             })}đ
                                             </div>
-                                        ): (
+                                        ) : (
                                             <div
                                                 className="text-left text-red-600 grid mr-2 mt-2 text-4xl font-roboto font-semibold">
                                                 - {selectedItem.money.toLocaleString('en-US', {
