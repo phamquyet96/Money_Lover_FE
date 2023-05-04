@@ -3,11 +3,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
-import {myAxios} from "../../../config/axios";
 import Swal from "sweetalert2";
 import TransactionService from "../../../../services/transaction.service";
-import {transactionActions} from "../../../../feature/transactionSlice";
-import axios from "axios";
 import categoryService from "../../../../services/category.service";
 import {walletActions} from "../../../../feature/walletSlice";
 
@@ -52,7 +49,6 @@ function AddTransactionForm({setShow}) {
                     })
                     dispatch(walletActions.changeCurrentWallet(res.data.wallet))
                     setShow(false)
-
                 })
         }
     })
