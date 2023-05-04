@@ -31,6 +31,7 @@ function Dashboard() {
     const [data, setData] = useState([]);
     const incomeRef = useRef(null);
     const [showTransactionModal, setShowTransactionModal] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null);
     const transaction = useSelector(state => state.transaction)
     const [dateFilter, setDateFilter] = useState({
         startDate: formatDate(new Date(y, m, 1)),
@@ -104,10 +105,12 @@ function Dashboard() {
                                     </div>
                                     <div className="flex justify-between">
                                         <div>Outflow</div>
-                                        <div ref={incomeRef} className='text-rose-600'>- { totalMoneyOutcome.toLocaleString('en-US', {
+                                        <div ref={incomeRef}
+                                             className='text-rose-600'>- {totalMoneyOutcome.toLocaleString('en-US', {
                                             style: 'decimal',
                                             currency: 'USD',
-                                        }) }đ</div>
+                                        })}đ
+                                        </div>
                                     </div>
                                     <div className="border-t-2 border-gray-300 ml-auto"
                                          style={{width: maxWidth}}></div>
@@ -122,15 +125,18 @@ function Dashboard() {
                                         REPORT FOR THIS PERIOD
                                     </div>
                                 </div>
-                                <div className="overflow-auto md:overflow-scroll h-24">
+                                <div className="overflow-y-auto h-fit">
                                     <div className="left-0 right-0 h-9 mt-5 bg-gray-100"></div>
                                     {data.length > 0 && data.map((item) => (
 
                                         <button key={item.id} className='hover:bg-green-300 w-full'
-                                                onClick={(e) => setShowTransactionModal(true)}>
+                                                onClick={(e) => {
+                                                    setSelectedItem(item)
+                                                    setShowTransactionModal(true)
+                                                }}>
                                             <div className="">
                                                 <div className="flex my-3 justify-between">
-                                                    <div className="grid gap-0.5 grid-cols-2">
+                                                    <div className="grid gap-1 grid-cols-2">
                                                         <div
                                                             className="ml-1.5 rounded-full bg-gray-100 w-11 h-11"></div>
                                                         <div className="grid grid-rows-2 mt-1">
@@ -140,16 +146,16 @@ function Dashboard() {
                                                                 className="text-gray-500 text-xs text-left">{item.date}</div>
                                                         </div>
                                                     </div>
-                                                    { item.subCategory.category.id == 1 ? (
+                                                    {item.subCategory.category.id == 1 ? (
                                                         <div
                                                             className="text-center text-green-500 grid mr-2 mt-2 font-roboto font-semibold">
 
-                                                           + {item.money.toLocaleString('en-US', {
-                                                                style: 'decimal',
-                                                                currency: 'USD',
-                                                            })}
+                                                            + {item.money.toLocaleString('en-US', {
+                                                            style: 'decimal',
+                                                            currency: 'USD',
+                                                        })}
                                                         </div>
-                                                    ): (
+                                                    ) : (
                                                         <div
                                                             className="text-center text-red-600 grid mr-2 mt-2 font-roboto font-semibold">
 
@@ -160,15 +166,10 @@ function Dashboard() {
                                                         </div>
                                                     )
                                                     }
-
-
                                                 </div>
                                             </div>
                                         </button>
-
-
                                     ))}
-
                                 </div>
                             </TabPanel>
                             <TabPanel value="3"></TabPanel>
@@ -176,8 +177,9 @@ function Dashboard() {
                     </Box>
                 </div>
             </Container>
-            {showTransactionModal ? (
-                    <>
+            {selectedItem && showTransactionModal ? (
+                    <div
+                        transaction={selectedItem}>
                         <div
                             className="fixed inset-0 w-full z-10 h-full bg-black opacity-40"
                             onClick={() => setShowTransactionModal(false)}
@@ -225,30 +227,43 @@ function Dashboard() {
                                                 />
                                             </div>
                                             <div className='grid grid-rows-2'>
-                                                <div className='text-2xl mt-1.5'>Category</div>
-                                                <div className='text-sm font-roboto mt-1'>userName</div>
+                                                <div className='text-2xl mt-1.5'>{selectedItem.subCategory.name}</div>
+                                                <div className='text-sm font-roboto mt-1'>{wallet.currentWallet.name}</div>
                                             </div>
                                         </div>
                                         <div className='grid grid-cols-2'>
                                             <div></div>
                                             <div className=''>
-                                                <div className='text-xs text-gray-500 '>Sunday, 23/04/2023</div>
+                                                <div className='text-xs text-gray-500 '>{selectedItem.date}</div>
                                                 <div className='border-t-2 mt-3 w-28 mb-1.5'></div>
-                                                <div className='flex'>Note</div>
-
+                                                <div className='flex'>{selectedItem.note}</div>
                                             </div>
                                         </div>
                                     </div>
                                     <div className='grid mt-6 ml-40'>
-                                        <div
-                                            className={myNumber >= 0 ? 'text-green-400 text-5xl' : 'text-red-400 text-5xl'}>
-                                            {myNumber >= 0 ? '+' : '-'}{Math.abs(myNumber)}
-                                        </div>
+                                        {selectedItem.subCategory.category.id == 1 ? (
+                                            <div
+                                                className="text-left text-green-500 grid mr-2 mt-2 text-4xl font-roboto font-semibold">
+                                                + {selectedItem.money.toLocaleString('en-US', {
+                                                style: 'decimal',
+                                                currency: 'USD',
+                                            })}đ
+                                            </div>
+                                        ) : (
+                                            <div
+                                                className="text-left text-red-600 grid mr-2 mt-2 text-4xl font-roboto font-semibold">
+                                                - {selectedItem.money.toLocaleString('en-US', {
+                                                style: 'decimal',
+                                                currency: 'USD',
+                                            })}đ
+                                            </div>
+                                        )
+                                        }
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </>)
+                    </div>)
                 : null}
         </Layout>
     );

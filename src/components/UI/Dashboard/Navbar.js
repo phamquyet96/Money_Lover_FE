@@ -24,7 +24,6 @@ export default function NavBar() {
     useEffect(() => {
         WalletService.getWalletOfUser()
             .then(res => {
-                console.log(res)
                 dispatch(walletActions.changeCurrentWallet(res.data[0]))
                 setData(res.data);
             })
@@ -39,7 +38,6 @@ export default function NavBar() {
     }, []);
 
     const changeCurrentWalletMenu = (wallet) => {
-        console.log('werew')
         dispatch(walletActions.changeCurrentWallet(wallet))
     }
 
@@ -97,7 +95,6 @@ export default function NavBar() {
 
                         <div className="flex relative">
                             <button onClick={() => setOpenDropDown(true)}
-                                    id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
                                     className="text-gray-600 flex-col bg-white outline-none font-medium rounded-lg text-sm px-2 text-center inline-flex"
                                     type="button">
                                 <div className='flex'>
