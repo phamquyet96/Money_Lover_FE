@@ -16,5 +16,8 @@ class TransactionService{
     static deleteTransaction(transactionId){
         return myAxios.delete(`/transaction/${transactionId}`)
     }
+    static updateTransaction(transactionId,data){
+        return myAxios.put(`/transaction/${transactionId}`,data)
+    }
 }
 export default TransactionService;
