@@ -24,6 +24,7 @@ export default function NavBar() {
     useEffect(() => {
         WalletService.getWalletOfUser()
             .then(res => {
+                console.log(res.data)
                 dispatch(walletActions.changeCurrentWallet(res.data[0]))
                 setData(res.data);
             })
@@ -109,7 +110,7 @@ export default function NavBar() {
                                     </svg>
                                 </div>
                                 <div
-                                    className='text-lg text-black font-bold italic'>+ {wallet.currentWallet.balance?.toLocaleString('en-US', {
+                                    className='text-lg text-black font-bold italic'>+ {wallet.currentWallet.initialBalance?.toLocaleString('en-US', {
                                     style: 'decimal',
                                     currency: 'USD',
                                 })} VND
@@ -145,7 +146,7 @@ export default function NavBar() {
                                                             </div>
                                                             <div
                                                                 className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                                                {wallet.currentWallet.balance?.toLocaleString('en-US', {
+                                                                {wallet.currentWallet.initialBalance?.toLocaleString('en-US', {
                                                                     style: 'decimal',
                                                                     currency: 'USD',
                                                                 })} VND

@@ -13,5 +13,8 @@ class TransactionService{
                 endDate: endDate}
         })
     }
+    static deleteTransaction(transactionId){
+        return myAxios.delete(`/transaction/${transactionId}`)
+    }
 }
 export default TransactionService;
