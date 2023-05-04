@@ -13,7 +13,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {walletActions} from "../../../feature/walletSlice";
 import icon from "../../img/iconWallet.png"
 
-
+const getTotalMoneyAllWallet = (wallets) => {
+    let total = 0;
+    for(let i of wallets) {
+        total += +i.balance;
+    }
+    return total;
+}
 export default function NavBar() {
     const [openNav, setOpenNav] = useState(false);
     const [data, setData] = useState([]);
@@ -22,22 +28,17 @@ export default function NavBar() {
     const dispatch = useDispatch();
     const wallet = useSelector(state => state.wallet);
 
-    useEffect(() => {
-        let total = 0;
-        for(let i of data) {
-          total += i.balance;
-        }
-        setTotalWalletBalance(total);
-    },[wallet])
 
     useEffect(() => {
         WalletService.getWalletOfUser()
             .then(res => {
                 dispatch(walletActions.changeCurrentWallet(res.data[0]))
                 setData(res.data);
+                const total = getTotalMoneyAllWallet(res.data)
+                setTotalWalletBalance(total);
             })
             .catch(err => console.error(err))
-    }, [ wallet])
+    }, [])
 
     useEffect(() => {
         window.addEventListener(
@@ -48,6 +49,7 @@ export default function NavBar() {
 
     const changeCurrentWalletMenu = (wallet) => {
         dispatch(walletActions.changeCurrentWallet(wallet))
+        setOpenDropDown(false)
     }
 
     const navList = (
@@ -118,18 +120,18 @@ export default function NavBar() {
                                     </svg>
                                 </div>
                                 <div
-                                    className='text-lg text-black font-bold italic'>+ {wallet.currentWallet.balance?.toLocaleString('en-US', {
+                                    className='text-lg text-black font-bold italic'>+ { Number(wallet.currentWallet.balance)?.toLocaleString('en-US', {
                                     style: 'decimal',
                                     currency: 'USD',
                                 })} VND
                                 </div>
                             </button>
-                            {openDropDown ? (
+                            {openDropDown && (
                                 <>
                                     <div
-                                        className="fixed inset-0 w-full z-50 h-full"
-                                        onClick={() => setOpenDropDown(false)}></div>
-                                    <div className="fixed flex inset-0 z-10 overflow-y-auto">
+                                        className="fixed inset-0 w-full z-30 h-full"
+                                    ></div>
+                                    <div className="fixed flex inset-0 z-50 overflow-y-auto">
                                         <div aria-labelledby="dropdownDefaultButton"
                                              className="w-full max-w-md p-4 h-fit mt-16 ml-24 bg-white border border-gray-200 rounded-lg shadow sm:p-8">
                                             <div className="flex items-center justify-between mb-4">
@@ -154,7 +156,7 @@ export default function NavBar() {
                                                             </div>
                                                             <div
                                                                 className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                                                {totalWalletBalance > 0 && totalWalletBalance.toLocaleString('en-US', {
+                                                                {totalWalletBalance > 0 && Number(totalWalletBalance).toLocaleString('en-US', {
                                                                     style: 'decimal',
                                                                     currency: 'USD',
                                                                 })} VND
@@ -163,7 +165,7 @@ export default function NavBar() {
                                                     </li>
                                                     {data.length > 0 && data.map(wallet => (
                                                         <li key={wallet.id} className="py-3 sm:py-4">
-                                                            <div className="flex items-center space-x-4">
+                                                            <div className="flex items-center space-x-4 hover:bg-green-400 hover:cursor-pointer" onClick={() => changeCurrentWalletMenu(wallet)}>
                                                                 <div className="flex-shrink-0">
                                                                     <img className="w-8 h-8 rounded-full"
                                                                          src={icon}
@@ -176,7 +178,7 @@ export default function NavBar() {
                                                                 </div>
                                                                 <div
                                                                     className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                                                    {wallet?.balance.toLocaleString('en-US', {
+                                                                    { Number(wallet.balance)?.toLocaleString('en-US', {
                                                                         style: 'decimal',
                                                                         currency: 'USD',
                                                                     })} VND
@@ -189,7 +191,7 @@ export default function NavBar() {
                                         </div>
                                     </div>
                                 </>
-                            ) : null}
+                            )}
                         </div>
                     </div>
                     <div className="flex items-center gap-4">

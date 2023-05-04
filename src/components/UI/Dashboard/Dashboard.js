@@ -39,7 +39,18 @@ const listTabMonth = [
         label: "Future",
         value: "3"
     }
-]
+];
+
+
+const groupByTransactionByDate = (data) => {
+    const result = data.groupBy(item => {
+        return item.date;
+    });
+
+    return result
+}
+
+
 function Dashboard() {
 
     const [value, setValue] = useState("2");
@@ -57,10 +68,10 @@ function Dashboard() {
     const [listMonthTab, setListMonthTab] = useState(listTabMonth)
 
     const wallet = useSelector(state => state.wallet)
-    const dispatch=useDispatch()
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        TransactionService.getTransaction(wallet.currentWallet.id,dateFilter.startDate, dateFilter.endDate).then(res => {
+        TransactionService.getTransaction(wallet.currentWallet.id, dateFilter.startDate, dateFilter.endDate).then(res => {
             setData(res.data.transactions)
             setTotalMoneyOutcome(res.data.totalMoneyOutcome)
         })
@@ -82,7 +93,6 @@ function Dashboard() {
         }
     }, []);
     const deleteTransaction = () => {
-        console.log(selectedItem)
         TransactionService.deleteTransaction(selectedItem.id).then(res => {
             setShowTransactionModal(false)
             dispatch(walletActions.changeCurrentWallet(res.data.data))
@@ -110,9 +120,9 @@ function Dashboard() {
                                     aria-label="lab API tabs example"
                                     value={value}
                                 >
-                                    {listMonthTab && listMonthTab.map((item,index) => (
+                                    {listMonthTab && listMonthTab.map((item, index) => (
                                         <Tab key={index} label={item.label} value={item.value}/>
-                                    )) }
+                                    ))}
 
 
                                 </TabList>
@@ -122,7 +132,7 @@ function Dashboard() {
                                     <div className="flex justify-between">
                                         <div>Inflow</div>
                                         <div
-                                            className='text-inflow'>+ {(wallet.currentWallet.balance + totalMoneyOutcome)?.toLocaleString('en-US', {
+                                            className='text-inflow'>+ {(+wallet.currentWallet.balance + totalMoneyOutcome)?.toLocaleString('en-US', {
                                             style: 'decimal',
                                             currency: 'USD',
                                         })}đ
@@ -131,7 +141,7 @@ function Dashboard() {
                                     <div className="flex justify-between">
                                         <div>Outflow</div>
                                         <div ref={incomeRef}
-                                             className='text-rose-600'>- {totalMoneyOutcome.toLocaleString('en-US', {
+                                             className='text-rose-600'>- { Number(totalMoneyOutcome).toLocaleString('en-US', {
                                             style: 'decimal',
                                             currency: 'USD',
                                         })}đ
@@ -151,7 +161,7 @@ function Dashboard() {
                                     </div>
                                 </div>
                                 <div className="overflow-y-auto scrollbar-hide h-[600px]">
-                                    <div className="left-0 right-0 h-9 mt-5 bg-gray-100"></div>
+                                    <div className="left-0 right-0 h-9 mt-5 bg-gray-100 w-full"></div>
                                     {data.length > 0 && data.map((item) => (
 
                                         <button key={item.id} className='hover:bg-green-300 w-full'
@@ -161,12 +171,12 @@ function Dashboard() {
                                                 }}>
                                             <div className="">
                                                 <div className="flex my-3 justify-between">
-                                                    <div className="grid gap-1 grid-cols-2">
+                                                    <div className="flex ">
                                                         <div
                                                             className="ml-1.5 rounded-full bg-gray-100 w-11 h-11"></div>
-                                                        <div className="grid grid-rows-2 mt-1">
+                                                        <div className="grid grid-rows-2 mt-1 ml-3">
                                                             <div
-                                                                className="font-semibold text-sm">{item.subCategory.name}</div>
+                                                                className="font-semibold text-left text-sm">{item.subCategory.name}</div>
                                                             <div
                                                                 className="text-gray-500 text-xs text-left">{item.date}</div>
                                                         </div>
@@ -178,7 +188,7 @@ function Dashboard() {
                                                             + {item.money.toLocaleString('en-US', {
                                                             style: 'decimal',
                                                             currency: 'USD',
-                                                        })}
+                                                        })}đ
                                                         </div>
                                                     ) : (
                                                         <div
@@ -195,6 +205,7 @@ function Dashboard() {
                                             </div>
                                         </button>
                                     ))}
+
                                 </div>
                             </TabPanel>
                         </TabContext>
@@ -229,7 +240,7 @@ function Dashboard() {
                                     <div className='grid grid-cols-5'>
                                         <div></div>
                                         <div></div>
-                                        <button onClick={()=>deleteTransaction()}
+                                        <button onClick={() => deleteTransaction()}
                                                 className='text-rose-400 font-roboto font-semibold rounded hover:bg-rose-100'
                                         >DELETE
                                         </button>

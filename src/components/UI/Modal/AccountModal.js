@@ -52,7 +52,7 @@ const AccountModal = () => {
     return (
         <>
             <NavBar/>
-            <div className='flex bg-custom-gray'>
+            <div className='flex bg-custom-gray pt-[62px] fixed'>
                 <MenuLeft/>
                 <div className='w-[100vw] h-[100vh] flex justify-center'>
                     <div className='shadow-2xl bg-white rounded-md w-[500px] h-[64px] mt-10'>
