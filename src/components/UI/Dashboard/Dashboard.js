@@ -122,7 +122,7 @@ function Dashboard() {
                                     <div className="flex justify-between">
                                         <div>Inflow</div>
                                         <div
-                                            className='text-inflow'>+ {wallet.currentWallet.balance?.toLocaleString('en-US', {
+                                            className='text-inflow'>+ {(wallet.currentWallet.balance + totalMoneyOutcome)?.toLocaleString('en-US', {
                                             style: 'decimal',
                                             currency: 'USD',
                                         })}đ
@@ -140,7 +140,7 @@ function Dashboard() {
                                     <div className="border-t-2 border-gray-300 ml-auto"
                                          style={{width: maxWidth}}></div>
                                     <div
-                                        className="ml-auto">{(wallet.currentWallet.balance + totalMoneyOutcome)?.toLocaleString('en-US', {
+                                        className="ml-auto">{wallet.currentWallet.balance?.toLocaleString('en-US', {
                                         style: 'decimal',
                                         currency: 'USD',
                                     })}đ
