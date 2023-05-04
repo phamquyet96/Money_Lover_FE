@@ -16,15 +16,30 @@ import {useDispatch, useSelector} from "react-redux";
 import TransactionService from "../../../services/transaction.service";
 import {randomInt} from "next/dist/shared/lib/bloom-filter/utils";
 import Layout from "../Layout/Master";
-import DatePicker from "react-datepicker";
+import {walletActions} from "../../../feature/walletSlice";
 
 let myNumber = 1000;
 const date = new Date(), y = date.getFullYear(), m = date.getMonth();
+
 
 function formatDate(date) {
     return date.toISOString().slice(0, 10)
 }
 
+const listTabMonth = [
+    {
+        label: "Last month",
+        value: "1"
+    },
+    {
+        label: "This month",
+        value: "2"
+    },
+    {
+        label: "Future",
+        value: "3"
+    }
+]
 function Dashboard() {
 
     const [value, setValue] = useState("2");
@@ -32,7 +47,6 @@ function Dashboard() {
     const [data, setData] = useState([]);
     const incomeRef = useRef(null);
     const [showTransactionModal, setShowTransactionModal] = useState(false);
-    const [showEditTransactionModal, setShowEditTransactionModal] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
     const transaction = useSelector(state => state.transaction)
     const [dateFilter, setDateFilter] = useState({
@@ -40,39 +54,48 @@ function Dashboard() {
         endDate: formatDate(new Date(y, m + 1, 0))
     })
     const [totalMoneyOutcome, setTotalMoneyOutcome] = useState(0)
+    const [listMonthTab, setListMonthTab] = useState(listTabMonth)
 
     const wallet = useSelector(state => state.wallet)
+    const dispatch=useDispatch()
 
     useEffect(() => {
-        TransactionService.getTransaction(wallet.currentWallet.id, dateFilter.startDate, dateFilter.endDate).then(res => {
+        TransactionService.getTransaction(wallet.currentWallet.id,dateFilter.startDate, dateFilter.endDate).then(res => {
             setData(res.data.transactions)
             setTotalMoneyOutcome(res.data.totalMoneyOutcome)
         })
 
-    }, [wallet])
+    }, [wallet, showTransactionModal])
 
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
+
     useLayoutEffect(() => {
         const incomeNumberDiv = incomeRef.current;
-
         if (incomeNumberDiv) {
             const rect = incomeNumberDiv.getBoundingClientRect();
             const width = rect.width;
             setMaxWidth(width);
         }
     }, []);
-
-
+    const deleteTransaction = () => {
+        console.log(selectedItem)
+        TransactionService.deleteTransaction(selectedItem.id).then(res => {
+            setShowTransactionModal(false)
+            dispatch(walletActions.changeCurrentWallet(res.data.data))
+        }).catch(error => {
+            console.log(error)
+        })
+    }
     return (
         <Layout>
-            <Container maxWidth="sm" maxheight="400px" style={{marginTop: "1rem", display: "inline-block", position: "fixed", left:"700px"}}>
-                <div className="bg-white rounded-b-md h-fit justify-center relative"
+            <Container maxWidth="sm" style={{marginTop: "1rem"}}>
+                <div className="bg-white rounded-b-md h-fit flex justify-center relative"
                 >
-                    <Box sx={{height: "60%" ,width: "100%", typography: "body1"}}>
+                    <Box sx={{width: "100%", typography: "body1"}}>
                         <TabContext value={value}>
                             <Box
                                 className="flex justify-center"
@@ -87,18 +110,19 @@ function Dashboard() {
                                     aria-label="lab API tabs example"
                                     value={value}
                                 >
-                                    <Tab label="Last month" value="1"/>
-                                    <Tab label="This month" value="2"/>
-                                    <Tab label="future" value="3"/>
+                                    {listMonthTab && listMonthTab.map((item,index) => (
+                                        <Tab key={index} label={item.label} value={item.value}/>
+                                    )) }
+
+
                                 </TabList>
                             </Box>
-                            <TabPanel value="1"></TabPanel>
-                            <TabPanel value="2">
+                            <TabPanel value={value}>
                                 <div className="grid gap-2">
                                     <div className="flex justify-between">
                                         <div>Inflow</div>
                                         <div
-                                            className='text-inflow'>+ {wallet.currentWallet.balance?.toLocaleString('en-US', {
+                                            className='text-inflow'>+ {(wallet.currentWallet.balance + totalMoneyOutcome)?.toLocaleString('en-US', {
                                             style: 'decimal',
                                             currency: 'USD',
                                         })}đ
@@ -126,7 +150,7 @@ function Dashboard() {
                                         REPORT FOR THIS PERIOD
                                     </div>
                                 </div>
-                                <div className="overflow-y-auto scrollbar-hide h-[calc(100vh-30rem)]">
+                                <div className="overflow-y-auto h-fit">
                                     <div className="left-0 right-0 h-9 mt-5 bg-gray-100"></div>
                                     {data.length > 0 && data.map((item) => (
 
@@ -173,7 +197,6 @@ function Dashboard() {
                                     ))}
                                 </div>
                             </TabPanel>
-                            <TabPanel value="3"></TabPanel>
                         </TabContext>
                     </Box>
                 </div>
@@ -206,8 +229,8 @@ function Dashboard() {
                                     <div className='grid grid-cols-5'>
                                         <div></div>
                                         <div></div>
-                                        <button
-                                            className='text-rose-400 font-roboto font-semibold rounded hover:bg-rose-100'
+                                        <button onClick={()=>deleteTransaction()}
+                                                className='text-rose-400 font-roboto font-semibold rounded hover:bg-rose-100'
                                         >DELETE
                                         </button>
                                         <button

@@ -18,8 +18,17 @@ export default function NavBar() {
     const [openNav, setOpenNav] = useState(false);
     const [data, setData] = useState([]);
     const [openDropDown, setOpenDropDown] = useState(false);
+    const [totalWalletBalance, setTotalWalletBalance] = useState(0);
     const dispatch = useDispatch();
     const wallet = useSelector(state => state.wallet);
+
+    useEffect(() => {
+        let total = 0;
+        for(let i of data) {
+          total += i.balance;
+        }
+        setTotalWalletBalance(total);
+    },[wallet])
 
     useEffect(() => {
         WalletService.getWalletOfUser()
@@ -28,7 +37,7 @@ export default function NavBar() {
                 setData(res.data);
             })
             .catch(err => console.error(err))
-    }, [dispatch])
+    }, [ wallet])
 
     useEffect(() => {
         window.addEventListener(
@@ -145,7 +154,7 @@ export default function NavBar() {
                                                             </div>
                                                             <div
                                                                 className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                                                {wallet.currentWallet.balance?.toLocaleString('en-US', {
+                                                                {totalWalletBalance > 0 && totalWalletBalance.toLocaleString('en-US', {
                                                                     style: 'decimal',
                                                                     currency: 'USD',
                                                                 })} VND
@@ -167,7 +176,7 @@ export default function NavBar() {
                                                                 </div>
                                                                 <div
                                                                     className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                                                    {wallet.includeTotal.toLocaleString('en-US', {
+                                                                    {wallet?.balance.toLocaleString('en-US', {
                                                                         style: 'decimal',
                                                                         currency: 'USD',
                                                                     })} VND
