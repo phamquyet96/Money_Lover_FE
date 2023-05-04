@@ -54,7 +54,7 @@ const groupByTransactionByDate = (data) => {
 function Dashboard() {
 
     const [value, setValue] = useState("2");
-    const [maxWidth, setMaxWidth] = useState(150);
+    const [maxWidth, setMaxWidth] = useState(350);
     const [data, setData] = useState([]);
     const incomeRef = useRef(null);
     const [showTransactionModal, setShowTransactionModal] = useState(false);
@@ -66,7 +66,7 @@ function Dashboard() {
     })
     const [totalMoneyOutcome, setTotalMoneyOutcome] = useState(0)
     const [listMonthTab, setListMonthTab] = useState(listTabMonth)
-
+    const monthYearStr = date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
     const wallet = useSelector(state => state.wallet)
     const dispatch = useDispatch()
 
@@ -83,6 +83,13 @@ function Dashboard() {
         setValue(newValue);
     };
 
+    const formatTheDate = (dateStr) => {
+        const date = new Date(dateStr);
+        const options = { month: 'long', year: 'numeric' };
+        const formattedDate = date.toLocaleDateString('en-US', options);
+        const [month, year] = formattedDate.split(' ');
+        return month.toUpperCase() + ' - ' + year;
+    };
 
     useLayoutEffect(() => {
         const incomeNumberDiv = incomeRef.current;
@@ -132,7 +139,7 @@ function Dashboard() {
                                     <div className="flex justify-between">
                                         <div>Inflow</div>
                                         <div
-                                            className='text-inflow'>+ {(+wallet.currentWallet.balance + totalMoneyOutcome)?.toLocaleString('en-US', {
+                                            className='text-inflow'>+ { Number(+wallet.currentWallet.balance + totalMoneyOutcome)?.toLocaleString('en-US', {
                                             style: 'decimal',
                                             currency: 'USD',
                                         })}đ
@@ -150,7 +157,7 @@ function Dashboard() {
                                     <div className="border-t-2 border-gray-300 ml-auto"
                                          style={{width: maxWidth}}></div>
                                     <div
-                                        className="ml-auto">{wallet.currentWallet.balance?.toLocaleString('en-US', {
+                                        className="ml-auto">{ Number(wallet.currentWallet.balance)?.toLocaleString('en-US', {
                                         style: 'decimal',
                                         currency: 'USD',
                                     })}đ
@@ -160,8 +167,12 @@ function Dashboard() {
                                         REPORT FOR THIS PERIOD
                                     </div>
                                 </div>
+                                <div className="h-9 mt-5 w-full text-center font-bold text-2xl text-gray-600">
+                                    {data.length > 0 && (
+                                        <div> {formatTheDate(data[0].date)}</div>)}
+                                    <div className="border-t-2 border-gray-300 ml-auto"></div>
+                                </div>
                                 <div className="overflow-y-auto scrollbar-hide h-[600px]">
-                                    <div className="left-0 right-0 h-9 mt-5 bg-gray-100 w-full"></div>
                                     {data.length > 0 && data.map((item) => (
 
                                         <button key={item.id} className='hover:bg-green-300 w-full'
@@ -171,7 +182,7 @@ function Dashboard() {
                                                 }}>
                                             <div className="">
                                                 <div className="flex my-3 justify-between">
-                                                    <div className="flex ">
+                                                    <div className="flex">
                                                         <div
                                                             className="ml-1.5 rounded-full bg-gray-100 w-11 h-11"></div>
                                                         <div className="grid grid-rows-2 mt-1 ml-3">
@@ -185,7 +196,7 @@ function Dashboard() {
                                                         <div
                                                             className="text-center text-green-500 grid mr-2 mt-2 font-roboto font-semibold">
 
-                                                            + {item.money.toLocaleString('en-US', {
+                                                            + {Number(item.money).toLocaleString('en-US', {
                                                             style: 'decimal',
                                                             currency: 'USD',
                                                         })}đ
@@ -194,7 +205,7 @@ function Dashboard() {
                                                         <div
                                                             className="text-center text-red-600 grid mr-2 mt-2 font-roboto font-semibold">
 
-                                                            - {item.money.toLocaleString('en-US', {
+                                                            - {Number(item.money).toLocaleString('en-US', {
                                                             style: 'decimal',
                                                             currency: 'USD',
                                                         })}đ

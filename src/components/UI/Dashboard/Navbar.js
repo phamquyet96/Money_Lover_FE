@@ -13,6 +13,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {walletActions} from "../../../feature/walletSlice";
 import icon from "../../img/iconWallet.png"
 
+
 const getTotalMoneyAllWallet = (wallets) => {
     let total = 0;
     for(let i of wallets) {
@@ -129,7 +130,8 @@ export default function NavBar() {
                             {openDropDown && (
                                 <>
                                     <div
-                                        className="fixed inset-0 w-full z-30 h-full"
+                                        className="fixed inset-0 z-30 w-fit h-fit"
+                                        onClick={() => setOpenDropDown(false)}
                                     ></div>
                                     <div className="fixed flex inset-0 z-50 overflow-y-auto">
                                         <div aria-labelledby="dropdownDefaultButton"
@@ -140,11 +142,11 @@ export default function NavBar() {
                                             <div className="flow-root">
                                                 <ul role="list"
                                                     className="divide-y divide-gray-200 dark:divide-gray-700">
-                                                    <li className="py-3 sm:py-4">
+                                                    <li className="py-3 px-3 sm:py-4">
                                                         <div className="flex items-center space-x-4">
                                                             <div className="flex-shrink-0">
                                                                 <img className="w-8 h-8 rounded-full"
-                                                                     src={icon}
+                                                                     src={logo}
                                                                      alt="Neil image"/>
                                                             </div>
                                                             <div className="flex-1 min-w-0">
@@ -164,8 +166,8 @@ export default function NavBar() {
                                                         </div>
                                                     </li>
                                                     {data.length > 0 && data.map(wallet => (
-                                                        <li key={wallet.id} className="py-3 sm:py-4">
-                                                            <div className="flex items-center space-x-4 hover:bg-green-400 hover:cursor-pointer" onClick={() => changeCurrentWalletMenu(wallet)}>
+                                                        <li key={wallet.id} className="py-3 px-3 sm:py-4 hover:bg-green-400 hover:rounded hover:cursor-pointer">
+                                                            <div className="flex items-center space-x-4" onClick={() => changeCurrentWalletMenu(wallet)}>
                                                                 <div className="flex-shrink-0">
                                                                     <img className="w-8 h-8 rounded-full"
                                                                          src={icon}
