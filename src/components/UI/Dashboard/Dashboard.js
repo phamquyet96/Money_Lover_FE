@@ -150,7 +150,7 @@ function Dashboard() {
                                         REPORT FOR THIS PERIOD
                                     </div>
                                 </div>
-                                <div className="overflow-y-auto h-fit">
+                                <div className="overflow-y-auto scrollbar-hide h-[600px]">
                                     <div className="left-0 right-0 h-9 mt-5 bg-gray-100"></div>
                                     {data.length > 0 && data.map((item) => (
 

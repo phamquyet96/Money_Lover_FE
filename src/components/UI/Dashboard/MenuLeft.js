@@ -29,7 +29,7 @@ function MenuLeft() {
     return (
         <div
             id="app"
-            style={({ height: "fit" }, { display: "flex", flexDirection: "row" })}
+            style={({ height: "fit" }, { display: "flex", flexDirection: "row"})}
         >
             <Sidebar
                 breakPoint="sm"
