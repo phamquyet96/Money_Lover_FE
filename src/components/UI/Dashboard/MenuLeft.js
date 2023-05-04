@@ -28,9 +28,8 @@ function MenuLeft() {
 
     return (
         <div
-
             id="app"
-            style={({ height: "100vh" }, { display: "flex", flexDirection: "row" })}
+            style={({ height: "fit" }, { display: "flex", flexDirection: "row" })}
         >
             <Sidebar
                 breakPoint="sm"
@@ -38,7 +37,7 @@ function MenuLeft() {
                 backgroundColor="#ffff"
                 rtl={false}
                 defaultCollapsed={true}
-                style={{ height: "100vh" }}
+                style={{ height: "100%" }}
             >
                 <Menu>
                     <MenuItem

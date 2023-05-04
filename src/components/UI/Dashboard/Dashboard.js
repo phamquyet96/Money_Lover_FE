@@ -16,6 +16,7 @@ import {useDispatch, useSelector} from "react-redux";
 import TransactionService from "../../../services/transaction.service";
 import {randomInt} from "next/dist/shared/lib/bloom-filter/utils";
 import Layout from "../Layout/Master";
+import DatePicker from "react-datepicker";
 
 let myNumber = 1000;
 const date = new Date(), y = date.getFullYear(), m = date.getMonth();
@@ -31,6 +32,7 @@ function Dashboard() {
     const [data, setData] = useState([]);
     const incomeRef = useRef(null);
     const [showTransactionModal, setShowTransactionModal] = useState(false);
+    const [showEditTransactionModal, setShowEditTransactionModal] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
     const transaction = useSelector(state => state.transaction)
     const [dateFilter, setDateFilter] = useState({
@@ -54,7 +56,6 @@ function Dashboard() {
         setValue(newValue);
     };
 
-
     useLayoutEffect(() => {
         const incomeNumberDiv = incomeRef.current;
 
@@ -68,10 +69,10 @@ function Dashboard() {
 
     return (
         <Layout>
-            <Container maxWidth="sm" style={{marginTop: "1rem"}}>
-                <div className="bg-white rounded-b-md h-fit flex justify-center relative"
+            <Container maxWidth="sm" maxheight="400px" style={{marginTop: "1rem", display: "inline-block", position: "fixed", left:"700px"}}>
+                <div className="bg-white rounded-b-md h-fit justify-center relative"
                 >
-                    <Box sx={{width: "100%", typography: "body1"}}>
+                    <Box sx={{height: "60%" ,width: "100%", typography: "body1"}}>
                         <TabContext value={value}>
                             <Box
                                 className="flex justify-center"
@@ -125,7 +126,7 @@ function Dashboard() {
                                         REPORT FOR THIS PERIOD
                                     </div>
                                 </div>
-                                <div className="overflow-y-auto h-fit">
+                                <div className="overflow-y-auto scrollbar-hide h-[calc(100vh-30rem)]">
                                     <div className="left-0 right-0 h-9 mt-5 bg-gray-100"></div>
                                     {data.length > 0 && data.map((item) => (
 
