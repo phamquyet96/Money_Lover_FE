@@ -5,7 +5,7 @@ import {
     IconButton,
 } from "@material-tailwind/react";
 import logo from '../../img/ic_category_all.png';
-import AddTransactionModal from "./AddTransaction/AddTransactionModal";
+import AddTransactionModal from "./Transaction/AddTransactionModal";
 import {Link} from "react-router-dom";
 import {myAxios} from "../../config/axios";
 import WalletService from "../../../services/wallet.service";

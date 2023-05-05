@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
+import UpdateTransactionForm from "./UpdateTransactionForm";
 
-import AddTransactionForm from "./AddTransactionForm";
-import {useDispatch, useSelector} from "react-redux";
-
-export default function AddTransactionModal() {
+export default function UpdateTransactionModal({selectedItem,setShowTransactionModal}) {
     const [show, setShow] = useState(false);
-
 
     return (
         <>
             <Button variant="contained" color="success" onClick={()=>setShow(true)}>
-                Add Transaction
+                Edit
             </Button>
             {
                 show ? (
@@ -26,7 +23,7 @@ export default function AddTransactionModal() {
                                     <div className=" bg-white rounded-lg shadow">
                                         <div className="flex items-start justify-between p-4 border-b rounded-t">
                                             <h3 className="text-xl ml-2 font-semibold text-gray-900 ">
-                                                Add Transaction!
+                                                Update Transaction!
                                             </h3>
                                             <button type="button" onClick={() => setShow(false)}
                                                     className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -40,7 +37,7 @@ export default function AddTransactionModal() {
                                                 <span className="sr-only" >Close modal</span>
                                             </button>
                                         </div>
-                                        <AddTransactionForm setShow={setShow}/>
+                                        <UpdateTransactionForm setShow={setShow} selectedItem={selectedItem} setShowTransactionModal={setShowTransactionModal}/>
                                     </div>
                                 </div>
                             </div>

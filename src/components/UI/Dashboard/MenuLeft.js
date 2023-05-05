@@ -62,10 +62,11 @@ function MenuLeft() {
                     <Link to={'/categories'}>
                         <MenuItem icon={<WidgetsOutlinedIcon />}>Category</MenuItem>
                     </Link>
-                    <SubMenu icon={<MenuOutlinedIcon />} label="Addon">
-
-                        <MenuItem icon={<AccountBalanceWalletOutlinedIcon />}>Transaction</MenuItem>
+                    <Link to={'/report'}>
                         <MenuItem icon={<AssessmentOutlinedIcon />}>Report</MenuItem>
+                    </Link>
+                    <SubMenu icon={<MenuOutlinedIcon />} label="Addon">
+                        <MenuItem icon={<AccountBalanceWalletOutlinedIcon />}>Transaction</MenuItem>
                         <MenuItem icon={<AdUnitsOutlinedIcon />}>Budget</MenuItem>
                         <MenuItem icon={<ShoppingCartOutlinedIcon />}>Store</MenuItem>
                         <MenuItem icon={<HelpOutlineOutlinedIcon />}>FAQ</MenuItem>

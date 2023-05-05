@@ -10,7 +10,7 @@ import MyWallet from "./components/UI/Wallet/MyWallet";
 import WalletDetail from "./components/UI/Wallet/WalletDetail";
 import AccountModal from "./components/UI/Modal/AccountModal";
 import ChangePassword from "./components/UI/Modal/ChangePasswordModal";
-import AddTransactionForm from "./components/UI/Dashboard/AddTransaction/AddTransactionForm";
+import AddTransactionForm from "./components/UI/Dashboard/Transaction/AddTransactionForm";
 import {useSelector} from "react-redux";
 import {useEffect} from "react";
 import Layout from './components/UI/Layout/Master';
