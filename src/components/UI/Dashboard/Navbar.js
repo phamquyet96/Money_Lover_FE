@@ -13,7 +13,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {walletActions} from "../../../feature/walletSlice";
 import icon from "../../img/iconWallet.png"
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3455c15f5f3a067e1be676891d75f2def1bc96f6
 const getTotalMoneyAllWallet = (wallets) => {
     let total = 0;
     for(let i of wallets) {
@@ -121,7 +124,11 @@ export default function NavBar() {
                                     </svg>
                                 </div>
                                 <div
+<<<<<<< HEAD
                                     className='text-lg text-black font-bold italic'> { Number(wallet.currentWallet?.balance)?.toLocaleString('en-US', {
+=======
+                                    className='text-lg text-black font-bold italic'>{ Number(wallet.currentWallet?.balance)?.toLocaleString('en-US', {
+>>>>>>> 3455c15f5f3a067e1be676891d75f2def1bc96f6
                                     style: 'decimal',
                                     currency: 'USD',
                                 })} VND

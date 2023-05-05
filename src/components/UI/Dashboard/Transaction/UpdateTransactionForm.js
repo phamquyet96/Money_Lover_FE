@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import TransactionService from "../../../../services/transaction.service";
 import {walletActions} from "../../../../feature/walletSlice";
 import categoryService from "../../../../services/category.service";
+import WalletService from "../../../../services/wallet.service";
 
 
 let date = new Date()
@@ -35,7 +36,6 @@ function UpdateTransactionForm({setShow, selectedItem,setShowTransactionModal}) 
             date: selectedItem.date.split("-").join("/"),
             note: `${selectedItem.note}`
         },
-
         onSubmit: values => {
             TransactionService.updateTransaction(selectedItem.id,values)
                 .then((res) => {
@@ -46,14 +46,16 @@ function UpdateTransactionForm({setShow, selectedItem,setShowTransactionModal}) 
                         showConfirmButton: false,
                         timer: 1500,
                     })
-                    dispatch(walletActions.changeCurrentWallet(res.data.wallet))
+                    WalletService.getWalletOfUser()
+                        .then(res => {
+                            dispatch(walletActions.changeCurrentWallet(res.data[0]))
+                        })
+                        .catch(err => console.error(err))
                     setShowTransactionModal(false)
                     setShow(false)
-
                 })
         }
     })
-
     const handeChangeDate = (date) => {
         let myDate = new Date(date)
         let data = myDate.toISOString().slice(0, 10);
