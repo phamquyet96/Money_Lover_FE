@@ -1,6 +1,4 @@
 import * as React from "react";
-import NavBar from './Navbar'
-import MenuLeft from './MenuLeft';
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
@@ -8,19 +6,15 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import Container from "@mui/material/Container";
 import {useEffect, useLayoutEffect, useRef, useState} from "react";
-import {Link} from "react-router-dom";
 import iconWallet from "../../img/iconWallet.png";
-import {myAxios} from "../../config/axios";
 import {useDispatch, useSelector} from "react-redux";
 
 import TransactionService from "../../../services/transaction.service";
-import {randomInt} from "next/dist/shared/lib/bloom-filter/utils";
 import Layout from "../Layout/Master";
 import {walletActions} from "../../../feature/walletSlice";
 import UpdateTransactionModal from "./Transaction/UpdateTransactionModal";
 import Swal from "sweetalert2";
 
-let myNumber = 1000;
 const date = new Date(), y = date.getFullYear(), m = date.getMonth();
 
 
@@ -55,7 +49,7 @@ const groupByTransactionByDate = (data) => {
 function Dashboard() {
 
     const [value, setValue] = useState("2");
-    const [maxWidth, setMaxWidth] = useState(350);
+    const [maxWidth, setMaxWidth] = useState(150);
     const [data, setData] = useState([]);
     const incomeRef = useRef(null);
     const [showTransactionModal, setShowTransactionModal] = useState(false);
@@ -68,7 +62,6 @@ function Dashboard() {
     })
     const [totalMoneyOutcome, setTotalMoneyOutcome] = useState(0)
     const [listMonthTab, setListMonthTab] = useState(listTabMonth)
-    const monthYearStr = date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
     const wallet = useSelector(state => state.wallet)
     const dispatch = useDispatch()
 
@@ -111,7 +104,7 @@ function Dashboard() {
                 timer: 1500
             });
             setShowTransactionModal(false)
-            dispatch(walletActions.changeCurrentWallet(res.data.data))
+            dispatch(walletActions.changeCurrentWallet(res.data.wallet))
             setShowDeleteModal(false)
         }).catch(error => {
             console.log(error)
@@ -120,121 +113,125 @@ function Dashboard() {
     return (
 
         <Layout>
-            <Container maxWidth="sm" style={{marginTop: "1rem"}}>
-                <div className="bg-white rounded-b-md h-fit flex justify-center relative"
-                >
-                    <Box sx={{width: "100%", typography: "body1"}}>
-                        <TabContext value={value}>
-                            <Box
-                                className="flex justify-center"
-                                sx={{
-                                    borderBottom: 1,
-                                    borderColor: "divider",
-                                    color: "success.main",
-                                }}
-                            >
-                                <TabList
-                                    onChange={handleChange}
-                                    aria-label="lab API tabs example"
-                                    value={value}
-                                >
-                                    {listMonthTab && listMonthTab.map((item, index) => (
-                                        <Tab key={index} label={item.label} value={item.value}/>
-                                    ))}
+            {wallet.currentWallet?.balance && (
+                <>
+                    <Container maxWidth="sm" style={{marginTop: "1rem"}}>
+                        <div className="bg-white rounded-b-md h-fit flex justify-center relative"
+                        >
+                            <Box sx={{width: "100%", typography: "body1"}}>
+                                <TabContext value={value}>
+                                    <Box
+                                        className="flex justify-center"
+                                        sx={{
+                                            borderBottom: 1,
+                                            borderColor: "divider",
+                                            color: "success.main",
+                                        }}
+                                    >
+                                        <TabList
+                                            onChange={handleChange}
+                                            aria-label="lab API tabs example"
+                                            value={value}
+                                        >
+                                            {listMonthTab && listMonthTab.map((item, index) => (
+                                                <Tab key={index} label={item.label} value={item.value}/>
+                                            ))}
 
 
-                                </TabList>
-                            </Box>
-                            <TabPanel value={value}>
-                                <div className="grid gap-2">
-                                    <div className="flex justify-between">
-                                        <div>Inflow</div>
-                                        <div
-                                            className='text-inflow'>+ { Number(+wallet.currentWallet.balance + totalMoneyOutcome)?.toLocaleString('en-US', {
-                                            style: 'decimal',
-                                            currency: 'USD',
-                                        })}đ
-                                        </div>
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <div>Outflow</div>
-                                        <div ref={incomeRef}
-                                             className='text-rose-600'>- { Number(totalMoneyOutcome).toLocaleString('en-US', {
-                                            style: 'decimal',
-                                            currency: 'USD',
-                                        })}đ
-                                        </div>
-                                    </div>
-                                    <div className="border-t-2 border-gray-300 ml-auto"
-                                         style={{width: maxWidth}}></div>
-                                    <div
-                                        className="ml-auto">{ Number(wallet.currentWallet.balance)?.toLocaleString('en-US', {
-                                        style: 'decimal',
-                                        currency: 'USD',
-                                    })}đ
-                                    </div>
-                                    <div
-                                        className="flex justify-center text-green-400 font-roboto font-semibold">VIEW
-                                        REPORT FOR THIS PERIOD
-                                    </div>
-                                </div>
-                                <div className="h-9 mt-5 w-full text-center font-bold text-2xl text-gray-600">
-                                    {data.length > 0 && (
-                                        <div> {formatTheDate(data[0].date)}</div>)}
-                                    <div className="border-t-2 border-gray-300 ml-auto"></div>
-                                </div>
-                                <div className="overflow-y-auto scrollbar-hide h-[600px]">
-                                    {data.length > 0 && data.map((item) => (
-
-                                        <button key={item.id} className='hover:bg-green-300 w-full'
-                                                onClick={(e) => {
-                                                    setSelectedItem(item)
-                                                    setShowTransactionModal(true)
-                                                }}>
-                                            <div className="">
-                                                <div className="flex my-3 justify-between">
-                                                    <div className="flex">
-                                                        <div
-                                                            className="ml-1.5 rounded-full bg-gray-100 w-11 h-11"></div>
-                                                        <div className="grid grid-rows-2 mt-1 ml-3">
-                                                            <div
-                                                                className="font-semibold text-left text-sm">{item.subCategory.name}</div>
-                                                            <div
-                                                                className="text-gray-500 text-xs text-left">{item.date}</div>
-                                                        </div>
-                                                    </div>
-                                                    {item.subCategory.category.id == 1 ? (
-                                                        <div
-                                                            className="text-center text-green-500 grid mr-2 mt-2 font-roboto font-semibold">
-
-                                                            + {Number(item.money).toLocaleString('en-US', {
-                                                            style: 'decimal',
-                                                            currency: 'USD',
-                                                        })}đ
-                                                        </div>
-                                                    ) : (
-                                                        <div
-                                                            className="text-center text-red-600 grid mr-2 mt-2 font-roboto font-semibold">
-
-                                                            - {Number(item.money).toLocaleString('en-US', {
-                                                            style: 'decimal',
-                                                            currency: 'USD',
-                                                        })}đ
-                                                        </div>
-                                                    )
-                                                    }
+                                        </TabList>
+                                    </Box>
+                                    <TabPanel value={value}>
+                                        <div className="grid gap-2">
+                                            <div className="flex justify-between">
+                                                <div>Inflow</div>
+                                                <div
+                                                    className='text-inflow'>+ { Number(+wallet.currentWallet.balance + totalMoneyOutcome)?.toLocaleString('en-US', {
+                                                    style: 'decimal',
+                                                    currency: 'USD',
+                                                })}đ
                                                 </div>
                                             </div>
-                                        </button>
-                                    ))}
+                                            <div className="flex justify-between">
+                                                <div>Outflow</div>
+                                                <div ref={incomeRef}
+                                                     className='text-rose-600'>- { Number(totalMoneyOutcome).toLocaleString('en-US', {
+                                                    style: 'decimal',
+                                                    currency: 'USD',
+                                                })}đ
+                                                </div>
+                                            </div>
+                                            <div className="border-t-2 border-gray-300 ml-auto"
+                                                 style={{width: maxWidth}}></div>
+                                            <div
+                                                className="ml-auto">{ Number(wallet.currentWallet.balance)?.toLocaleString('en-US', {
+                                                style: 'decimal',
+                                                currency: 'USD',
+                                            })}đ
+                                            </div>
+                                            <div
+                                                className="flex justify-center text-green-400 font-roboto font-semibold">VIEW
+                                                REPORT FOR THIS PERIOD
+                                            </div>
+                                        </div>
+                                        <div className="h-9 mt-5 w-full text-center font-bold text-2xl text-gray-600">
+                                            {data.length > 0 && (
+                                                <div> {formatTheDate(data[0].date)}</div>)}
+                                            <div className="border-t-2 border-gray-300 ml-auto"></div>
+                                        </div>
+                                        <div className="overflow-y-auto scrollbar-hide h-[600px]">
+                                            {data.length > 0 && data.map((item) => (
 
-                                </div>
-                            </TabPanel>
-                        </TabContext>
-                    </Box>
-                </div>
-            </Container>
-            {selectedItem && showTransactionModal ? (
+                                                <button key={item.id} className='hover:bg-green-300 w-full'
+                                                        onClick={(e) => {
+                                                            setSelectedItem(item)
+                                                            setShowTransactionModal(true)
+                                                        }}>
+                                                    <div className="">
+                                                        <div className="flex my-3 justify-between">
+                                                            <div className="flex">
+                                                                <div
+                                                                    className="ml-1.5 rounded-full bg-gray-100 w-11 h-11"></div>
+                                                                <div className="grid grid-rows-2 mt-1 ml-3">
+                                                                    <div
+                                                                        className="font-semibold text-left text-sm">{item.subCategory.name}</div>
+                                                                    <div
+                                                                        className="text-gray-500 text-xs text-left">{item.date}</div>
+                                                                </div>
+                                                            </div>
+                                                            {item.subCategory.category.id == 1 ? (
+                                                                <div
+                                                                    className="text-center text-green-500 grid mr-2 mt-2 font-roboto font-semibold">
+
+                                                                    + {Number(item.money).toLocaleString('en-US', {
+                                                                    style: 'decimal',
+                                                                    currency: 'USD',
+                                                                })}đ
+                                                                </div>
+                                                            ) : (
+                                                                <div
+                                                                    className="text-center text-red-600 grid mr-2 mt-2 font-roboto font-semibold">
+
+                                                                    - {Number(item.money).toLocaleString('en-US', {
+                                                                    style: 'decimal',
+                                                                    currency: 'USD',
+                                                                })}đ
+                                                                </div>
+                                                            )
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            ))}
+
+                                        </div>
+                                    </TabPanel>
+                                </TabContext>
+                            </Box>
+                        </div>
+                    </Container>
+                </>
+            )}
+            {selectedItem && showTransactionModal && wallet.currentWallet ? (
                     <div
                         transaction={selectedItem}>
                         <div
@@ -366,7 +363,6 @@ function Dashboard() {
                         </div>
                     </div>
                 </>) : null}
-
         </Layout>
     );
 

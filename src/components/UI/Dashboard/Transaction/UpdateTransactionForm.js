@@ -6,7 +6,6 @@ import {useDispatch, useSelector} from "react-redux";
 import Swal from "sweetalert2";
 import TransactionService from "../../../../services/transaction.service";
 import {walletActions} from "../../../../feature/walletSlice";
-import transactionService from "../../../../services/transaction.service";
 import categoryService from "../../../../services/category.service";
 
 
@@ -22,10 +21,8 @@ function UpdateTransactionForm({setShow, selectedItem,setShowTransactionModal}) 
 
     useEffect(() => {
         const getData = async () => {
-            console.log(selectedItem,234)
             const res = await categoryService.getAllCategory();
             setCategories(res.data);
-            console.log(res.data,123)
         }
         getData();
     }, []);
