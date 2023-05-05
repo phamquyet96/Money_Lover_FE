@@ -362,7 +362,7 @@ export default function NavBar() {
                                     </svg>
                                 </div>
                                 <div
-                                    className='text-lg text-black font-bold italic'>+ { Number(wallet.currentWallet?.balance)?.toLocaleString('en-US', {
+                                    className='text-lg text-black font-bold italic'>{ Number(wallet.currentWallet?.balance)?.toLocaleString('en-US', {
                                     style: 'decimal',
                                     currency: 'USD',
                                 })} VND
