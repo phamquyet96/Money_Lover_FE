@@ -62,6 +62,13 @@ function Dashboard() {
 
     const wallet = useSelector(state => state.wallet)
     const dispatch = useDispatch()
+    const formatTheDate = (dateStr) => {
+        const date = new Date(dateStr);
+        const options = { month: 'long', year: 'numeric' };
+        const formattedDate = date.toLocaleDateString('en-US', options);
+        const [month, year] = formattedDate.split(' ');
+        return month.toUpperCase() + ' - ' + year;
+    };
 
     useEffect(() => {
         TransactionService.getTransaction(wallet.currentWallet?.id, dateFilter.startDate, dateFilter.endDate).then(res => {
@@ -167,10 +174,14 @@ function Dashboard() {
                                                 REPORT FOR THIS PERIOD
                                             </div>
                                         </div>
+                                        <div className="h-9 mt-5 w-full text-center font-bold text-2xl text-gray-600">
+                                            {data.length > 0 && (
+                                                <div> {formatTheDate(data[0].date)}</div>)}
+                                            <div className="border-t-2 border-gray-300 ml-auto"></div>
+                                        </div>
                                         <div className="overflow-y-auto h-fit">
                                             <div className="left-0 right-0 h-9 mt-5 bg-gray-100"></div>
-                                            {data.length > 0 && data.map((item) => (
-
+                                            {data.length > 0 && data.map((item) => (    
                                                 <button key={item.id} className='hover:bg-green-300 w-full'
                                                         onClick={(e) => {
                                                             setSelectedItem(item)
