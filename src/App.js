@@ -42,7 +42,7 @@ function App() {
                 <Route path="/report" element={<Chart/>}></Route>
 
                 <Route path="/categories" element={<ListCategory/>} />
-                
+
 
             </>
             {/*): <Route path="*" element={<Navigate to="/auth/login" replace />} />}*/}

@@ -7,7 +7,6 @@ const Category = () => {
     <>
       <div className="h-screen bg-custom-gray justify-center">
         <CategoryHeader />
-       
         <CategoryDetail />
       </div>
     </>
