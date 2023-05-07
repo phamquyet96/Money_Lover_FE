@@ -1,214 +1,209 @@
 import React, { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
-import axios from "axios";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import { Button } from "@mui/material";
 import { Chart as ChartJS } from "chart.js/auto";
-import { Chart } from "react-chartjs-2";
+import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
+import {
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
 import Master from "../Layout/Master";
+import { myAxios } from "../../config/axios";
+import {  useSelector } from "react-redux";
+
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+
+
+const labels = [];
+
+function getDaysInMonth(year, month) {
+  return new Date(year, month, 0).getDate();
+}
+
+export const options = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: "top",
+    },
+    title: {
+      display: false,
+      text: "Chart.js Bar Chart",
+    },
+  },
+  scales: {
+    x: {
+      stacked: true,
+    },
+    y: {
+      stacked: true,
+    },
+  },
+
+};
+
 const RevenueChart = () => {
-  const [monthYearFillter, setMonthYearFillter] = useState({
-    month: "",
-    year: "2023",
-  });
-  const [revenueOfMonth, setrevenueOfMonth] = useState("");
-  const [revenueOfYear, setrevenueOfYear] = useState("");
-  const [chartData, setChartData] = useState({
-    labels: [],
-    datasets: [
-      {
-        label: "Income",
-        data: [],
-        backgroundColor: "rgba(54, 162, 235, 1)",
-        borderColor: "rgba(54, 162, 235, 1)",
-        borderWidth: 1,
-      },
-      {
-        label: "Expense",
-        data: [],
-        backgroundColor: "rgb(255, 0, 0)",
-        borderColor: "rgb(255, 0, 0)",
-        borderWidth: 1,
-      },
-    ],
-  });
+    const wallet = useSelector((state) => state.wallet);
+            // TransactionService.getTransaction(wallet.currentWallet?.id, dateFilter.startDate, dateFilter.endDate).then(res => {
+
+  const [labels, setLabels] = useState([]);
+  const [loading, setloading] = useState(true);
+  const [chartData, setChartData] = useState(null);
+
+  // chamar o api: 
+  // 
+ 
+  useEffect(() => {
+    const today = new Date();
+        const lastDayOfMonth = new Date(
+          today.getFullYear(),
+          today.getMonth() + 1,
+          0
+        );
+        const firstDayOfMonth = new Date(
+          today.getFullYear(),
+          today.getMonth() ,
+          1
+        );
+    myAxios
+      .get("/transaction/", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+        params: {
+          walletId: wallet?.currentWallet?.id,
+          startDate: firstDayOfMonth,
+          endDate: lastDayOfMonth,
+        },
+    
+      })
+      .then((res) => {
+        const transactions = res.data.transactions;
+        let maptransactionsExpense = {};
+        let maptransactionsIncome = {};
+        transactions.forEach((transaction) => {
+          const transactionDay = new Date(transaction.date).getDate();
+          if (transaction.subCategory.category.id === 2) {
+            maptransactionsExpense[transactionDay] =
+              transaction.money + (maptransactionsExpense[transactionDay] || 0);
+            return;
+          }
+          maptransactionsIncome[transactionDay] =
+            transaction.money + (maptransactionsIncome[transactionDay] || 0);
+        });
+        setChartData([
+          {
+            label: "Income",
+            data: labels.map((label) => maptransactionsIncome[label] || 0),
+            backgroundColor: "rgba(54, 162, 235, 1)",
+            borderColor: "rgba(54, 162, 235, 1)",
+            borderWidth: 1,
+          },
+          {
+            label: "Expense",
+            data: labels.map((label) => maptransactionsExpense[label] || 0),
+            backgroundColor: "rgb(255, 0, 0)",
+            borderColor: "rgb(255, 0, 0)",
+            borderWidth: 1,
+          },
+        ]);
+      })
+      //
+      .catch((err) => console.error(err));
+  }, [labels, wallet?.currentWallet?.id]);
 
   useEffect(() => {
-    axios
-      .get(
-        `http://localhost:8000/api/report=${localStorage.getItem(
-          "idUser"
-        )}`
-      )
-      .then((response) => {
-        const labels = response.data.map((item) => `${item.homes_title}`);
-        const revenues = response.data.map((item) => item.revenue);
-
-        setChartData({
-          labels,
-          datasets: [
-            {
-              label: "Thang",
-              data: revenues,
-              backgroundColor: "rgba(54, 162, 235, 1)",
-              borderColor: "rgba(54, 162, 235, 1)",
-              borderWidth: 1,
-            },
-          ],
-        });
-      });
-    axios
-      .get(
-        `http://localhost:3002/api/report=${localStorage.getItem(
-          "idUser"
-        )}`
-      )
-      .then((response) => {
-        setrevenueOfMonth(response.data.total_revenue);
-      });
-    axios
-      .get(
-        `http://localhost:8000/api/report=${localStorage.getItem(
-          "idUser"
-        )}`
-      )
-      .then((response) => {
-        setrevenueOfYear(response.data.total_revenue);
-      });
+        const today = new Date();
+        const lastDayOfMonth = new Date(
+          today.getFullYear(),
+          today.getMonth() + 1,
+          0
+        ).getDate();
+        const newLabels = [...Array(lastDayOfMonth).keys()].map((x) => ++x);
+        setLabels(newLabels);
+    
   }, []);
-  const handleChange = (event) => {
-    setMonthYearFillter({
-      ...monthYearFillter,
-      [event.target.name]: event.target.value,
-    });
-  };
-  const handleSubmitFillter = () => {
-    axios
-      .get(
-        `http://localhost:8000/api/report=${localStorage.getItem(
-          "idUser"
-        )}&&month=${monthYearFillter.month}&&year=${monthYearFillter.year}`
-      )
-      .then((response) => {
-        const labels = response.data.map((item) => `${item.homes_title}`);
-        const revenues = response.data.map((item) => item.revenue);
 
-        setChartData({
-          labels,
-          datasets: [
-            {
-              label: "Thang",
-              data: revenues,
-              backgroundColor: "rgba(54, 162, 235, 0.2)",
-              borderColor: "rgba(54, 162, 235, 1)",
-              borderWidth: 1,
-            },
-            
-          ],
-        });
-      });
-    handleSubmitFillterTotal();
-  };
-
-  const handleSubmitFillterTotal = () => {
-    axios
-      .get(
-        `http://localhost:8000/api/report=${localStorage.getItem(
-          "idUser"
-        )}&&month=${monthYearFillter.month}&&year=${monthYearFillter.year}`
-      )
-      .then((response) => {
-        setrevenueOfMonth(response.data.total_revenue);
-      });
-    axios
-      .get(
-        `http://localhost:8000/api/report=${localStorage.getItem(
-          "idUser"
-        )}&&year=${monthYearFillter.year}`
-      )
-      .then((response) => {
-        setrevenueOfYear(response.data.total_revenue);
-      });
-  };
+  useEffect(() => {
+    if (chartData) {
+      setloading(false);
+    }
+  }, [chartData]);
 
   return (
     <Master>
-      <div >
-        <Row>
-          <Col sm={8}>
-            <div >
-              <Bar
-                options={{
-                  maintainAspectRatio: false,
-                  responsive: true,
-                  barThickness: 110,
-                }}
-                data={chartData}
-              />
+      <Container maxWidth="md" style={{ marginTop: "1rem" }}>
+        <div className="w-fullbg-white rounded-b-md h-fit flex justify-center relative ">
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              width: "100%",
+              typography: "body1",
+              textAlign: "center",
+              height: "100px",
+            }}
+          >
+            <div className="w-[50%] flex justify-center">
+              <div className="balance-start">
+                <p className="title-balance" style={{ fontSize: "14px" }}>
+                  Saldo Inicial
+                </p>
+                <p className="balance">24.0000</p>
+              </div>
             </div>
-          </Col>
-          <Col sm={4}>
-            <div style={{ marginLeft: "40%" }}>
-              <h3>Revenue Report</h3>
+            <div className="w-[50%] flex justify-center">
+              <div className="balance-end">
+                <p className="title-balance" style={{ fontSize: "14px" }}>
+                  Saldo Inicial
+                </p>
+                <p className="balance">74.0000</p>
+              </div>
             </div>
-            <div style={{ marginLeft: "40px" }}>
-              <Row style={{ marginTop: "40px" }}>
-                <Col sm={4}>
-                  <h5 style={{ margin: 0 }}>Year:</h5>
-                  <select name="year" onChange={handleChange}>
-                    <option value="2023">2023</option>
-                    <option value="2022">2022</option>
-                    <option value="2021">2021</option>
-                  </select>
-                </Col>
-                <Col sm={4}>
-                  <h5 style={{ margin: 0 }}>Month:</h5>
-                  <select name="month" onChange={handleChange}>
-                    <option value="1">January</option>
-                    <option value="2">February</option>
-                    <option value="3">March</option>
-                    <option value="4">April</option>
-                    <option value="5">May</option>
-                    <option value="6">June</option>
-                    <option value="7">July</option>
-                    <option value="8">August</option>
-                    <option value="9">September</option>
-                    <option value="10">October</option>
-                    <option value="11">November</option>
-                    <option value="12">December</option>
-                  </select>
-                </Col>
-                <Col sm={4}>
-                  <Button
-                    onClick={handleSubmitFillter}
-                    style={{ marginTop: "13px", background: "#f7a800" }}
-                    variant="contained"
-                  >
-                    Select
-                  </Button>
-                </Col>
-              </Row>
-              <Row style={{ marginTop: "70px" }}>
-                <h5>
-                  Total revenue in the month:{" "}
-                  {revenueOfMonth != null
-                    ? Number(revenueOfMonth).toLocaleString("en-EN") + " VNĐ"
-                    : "0 VNĐ"}
-                </h5>
-              </Row>
-              <Row style={{ marginTop: "70px" }}>
-                <h5>
-                  Total revenue of year:{" "}
-                  {revenueOfYear != null
-                    ? Number(revenueOfYear).toLocaleString() + " VNĐ"
-                    : "0 VNĐ"}
-                </h5>
-              </Row>
+          </Box>
+        </div>
+        <hr />
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            width: "100%",
+            typography: "body1",
+            textAlign: "center",
+            height: "100px",
+          }}
+        >
+          <div className="text-bar-start w-full justify-center">
+            <div className="title-bar">Renda líquida</div>
+            <div className="amount-bar" style={{ fontSize: "28px" }}>
+              35345
             </div>
-          </Col>
-        </Row>
-      </div>
+          </div>
+        </Box>
+        <Box>
+          <div className="chart-report w-full justify-center">
+            {loading ? (
+              null
+            ) : (
+                          <Bar options={options} data={{labels, datasets: chartData}} />
+
+            )}
+          </div>
+        </Box>
+      </Container>
     </Master>
   );
 };
