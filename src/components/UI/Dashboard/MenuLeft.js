@@ -27,28 +27,27 @@ function MenuLeft() {
     };
 
     return (
-        <div
-
-            id="app"
-            style={({ height: "100vh" }, { display: "flex", flexDirection: "row" })}
+      <div
+        id="app"
+        style={({ height: "100vh" }, { display: "flex", flexDirection: "row" })}
+      >
+        <Sidebar
+          breakPoint="sm"
+          transitionDuration={800}
+          backgroundColor="#ffff"
+          rtl={false}
+          defaultCollapsed={true}
+          style={{ height: "100vh" }}
         >
-            <Sidebar
-                breakPoint="sm"
-                transitionDuration={800}
-                backgroundColor="#ffff"
-                rtl={false}
-                defaultCollapsed={true}
-                style={{ height: "100vh" }}
+          <Menu>
+            <MenuItem
+              icon={<SavingsOutlinedIcon />}
+              onClick={() => {
+                toggle();
+              }}
             >
-                <Menu>
-                    <MenuItem
-                        icon={<SavingsOutlinedIcon />}
-                        onClick={() => {
-                            toggle();
-                        }}
-                    >
-                        Menu
-                    </MenuItem>
+              Menu
+            </MenuItem>
 
                     <Link to={'/account/profile'}>
                         <MenuItem icon={<PeopleOutlinedIcon />}>
@@ -75,6 +74,7 @@ function MenuLeft() {
                 </Menu>
             </Sidebar>
         </div>
+
     );
 }
 
