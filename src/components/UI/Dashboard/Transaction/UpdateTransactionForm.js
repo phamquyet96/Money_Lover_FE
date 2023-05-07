@@ -6,18 +6,12 @@ import {useDispatch, useSelector} from "react-redux";
 import Swal from "sweetalert2";
 import TransactionService from "../../../../services/transaction.service";
 import {walletActions} from "../../../../feature/walletSlice";
-import transactionService from "../../../../services/transaction.service";
 import categoryService from "../../../../services/category.service";
 import WalletService from "../../../../services/wallet.service";
-
-
-let date = new Date()
-let dateFormat = date.toISOString().slice(0, 10);
 
 function UpdateTransactionForm({setShow, selectedItem,setShowTransactionModal}) {
     const [startDate, setStartDate] = useState(new Date());
     const [categories, setCategories] = useState([]);
-    const [catePick, setCatePick] = useState(0);
     const myWallet = useSelector(state => state.wallet.currentWallet)
     const dispatch = useDispatch();
 
@@ -62,10 +56,6 @@ function UpdateTransactionForm({setShow, selectedItem,setShowTransactionModal}) 
         let data = myDate.toISOString().slice(0, 10);
         setStartDate(date)
         formik.setFieldValue('date', data)
-    }
-
-    const handleChangeCategory = (id) => {
-        setCatePick(id);
     }
 
     return (

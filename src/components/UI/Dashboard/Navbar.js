@@ -6,7 +6,7 @@ import {
 } from "@material-tailwind/react";
 import logo from '../../img/ic_category_all.png';
 import AddTransactionModal from "./Transaction/AddTransactionModal";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {myAxios} from "../../config/axios";
 import WalletService from "../../../services/wallet.service";
 import {useDispatch, useSelector} from "react-redux";
@@ -27,7 +27,7 @@ export default function NavBar() {
     const [totalWalletBalance, setTotalWalletBalance] = useState(0);
     const dispatch = useDispatch();
     const wallet = useSelector(state => state.wallet);
-
+    const navigate=useNavigate();
 
     useEffect(() => {
         WalletService.getWalletOfUser()
@@ -48,6 +48,7 @@ export default function NavBar() {
     }, []);
 
     const changeCurrentWalletMenu = (wallet) => {
+        navigate('/dashboard')
         dispatch(walletActions.changeCurrentWallet(wallet))
         setOpenDropDown(false)
     }
