@@ -112,14 +112,12 @@ const WalletDetail = () => {
                                 <div></div>
                                 <button
                                     onClick={() => setOpenDelete(true)}
-                                    className='text-rose-400 font-roboto h-[40px] w-[80px] font-semibold rounded-lg hover:bg-rose-100'
-                                    data-modal-target="delete-modal" data-modal-toggle="delete-modal">DELETE
+                                    className='text-rose-400 font-roboto h-[40px] w-[80px] font-semibold rounded-lg hover:bg-rose-100'>DELETE
                                 </button>
                                 <div></div>
                                 <button
                                     onClick={() => setOpenUpdate(true)}
-                                    className='text-green-400 font-roboto h-[40px] w-[80px] font-semibold rounded-lg hover:bg-green-100'
-                                    data-modal-target="defaultModal" data-modal-toggle="defaultModal">UPDATE
+                                    className='text-green-400 font-roboto h-[40px] w-[80px] font-semibold rounded-lg hover:bg-green-100'>UPDATE
                                 </button>
                                 <div></div>
                             </div>
@@ -179,8 +177,7 @@ const WalletDetail = () => {
                                         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
                                             <button type="button"
                                                     onClick={() => setOpenDelete(false)}
-                                                    className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
-                                                    data-modal-hide="delete-modal">
+                                                    className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white">
                                                 <svg aria-hidden="true" className="w-5 h-5" fill="currentColor"
                                                      viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                                     <path fillRule="evenodd"
@@ -200,12 +197,12 @@ const WalletDetail = () => {
                                                 </svg>
                                                 <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are
                                                     you sure you want to delete this account?</h3>
-                                                <button data-modal-hide="delete-modal" type="button"
+                                                <button type="button"
                                                         onClick={deleteWalletDetail}
                                                         className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
                                                     Yes, I'm sure
                                                 </button>
-                                                <button data-modal-hide="delete-modal" type="button"
+                                                <button type="button"
                                                         onClick={() => setOpenDelete(false)}
                                                         className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No,
                                                     cancel
@@ -231,8 +228,7 @@ const WalletDetail = () => {
                                                 </h3>
                                                 <button type="button"
                                                         onClick={() => setOpenUpdate(false)}
-                                                        className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                                                        data-modal-hide="defaultModal">
+                                                        className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
                                                     <svg aria-hidden="true" className="w-5 h-5" fill="currentColor"
                                                          viewBox="0 0 20 20"
                                                          xmlns="http://www.w3.org/2000/svg">
@@ -288,12 +284,12 @@ const WalletDetail = () => {
                                                 </div>
                                                 <div
                                                     className="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
-                                                    <button data-modal-hide="defaultModal" type="submit"
+                                                    <button type="submit"
                                                             className="text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                                                         Save
                                                     </button>
                                                     <button onClick={() => setOpenUpdate(false)}
-                                                            data-modal-hide="defaultModal" type="button"
+                                                            type="button"
                                                             className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">Decline
                                                     </button>
                                                 </div>

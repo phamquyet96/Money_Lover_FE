@@ -5,6 +5,7 @@ import {myAxios} from "../../config/axios";
 import {useNavigate} from "react-router-dom";
 import UserService from "../../../services/user.service";
 
+
 const UpdateProfileModal = () => {
     const cloudName = 'money-lover';
     const uploadPreset = 'ypxhljuq';
@@ -28,7 +29,7 @@ const UpdateProfileModal = () => {
             headers: {
                 authorization: "Bearer " + localStorage.getItem('accessToken')
             }
-        })
+        });
         Swal.fire({
             position: 'center',
             icon: 'success',
@@ -37,7 +38,7 @@ const UpdateProfileModal = () => {
             timer: 1500
         })
         setOpen(false);
-        navigate("/dashboard")
+        navigate("/account/profile")
     }
 
     function handleFile(event) {

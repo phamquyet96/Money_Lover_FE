@@ -7,15 +7,21 @@ import TabPanel from "@mui/lab/TabPanel";
 import Container from "@mui/material/Container";
 import {useEffect, useLayoutEffect, useRef, useState} from "react";
 import iconWallet from "../../img/iconWallet.png";
+import inIcon from "../../img/category-img/in.png";
+import outIcon from "../../img/category-img/out.png";
+import inWallet from "../../img/category-img/inwallet.png";
+import outWallet from "../../img/category-img/outwallet.png";
 import {useDispatch, useSelector} from "react-redux";
-
 import TransactionService from "../../../services/transaction.service";
 import Layout from "../Layout/Master";
 import {walletActions} from "../../../feature/walletSlice";
 import UpdateTransactionModal from "./Transaction/UpdateTransactionModal";
 import Swal from "sweetalert2";
 
-const date = new Date(), y = date.getFullYear(), m = date.getMonth();
+const date = new Date();
+let y = date.getFullYear();
+let cMonth = date.getMonth();;
+let m = date.getMonth();
 
 
 function formatDate(date) {
@@ -35,16 +41,7 @@ const listTabMonth = [
         label: "Future",
         value: "3"
     }
-];
-
-
-const groupByTransactionByDate = (data) => {
-    const result = data.groupBy(item => {
-        return item.date;
-    });
-
-    return result
-}
+]
 
 function Dashboard() {
 
@@ -62,36 +59,163 @@ function Dashboard() {
     })
     const [totalMoneyOutcome, setTotalMoneyOutcome] = useState(0)
     const [listMonthTab, setListMonthTab] = useState(listTabMonth)
+
     const wallet = useSelector(state => state.wallet)
     const dispatch = useDispatch()
     const formatTheDate = (dateStr) => {
         const date = new Date(dateStr);
-        const options = { month: 'long', year: 'numeric' };
+        const options = {month: 'long', year: 'numeric'};
         const formattedDate = date.toLocaleDateString('en-US', options);
         const [month, year] = formattedDate.split(' ');
         return month.toUpperCase() + ' - ' + year;
     };
 
     useEffect(() => {
+        console.log(m)
         TransactionService.getTransaction(wallet.currentWallet?.id, dateFilter.startDate, dateFilter.endDate).then(res => {
             setData(res.data.transactions)
             setTotalMoneyOutcome(res.data.totalMoneyOutcome)
         })
 
-    }, [wallet, showTransactionModal])
+    }, [wallet, showTransactionModal, dateFilter]);
 
+    // const handleChange = (event, newValue) => {
+    //     if (newValue === "1") {
+    //         for (let i = 0; i < 3; i++) {
+    //             if (listMonthTab[i].value == value) {
+    //                 listMonthTab[i].value = "3";
+    //             }
+    //             if (listMonthTab[i].value == 1) {
+    //                 listMonthTab[i].value = "2";
+    //             }
+    //         }
+    //
+    //         m = m-1;
+    //         if (m == 0) {
+    //             m = 12;
+    //             y = y -1;
+    //         }
+    //         cMonth = m - 1;
+    //         if (cMonth < 0) {
+    //             cMonth = 11;
+    //             y -= 1;
+    //         }
+    //         const nameLabel = `${m}/${y}`
+    //         const lastMonth = {
+    //             label: nameLabel,
+    //             value: "1"
+    //         }
+    //
+    //         listMonthTab.unshift(lastMonth);
+    //         listMonthTab.pop();
+    //
+    //     } else if (newValue === "3"){
+    //         for (let i = 0; i < 3; i++) {
+    //             if (listMonthTab[i].value == value) {
+    //                 listMonthTab[i].value = "1";
+    //             }
+    //             if (listMonthTab[i].value == 3) {
+    //                 listMonthTab[i].value = "2";
+    //             }
+    //         }
+    //
+    //         if (m == 12) {
+    //             m = 1;
+    //             console.log(m)
+    //             y = y + 1;
+    //         }
+    //         cMonth = m + 1;
+    //         if (cMonth > 11) {
+    //             cMonth = 0;
+    //             y += 1;
+    //         }
+    //         m = m + 1
+    //         const nameLabel = `${m}/${y}`
+    //         const nextMonth = {
+    //             label: nameLabel,
+    //             value: "3"
+    //         }
+    //         listMonthTab.push(nextMonth);
+    //         listMonthTab.shift()
+    //
+    //     }
+    //
+    //
+    //     setListMonthTab([...listMonthTab])
+    //     let newDataFilter = {
+    //         startDate: formatDate(new Date(y, m, 1)),
+    //         endDate: formatDate(new Date(y, m + 1, 0))
+    //     }
+    //     setDateFilter({...dateFilter, startDate: newDataFilter.startDate, endDate: newDataFilter.endDate})
+    //
+    //     //setValue(newValue);
+    // };
 
     const handleChange = (event, newValue) => {
-        setValue(newValue);
+        if (newValue === "1") {
+            m = cMonth
+            let nameLabel
+            for (let i = 0; i < 3; i++) {
+                if (listMonthTab[i].value === value) {
+                    listMonthTab[i].value = "3";
+                }
+                if (listMonthTab[i].value === "1") {
+                    listMonthTab[i].value = "2";
+                }
+            }
+            m--
+            if (m < 1) {
+                m = 12;
+                y = y - 1;
+                cMonth = 1
+            }
+            nameLabel = `${getMonthName(m - 1)} ${y}`;
+            const lastMonth = {
+                label: nameLabel,
+                value: "1"
+            };
+            listMonthTab.unshift(lastMonth);
+            listMonthTab.pop();
+            cMonth = m
+        } else if (newValue === "3") {
+            m = cMonth
+            for (let i = 0; i < 3; i++) {
+                if (listMonthTab[i].value === value) {
+                    listMonthTab[i].value = "1";
+                }
+                if (listMonthTab[i].value === "3") {
+                    listMonthTab[i].value = "2";
+                }
+            }
+
+            m++
+            if (m > 10) {
+                m = -1;
+                y = y + 1;
+                cMonth = 12
+            }
+            let nameLabel = `${getMonthName(m + 1)} ${y}`;
+            const nextMonth = {
+                label: nameLabel,
+                value: "3"
+            };
+            listMonthTab.push(nextMonth);
+            listMonthTab.shift();
+            cMonth = m
+        }
+
+        setListMonthTab([...listMonthTab]);
+        let newDataFilter = {
+            startDate: formatDate(new Date(y, m, 1)),
+            endDate: formatDate(new Date(y, m + 1, 0))
+        };
+        setDateFilter({...dateFilter, startDate: newDataFilter.startDate, endDate: newDataFilter.endDate});
     };
 
-    const formatTheDate = (dateStr) => {
-        const date = new Date(dateStr);
-        const options = { month: 'long', year: 'numeric' };
-        const formattedDate = date.toLocaleDateString('en-US', options);
-        const [month, year] = formattedDate.split(' ');
-        return month.toUpperCase() + ' - ' + year;
-    };
+    function getMonthName(monthIndex) {
+        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        return months[monthIndex];
+    }
 
     useLayoutEffect(() => {
         const incomeNumberDiv = incomeRef.current;
@@ -111,7 +235,7 @@ function Dashboard() {
                 timer: 1500
             });
             setShowTransactionModal(false)
-            dispatch(walletActions.changeCurrentWallet(res.data.wallet))
+            dispatch(walletActions.changeCurrentWallet(res.data.data))
             setShowDeleteModal(false)
         }).catch(error => {
             console.log(error)
@@ -123,6 +247,7 @@ function Dashboard() {
             {wallet.currentWallet?.balance && (
                 <>
                     <Container maxWidth="sm" style={{marginTop: "1rem"}}>
+
                         <div className="bg-white rounded-b-md h-fit flex justify-center relative"
                         >
                             <Box sx={{width: "100%", typography: "body1"}}>
@@ -143,16 +268,15 @@ function Dashboard() {
                                             {listMonthTab && listMonthTab.map((item, index) => (
                                                 <Tab key={index} label={item.label} value={item.value}/>
                                             ))}
-
-
                                         </TabList>
                                     </Box>
                                     <TabPanel value={value}>
+
                                         <div className="grid gap-2">
                                             <div className="flex justify-between">
                                                 <div>Inflow</div>
                                                 <div
-                                                    className='text-inflow'>+ { Number(+wallet.currentWallet.balance + totalMoneyOutcome)?.toLocaleString('en-US', {
+                                                    className='text-inflow'>+ {(wallet.currentWallet.balance + totalMoneyOutcome)?.toLocaleString('en-US', {
                                                     style: 'decimal',
                                                     currency: 'USD',
                                                 })}đ
@@ -161,7 +285,7 @@ function Dashboard() {
                                             <div className="flex justify-between">
                                                 <div>Outflow</div>
                                                 <div ref={incomeRef}
-                                                     className='text-rose-600'>- { Number(totalMoneyOutcome).toLocaleString('en-US', {
+                                                     className='text-rose-600'>- {totalMoneyOutcome.toLocaleString('en-US', {
                                                     style: 'decimal',
                                                     currency: 'USD',
                                                 })}đ
@@ -170,13 +294,13 @@ function Dashboard() {
                                             <div className="border-t-2 border-gray-300 ml-auto"
                                                  style={{width: maxWidth}}></div>
                                             <div
-                                                className="ml-auto">{ Number(wallet.currentWallet.balance)?.toLocaleString('en-US', {
+                                                className="ml-auto">{wallet.currentWallet.balance?.toLocaleString('en-US', {
                                                 style: 'decimal',
                                                 currency: 'USD',
                                             })}đ
                                             </div>
                                             <div
-                                                className="flex justify-center text-green-400 font-roboto font-semibold">VIEW
+                                                className="flex justify-center mt-5 text-green-400 font-roboto font-semibold">VIEW
                                                 REPORT FOR THIS PERIOD
                                             </div>
                                         </div>
@@ -185,15 +309,8 @@ function Dashboard() {
                                                 <div> {formatTheDate(data[0].date)}</div>)}
                                             <div className="border-t-2 border-gray-300 ml-auto"></div>
                                         </div>
-<<<<<<< HEAD
-                                        <div className="overflow-y-auto scrollbar-hide h-[600px]">
+                                        <div className="overflow-scroll scrollbar-hide h-[650px]">
                                             {data.length > 0 && data.map((item) => (
-
-=======
-                                        <div className="overflow-y-auto h-fit">
-                                            <div className="left-0 right-0 h-9 mt-5 bg-gray-100"></div>
-                                            {data.length > 0 && data.map((item) => (    
->>>>>>> 3455c15f5f3a067e1be676891d75f2def1bc96f6
                                                 <button key={item.id} className='hover:bg-green-300 w-full'
                                                         onClick={(e) => {
                                                             setSelectedItem(item)
@@ -202,8 +319,21 @@ function Dashboard() {
                                                     <div className="">
                                                         <div className="flex my-3 justify-between">
                                                             <div className="flex">
-                                                                <div
-                                                                    className="ml-1.5 rounded-full bg-gray-100 w-11 h-11"></div>
+                                                                {item.subCategory.category.id == 1 ? (
+                                                                    <div
+                                                                        className="ml-1.5 rounded-full bg-gray-100 w-11 h-11">
+                                                                        <img className='w-20 flex justify-center'
+                                                                             src={inIcon}
+                                                                             alt={iconWallet}
+                                                                        />
+                                                                    </div>) : (
+                                                                    <div
+                                                                        className="ml-1.5 rounded-full bg-gray-100 w-11 h-11">
+                                                                        <img className='w-20 flex justify-center'
+                                                                             src={outIcon}
+                                                                             alt={iconWallet}
+                                                                        />
+                                                                    </div>)}
                                                                 <div className="grid grid-rows-2 mt-1 ml-3">
                                                                     <div
                                                                         className="font-semibold text-left text-sm">{item.subCategory.name}</div>
@@ -215,7 +345,7 @@ function Dashboard() {
                                                                 <div
                                                                     className="text-center text-green-500 grid mr-2 mt-2 font-roboto font-semibold">
 
-                                                                    + {Number(item.money).toLocaleString('en-US', {
+                                                                    + {item.money.toLocaleString('en-US', {
                                                                     style: 'decimal',
                                                                     currency: 'USD',
                                                                 })}đ
@@ -224,7 +354,7 @@ function Dashboard() {
                                                                 <div
                                                                     className="text-center text-red-600 grid mr-2 mt-2 font-roboto font-semibold">
 
-                                                                    - {Number(item.money).toLocaleString('en-US', {
+                                                                    - {item.money.toLocaleString('en-US', {
                                                                     style: 'decimal',
                                                                     currency: 'USD',
                                                                 })}đ
@@ -235,8 +365,8 @@ function Dashboard() {
                                                     </div>
                                                 </button>
                                             ))}
-
                                         </div>
+
                                     </TabPanel>
                                 </TabContext>
                             </Box>
@@ -272,11 +402,12 @@ function Dashboard() {
                                     <div className='grid grid-cols-5'>
                                         <div></div>
                                         <div></div>
-                                        <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" onClick={()=>setShowDeleteModal(true)}
+                                        <button onClick={() => setShowDeleteModal(true)}
                                                 className='text-rose-400 font-roboto font-semibold rounded hover:bg-rose-100'
                                         >DELETE
                                         </button>
-                                        <UpdateTransactionModal selectedItem={selectedItem} setShowTransactionModal={setShowTransactionModal}/>
+                                        <UpdateTransactionModal selectedItem={selectedItem}
+                                                                setShowTransactionModal={setShowTransactionModal}/>
                                         <div></div>
                                     </div>
                                 </div>
@@ -284,10 +415,15 @@ function Dashboard() {
                                     <div className='flex grid grid-rows-2'>
                                         <div className='flex justify-center grid grid-cols-2 mt-4'>
                                             <div className='flex justify-center'>
+                                                {selectedItem.subCategory.category.id == 1 ? (
                                                 <img className='w-20 flex justify-center'
-                                                     src={iconWallet}
+                                                     src={inWallet}
                                                      alt={iconWallet}
-                                                />
+                                                />) : (
+                                                    <img className='w-20 flex justify-center'
+                                                         src={outWallet}
+                                                         alt={iconWallet}
+                                                    />)}
                                             </div>
                                             <div className='grid grid-rows-2'>
                                                 <div className='text-2xl mt-1.5'>{selectedItem.subCategory.name}</div>
@@ -306,7 +442,7 @@ function Dashboard() {
                                     <div className='grid mt-6 ml-40'>
                                         {selectedItem.subCategory.category.id == 1 ? (
                                             <div
-                                                className="text-left text-green-500 grid mr-2 mt-2 text-4xl font-roboto font-semibold">
+                                                className="text-left text-green-500 grid mr-4 mt-2 text-4xl font-roboto font-semibold">
                                                 + {selectedItem.money.toLocaleString('en-US', {
                                                 style: 'decimal',
                                                 currency: 'USD',
@@ -314,7 +450,7 @@ function Dashboard() {
                                             </div>
                                         ) : (
                                             <div
-                                                className="text-left text-red-600 grid mr-2 mt-2 text-4xl font-roboto font-semibold">
+                                                className="text-left text-red-600 grid mr-4 mt-2 text-4xl font-roboto font-semibold">
                                                 - {selectedItem.money.toLocaleString('en-US', {
                                                 style: 'decimal',
                                                 currency: 'USD',
@@ -376,6 +512,7 @@ function Dashboard() {
                         </div>
                     </div>
                 </>) : null}
+
         </Layout>
     );
 

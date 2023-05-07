@@ -74,9 +74,9 @@ function AddTransactionForm({setShow}) {
                                 <p className="mb-2 font-light text-gray-700">Wallet</p>
                                 <select onChange={formik.handleChange}
                                         name="walletId"
-                                        className="w-full border-none p-5 bg-white border border-gray-200 rounded shadow-sm appearance-none text-black"
+                                        className="w-full border-none p-5 focus:ring-black bg-white border border-gray-200 rounded shadow-sm appearance-none text-black"
                                 >
-                                    <option defaultChecked value={myWallet.id}>{myWallet.name}</option>
+                                    <option defaultChecked  value={myWallet.id}>{myWallet.name}</option>
                                 </select>
                             </div>
                             <div className="w-full sm:w-1/2 mt-2 sm:mt-0">
@@ -86,7 +86,7 @@ function AddTransactionForm({setShow}) {
 
                                 }
                                         name='subcategoryId'
-                                        className="w-full p-5 bg-white border border-gray-200 rounded shadow-sm appearance-none text-black"
+                                        className="w-full focus:ring-black p-5 bg-white border-none border-gray-200 rounded shadow-sm appearance-none text-black"
                                         id=""
                                 >
                                     {categories.map((c, index) => (
@@ -104,9 +104,9 @@ function AddTransactionForm({setShow}) {
                             <div className="w-full sm:w-1/2 mt-2 sm:mt-0">
                                 <p className="mb-2 font-light text-gray-700">Amount</p>
                                 <input
-                                    type="text"
+                                    type="number"
                                     name="money" onChange={formik.handleChange}
-                                    className="w-full h-full p-5 bg-white border border-gray-200 rounded shadow-sm appearance-none text-black"
+                                    className="w-full h-full p-5 bg-white focus:ring-black border-none border-gray-200 rounded shadow-sm appearance-none text-black"
 
                                 />
                             </div>
@@ -114,7 +114,7 @@ function AddTransactionForm({setShow}) {
                         <div className="flex items-center mt-5 mb-3 space-x-4">
                             <div className="w-full sm:w-1/2">
                                 <p className="mb-2 font-light text-gray-700">Date</p>
-                                <DatePicker className="w-full p-5 bg-white text-black" selected={startDate}
+                                <DatePicker className="w-full p-5 focus:ring-black border-none bg-white text-black" selected={startDate}
                                             onChange={(date) => handeChangeDate(date)} dateFormat="yyyy/MM/dd"/>
                             </div>
                             <div className="w-full sm:w-1/2">
@@ -123,7 +123,7 @@ function AddTransactionForm({setShow}) {
                                     type="text"
                                     name="note"
                                     onChange={formik.handleChange}
-                                    className="w-full p-5 bg-white border border-gray-200 rounded shadow-sm appearance-none text-black"
+                                    className="w-full p-5 bg-white focus:ring-black border-none rounded shadow-sm appearance-none text-black"
                                     id=""
                                 />
                             </div>

@@ -16,12 +16,19 @@ import SavingsOutlinedIcon from "@mui/icons-material/SavingsOutlined";
 import * as React from "react";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import {Link} from "react-router-dom";
-
+import {useEffect, useState} from "react";
+import UserService from "../../../services/user.service";
+import AvatarIcon from "../Layout/icon";
 
 function MenuLeft() {
     const { collapseSidebar, toggleSidebar, toggled } = useProSidebar();
+    const [user, setUser] = useState({});
 
-
+    useEffect(() => {
+        UserService.getProfile().then(res => {
+            setUser(res.data.data)
+        })
+    }, [])
     const toggle = () => {
         collapseSidebar();
     };
@@ -50,9 +57,14 @@ function MenuLeft() {
                     </MenuItem>
 
                     <Link to={'/account/profile'}>
-                        <MenuItem icon={<PeopleOutlinedIcon />}>
-                            Account
-                        </MenuItem>
+                        {user.image == null ? (
+                            <MenuItem icon={<PeopleOutlinedIcon />} >
+                                Account
+                            </MenuItem>) : (
+                            <MenuItem icon={<AvatarIcon />} >
+                                Account
+                            </MenuItem>
+                        )}
                     </Link>
                     <Link to={'/my-wallet'}>
                         <MenuItem icon={<AccountBalanceWalletOutlinedIcon />}>

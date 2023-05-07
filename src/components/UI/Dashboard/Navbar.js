@@ -13,10 +13,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {walletActions} from "../../../feature/walletSlice";
 import icon from "../../img/iconWallet.png"
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 3455c15f5f3a067e1be676891d75f2def1bc96f6
 const getTotalMoneyAllWallet = (wallets) => {
     let total = 0;
     for(let i of wallets) {
@@ -124,11 +120,7 @@ export default function NavBar() {
                                     </svg>
                                 </div>
                                 <div
-<<<<<<< HEAD
-                                    className='text-lg text-black font-bold italic'> { Number(wallet.currentWallet?.balance)?.toLocaleString('en-US', {
-=======
                                     className='text-lg text-black font-bold italic'>{ Number(wallet.currentWallet?.balance)?.toLocaleString('en-US', {
->>>>>>> 3455c15f5f3a067e1be676891d75f2def1bc96f6
                                     style: 'decimal',
                                     currency: 'USD',
                                 })} VND
@@ -136,11 +128,7 @@ export default function NavBar() {
                             </button>
                             {openDropDown && (
                                 <>
-                                    <div
-                                        className="fixed inset-0 z-30 w-fit h-fit"
-                                        onClick={() => setOpenDropDown(false)}
-                                    ></div>
-                                    <div className="fixed flex inset-0 z-50 overflow-y-auto">
+                                    <div className="fixed flex inset-0 overflow-y-auto" onClick={() => setOpenDropDown(false)}>
                                         <div aria-labelledby="dropdownDefaultButton"
                                              className="w-full max-w-md p-4 h-fit mt-16 ml-24 bg-white border border-gray-200 rounded-lg shadow sm:p-8">
                                             <div className="flex items-center justify-between mb-4">

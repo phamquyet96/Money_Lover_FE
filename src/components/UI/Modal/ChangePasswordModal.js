@@ -54,7 +54,6 @@ const ChangePassword = () => {
                 oldPassword: values.oldPassword,
                 newPassword: values.confirmPassword,
             };
-            console.log(values);
             if (checkConfirmPassword()) {
                 UserService.changePassword(data)
                     .then(() => {
