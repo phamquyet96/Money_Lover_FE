@@ -15,6 +15,7 @@ import {useSelector} from "react-redux";
 import {useEffect} from "react";
 import Layout from './components/UI/Layout/Master';
 import ListCategory from './components/UI/Category/ListCategory';
+import Chart from './components/UI/Chart/Chart';
 
 function App() {
 
@@ -38,8 +39,10 @@ function App() {
                 <Route path="/change-password" element={<ChangePassword />}></Route>
                 <Route path="/transaction" element={<AddTransactionForm />}></Route>
 
+                <Route path="/report" element={<Chart/>}></Route>
 
                 <Route path="/categories" element={<ListCategory/>} />
+
 
             </>
             {/*): <Route path="*" element={<Navigate to="/auth/login" replace />} />}*/}

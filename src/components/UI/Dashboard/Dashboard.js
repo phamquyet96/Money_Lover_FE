@@ -20,8 +20,9 @@ import Swal from "sweetalert2";
 
 const date = new Date();
 let y = date.getFullYear();
-let cMonth = date.getMonth();;
+let cMonth = date.getMonth();
 let m = date.getMonth();
+
 
 
 function formatDate(date) {
@@ -152,6 +153,7 @@ function Dashboard() {
     // };
 
     const handleChange = (event, newValue) => {
+
         if (newValue === "1") {
             m = cMonth
             let nameLabel
@@ -187,7 +189,6 @@ function Dashboard() {
                     listMonthTab[i].value = "2";
                 }
             }
-
             m++
             if (m > 10) {
                 m = -1;
@@ -375,6 +376,8 @@ function Dashboard() {
                 </>
             )}
             {selectedItem && showTransactionModal && wallet.currentWallet ? (
+                <div
+                    transaction={selectedItem}>
                     <div
                         transaction={selectedItem}>
                         <div
@@ -430,13 +433,9 @@ function Dashboard() {
                                                 <div className='text-sm font-roboto mt-1'>{wallet.currentWallet.name}</div>
                                             </div>
                                         </div>
-                                        <div className='grid grid-cols-2'>
-                                            <div></div>
-                                            <div className=''>
-                                                <div className='text-xs text-gray-500 '>{selectedItem.date}</div>
-                                                <div className='border-t-2 mt-3 w-28 mb-1.5'></div>
-                                                <div className='flex'>{selectedItem.note}</div>
-                                            </div>
+                                        <div className='grid grid-rows-2'>
+                                            <div className='text-2xl mt-1.5'>{selectedItem.subCategory.name}</div>
+                                            <div className='text-sm font-roboto mt-1'>{wallet.currentWallet.name}</div>
                                         </div>
                                     </div>
                                     <div className='grid mt-6 ml-40'>
@@ -460,9 +459,30 @@ function Dashboard() {
                                         }
                                     </div>
                                 </div>
+                                <div className='grid mt-6 ml-40'>
+                                    {selectedItem.subCategory.category.id == 1 ? (
+                                        <div
+                                            className="text-left text-green-500 grid mr-4 mt-2 text-4xl font-roboto font-semibold">
+                                            + {selectedItem.money.toLocaleString('en-US', {
+                                            style: 'decimal',
+                                            currency: 'USD',
+                                        })}đ
+                                        </div>
+                                    ) : (
+                                        <div
+                                            className="text-left text-red-600 grid mr-4 mt-2 text-4xl font-roboto font-semibold">
+                                            - {selectedItem.money.toLocaleString('en-US', {
+                                            style: 'decimal',
+                                            currency: 'USD',
+                                        })}đ
+                                        </div>
+                                    )
+                                    }
+                                </div>
                             </div>
                         </div>
-                    </div>)
+                    </div>
+                </div>)
                 : null}
             {showDeleteModal ? (
                 <>
