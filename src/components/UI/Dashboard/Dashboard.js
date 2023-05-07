@@ -67,7 +67,6 @@ function Dashboard() {
     };
 
     useEffect(() => {
-        console.log(m)
         TransactionService.getTransaction(wallet.currentWallet?.id, dateFilter.startDate, dateFilter.endDate).then(res => {
             setData(res.data.transactions)
             setTotalMoneyOutcome(res.data.totalMoneyOutcome)
