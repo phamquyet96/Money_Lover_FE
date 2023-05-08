@@ -7,9 +7,9 @@ export default function UpdateTransactionModal({selectedItem,setShowTransactionM
 
     return (
         <>
-            <Button variant="contained" color="success" onClick={()=>setShow(true)}>
-                Edit
-            </Button>
+            <div className='text-green-500 h-10 text-center pt-2 cursor-pointer font-roboto font-semibold rounded hover:bg-green-100' onClick={()=>setShow(true)}>
+                EDIT
+            </div>
             {
                 show ? (
                     <>

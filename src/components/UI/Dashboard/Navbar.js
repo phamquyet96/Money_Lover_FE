@@ -121,19 +121,16 @@ export default function NavBar() {
                                     </svg>
                                 </div>
                                 <div
-                                    className='text-lg text-black font-bold italic'>{ Number(wallet.currentWallet?.balance)?.toLocaleString('en-US', {
+                                    className='text-lg text-black font-bold italic'>{ wallet.currentWallet?.balance == null ? ("Create a wallet first!") : (
+                                     Number(wallet.currentWallet?.balance)?.toLocaleString('en-US', {
                                     style: 'decimal',
                                     currency: 'USD',
-                                })} VND
+                                }) + '\xa0' +"VND")}
                                 </div>
                             </button>
                             {openDropDown && (
                                 <>
-                                    <div
-                                        className="fixed inset-0 z-30 w-fit h-fit"
-                                        onClick={() => setOpenDropDown(false)}
-                                    ></div>
-                                    <div className="fixed flex inset-0 z-50 overflow-y-auto">
+                                    <div className="fixed flex inset-0 overflow-y-auto" onClick={() => setOpenDropDown(false)}>
                                         <div aria-labelledby="dropdownDefaultButton"
                                              className="w-full max-w-md p-4 h-fit mt-16 ml-24 bg-white border border-gray-200 rounded-lg shadow sm:p-8">
                                             <div className="flex items-center justify-between mb-4">
@@ -196,9 +193,9 @@ export default function NavBar() {
                             )}
                         </div>
                     </div>
+                    <AddTransactionModal/>
                     <div className="flex items-center gap-4">
                         <div className="mr-4 hidden lg:block">{navList}</div>
-                        <AddTransactionModal/>
                         <IconButton
                             variant="text"
                             className="ml-auto  h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"

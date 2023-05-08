@@ -16,65 +16,74 @@ import SavingsOutlinedIcon from "@mui/icons-material/SavingsOutlined";
 import * as React from "react";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import {Link} from "react-router-dom";
-
+import {useEffect, useState} from "react";
+import UserService from "../../../services/user.service";
+import AvatarIcon from "../Layout/icon";
 
 function MenuLeft() {
-    const { collapseSidebar, toggleSidebar, toggled } = useProSidebar();
+    const {collapseSidebar, toggleSidebar, toggled} = useProSidebar();
+    const [user, setUser] = useState({});
 
-
+    useEffect(() => {
+        UserService.getProfile().then(res => {
+            setUser(res.data.data)
+        })
+    }, [user])
     const toggle = () => {
         collapseSidebar();
     };
 
     return (
-      <div
-        id="app"
-        style={({ height: "100vh" }, { display: "flex", flexDirection: "row" })}
-      >
-        <Sidebar
-          breakPoint="sm"
-          transitionDuration={800}
-          backgroundColor="#ffff"
-          rtl={false}
-          defaultCollapsed={true}
-          style={{ height: "100vh" }}
+        <div
+            id="app"
+            style={({height: "fit"}, {display: "flex", flexDirection: "row"})}
         >
-          <Menu>
-            <MenuItem
-              icon={<SavingsOutlinedIcon />}
-              onClick={() => {
-                toggle();
-              }}
-            >
-              Menu
-            </MenuItem>
-
+            <Sidebar
+                breakPoint="sm"
+                transitionDuration={800}
+                backgroundColor="#ffff"
+                rtl={false}
+                defaultCollapsed={true}
+                style={{height: "100%"}}>
+                <Menu>
+                    <MenuItem
+                        icon={<SavingsOutlinedIcon />}
+                        onClick={() => {
+                            toggle();
+                        }}
+                    >
+                        Menu
+                    </MenuItem>
                     <Link to={'/account/profile'}>
-                        <MenuItem icon={<PeopleOutlinedIcon />}>
-                            Account
-                        </MenuItem>
+                        {user.image == null ? (
+                            <MenuItem icon={<PeopleOutlinedIcon/>}>
+                                Account
+                            </MenuItem>) : (
+                            <MenuItem icon={<AvatarIcon/>}>
+                                Account
+                            </MenuItem>
+                        )}
                     </Link>
                     <Link to={'/my-wallet'}>
-                        <MenuItem icon={<AccountBalanceWalletOutlinedIcon />}>
+                        <MenuItem icon={<AccountBalanceWalletOutlinedIcon/>}>
                             Wallet
                         </MenuItem>
                     </Link>
                     <Link to={'/categories'}>
-                        <MenuItem icon={<WidgetsOutlinedIcon />}>Category</MenuItem>
+                        <MenuItem icon={<WidgetsOutlinedIcon/>}>Category</MenuItem>
                     </Link>
                     <Link to={'/report'}>
-                        <MenuItem icon={<AssessmentOutlinedIcon />}>Report</MenuItem>
+                        <MenuItem icon={<AssessmentOutlinedIcon/>}>Report</MenuItem>
                     </Link>
-                    <SubMenu icon={<MenuOutlinedIcon />} label="Addon">
-                        <MenuItem icon={<AccountBalanceWalletOutlinedIcon />}>Transaction</MenuItem>
-                        <MenuItem icon={<AdUnitsOutlinedIcon />}>Budget</MenuItem>
-                        <MenuItem icon={<ShoppingCartOutlinedIcon />}>Store</MenuItem>
-                        <MenuItem icon={<HelpOutlineOutlinedIcon />}>FAQ</MenuItem>
+                    <SubMenu icon={<MenuOutlinedIcon/>} label="Addon">
+                        <MenuItem icon={<AccountBalanceWalletOutlinedIcon/>}>Transaction</MenuItem>
+                        <MenuItem icon={<AdUnitsOutlinedIcon/>}>Budget</MenuItem>
+                        <MenuItem icon={<ShoppingCartOutlinedIcon/>}>Store</MenuItem>
+                        <MenuItem icon={<HelpOutlineOutlinedIcon/>}>FAQ</MenuItem>
                     </SubMenu>
                 </Menu>
             </Sidebar>
         </div>
-
     );
 }
 

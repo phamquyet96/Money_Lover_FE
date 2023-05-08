@@ -14,8 +14,7 @@ export const walletSlice = createSlice({
             return state
         },
         changeCurrentWallet: (state, action) => {
-            state = {...state, currentWallet: action.payload}
-            return state
+            state.currentWallet = action.payload
         },
         resetWallet: (state) => {
             state = initialState
