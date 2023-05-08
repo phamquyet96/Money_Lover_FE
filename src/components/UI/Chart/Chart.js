@@ -4,6 +4,7 @@ import { Chart as ChartJS } from "chart.js/auto";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import {
+    ArcElement,
     CategoryScale,
     LinearScale,
     BarElement,
@@ -16,9 +17,10 @@ import { myAxios } from "../../config/axios";
 import {useDispatch, useSelector} from "react-redux";
 import WalletService from "../../../services/wallet.service";
 import {walletActions} from "../../../feature/walletSlice";
-
+import { Pie } from 'react-chartjs-2';
 
 ChartJS.register(
+    ArcElement,
     CategoryScale,
     LinearScale,
     BarElement,
@@ -56,7 +58,6 @@ export const options = {
     },
 
 };
-
 const RevenueChart = () => {
     const wallet = useSelector((state) => state.wallet);
     // TransactionService.getTransaction(wallet.currentWallet?.id, dateFilter.startDate, dateFilter.endDate).then(res => {
@@ -65,6 +66,7 @@ const RevenueChart = () => {
     const [loading, setloading] = useState(true);
     const [chartData, setChartData] = useState(null);
     const [data, setData] = useState([]);
+    const [trans, setTrans] = useState([]);
     const dispatch = useDispatch();
     // chamar o api:
     //
@@ -94,6 +96,9 @@ const RevenueChart = () => {
 
             })
             .then((res) => {
+                console.log(res.data,555)
+
+                setTrans(res.data.totalMoneyOutcome)
                 const transactions = res.data.transactions;
                 let maptransactionsExpense = {};
                 let maptransactionsIncome = {};
@@ -156,7 +161,7 @@ const RevenueChart = () => {
     return (
         <Master>
             <Container maxWidth="md" style={{ marginTop: "1rem" }}>
-                <div className="w-fullbg-white rounded-b-md h-fit flex justify-center relative ">
+                  <div className="w-fullbg-white rounded-b-md h-fit flex justify-center relative ">
                     <Box
                         sx={{
                             display: "flex",
@@ -220,6 +225,40 @@ const RevenueChart = () => {
                             <Bar options={options} data={{labels, datasets: chartData}} />
 
                         )}
+                    </div>
+                </Box>
+                <hr/>
+                <Box
+                    sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        width: "100%",
+                        typography: "body1",
+                        textAlign: "center",
+                        height: "100px",
+                    }}
+                >
+                    <div className="w-[50%] flex justify-center">
+                        <div className="balance-start">
+                            <p className="title-balance" style={{ fontSize: "14px" }}>
+                                Income
+                            </p>
+                            <p className="balance text-blue-500">{Number(data?.balance)?.toLocaleString('en-US', {
+                                style: 'decimal',
+                                currency: 'USD',
+                            })} đ</p>
+                        </div>
+                    </div>
+                    <div className="w-[50%] flex justify-center">
+                        <div className="balance-end">
+                            <p className="title-balance" style={{ fontSize: "14px" }}>
+                                Expense
+                            </p>
+                            <p className="balance text-red-500">{trans?.toLocaleString('en-US', {
+                                style: 'decimal',
+                                currency: 'USD',
+                            })} đ</p>
+                        </div>
                     </div>
                 </Box>
             </Container>

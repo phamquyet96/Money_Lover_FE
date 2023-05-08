@@ -134,7 +134,6 @@ const AddWalletModal = ({ statusWallet }) => {
                                   required
                               >
                                 <option>VND</option>
-                                <option>US Dollar</option>
                               </select>
                             </div>
                           </div>
