@@ -20,8 +20,8 @@ export default function AddTransactionModal() {
                                 onClick={() => setShow(false)}
                             ></div>
                             <div className="flex items-center min-h-screen px-4 py-8">
-                                <div className="relative w-full max-w-2xl p-4 mx-auto bg-white rounded-md shadow-lg">
-                                    <div className=" bg-white rounded-lg shadow">
+                                <div className="relative mx-auto">
+                                    <div className=" bg-white w-fit mx-auto rounded-lg shadow">
                                         <div className="flex items-start justify-between p-4 border-b rounded-t">
                                             <h3 className="text-xl ml-2 font-semibold text-gray-900 ">
                                                 Add Transaction!

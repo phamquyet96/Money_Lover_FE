@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Bar } from "react-chartjs-2";
-import { Chart as ChartJS } from "chart.js/auto";
+import React, {useEffect, useState} from "react";
+import {Bar} from "react-chartjs-2";
+import {Chart as ChartJS} from "chart.js/auto";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import {
@@ -13,11 +13,13 @@ import {
     Legend,
 } from "chart.js";
 import Master from "../Layout/Master";
-import { myAxios } from "../../config/axios";
+import {myAxios} from "../../config/axios";
 import {useDispatch, useSelector} from "react-redux";
 import WalletService from "../../../services/wallet.service";
 import {walletActions} from "../../../feature/walletSlice";
-import { Pie } from 'react-chartjs-2';
+import {Pie} from 'react-chartjs-2';
+import NavBar from "../Dashboard/Navbar";
+import MenuLeft from "../Dashboard/MenuLeft";
 
 ChartJS.register(
     ArcElement,
@@ -28,7 +30,6 @@ ChartJS.register(
     Tooltip,
     Legend
 );
-
 
 
 const labels = [];
@@ -80,7 +81,7 @@ const RevenueChart = () => {
         );
         const firstDayOfMonth = new Date(
             today.getFullYear(),
-            today.getMonth() ,
+            today.getMonth(),
             1
         );
         myAxios
@@ -96,7 +97,7 @@ const RevenueChart = () => {
 
             })
             .then((res) => {
-                console.log(res.data,555)
+                console.log(res.data, 555)
 
                 setTrans(res.data.totalMoneyOutcome)
                 const transactions = res.data.transactions;
@@ -159,110 +160,118 @@ const RevenueChart = () => {
     }, [chartData]);
 
     return (
-        <Master>
-            <Container maxWidth="md" style={{ marginTop: "1rem" }}>
-                  <div className="w-fullbg-white rounded-b-md h-fit flex justify-center relative ">
-                    <Box
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            width: "100%",
-                            typography: "body1",
-                            textAlign: "center",
-                            height: "100px",
-                        }}
-                    >
-                        <div className="w-[50%] flex justify-center">
-                            <div className="balance-start">
-                                <p className="title-balance" style={{ fontSize: "14px" }}>
-                                    Opening balance
-                                </p>
-                                <p className="balance">{Number(data?.initialBalance-data?.balance)?.toLocaleString('en-US', {
-                                    style: 'decimal',
-                                    currency: 'USD',
-                                })} đ</p>
+        <>
+            <NavBar/>
+            <div className="flex bg-custom-gray h-[100vh] pt-[62px]">
+                <MenuLeft/>
+                <div className="w-[100vw] h-fit flex justify-center">
+                    <div className="shadow-2xl bg-white w-[800px] rounded mt-10">
+                        <Container maxWidth="xl" style={{marginTop: "1rem"}}>
+                            <div className="w-full bg-white rounded-b-md h-fit flex justify-center relative ">
+                                <Box
+                                    sx={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        width: "100%",
+                                        typography: "body1",
+                                        textAlign: "center",
+                                        height: "100px",
+                                    }}
+                                >
+                                    <div className="w-[50%] flex justify-center">
+                                        <div className="balance-start">
+                                            <p className="title-balance" style={{fontSize: "14px"}}>
+                                                Opening balance
+                                            </p>
+                                            <p className="balance">{Number(data?.initialBalance - data?.balance)?.toLocaleString('en-US', {
+                                                style: 'decimal',
+                                                currency: 'USD',
+                                            })} đ</p>
+                                        </div>
+                                    </div>
+                                    <div className="w-[50%] flex justify-center">
+                                        <div className="balance-end">
+                                            <p className="title-balance" style={{fontSize: "14px"}}>
+                                                Ending balance
+                                            </p>
+                                            <p className="balance">{data?.initialBalance?.toLocaleString('en-US', {
+                                                style: 'decimal',
+                                                currency: 'USD',
+                                            })} đ</p>
+                                        </div>
+                                    </div>
+                                </Box>
                             </div>
-                        </div>
-                        <div className="w-[50%] flex justify-center">
-                            <div className="balance-end">
-                                <p className="title-balance" style={{ fontSize: "14px" }}>
-                                    Ending balance
-                                </p>
-                                <p className="balance">{data?.initialBalance?.toLocaleString('en-US', {
-                                    style: 'decimal',
-                                    currency: 'USD',
-                                })} đ</p>
-                            </div>
-                        </div>
-                    </Box>
-                </div>
-                <hr />
-                <Box
-                    sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        width: "100%",
-                        typography: "body1",
-                        textAlign: "center",
-                        height: "100px",
-                    }}
-                >
-                    <div className="text-bar-start w-full justify-center">
-                        <div className="title-bar">Net Income</div>
-                        <div className="amount-bar" style={{ fontSize: "28px" }}>
-                            {data?.balance?.toLocaleString('en-US', {
-                                style: 'decimal',
-                                currency: 'USD',
-                            })} đ
-                        </div>
-                    </div>
-                </Box>
-                <Box>
-                    <div className="chart-report w-full justify-center">
-                        {loading ? (
-                            null
-                        ) : (
-                            <Bar options={options} data={{labels, datasets: chartData}} />
+                            <hr/>
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    width: "100%",
+                                    typography: "body1",
+                                    textAlign: "center",
+                                    height: "100px",
+                                }}
+                            >
+                                <div className="text-bar-start w-full justify-center">
+                                    <div className="title-bar">Net Income</div>
+                                    <div className="amount-bar" style={{fontSize: "28px"}}>
+                                        {data?.balance?.toLocaleString('en-US', {
+                                            style: 'decimal',
+                                            currency: 'USD',
+                                        })} đ
+                                    </div>
+                                </div>
+                            </Box>
+                            <Box>
+                                <div className="chart-report w-full justify-center">
+                                    {loading ? (
+                                        null
+                                    ) : (
+                                        <Bar options={options} data={{labels, datasets: chartData}}/>
 
-                        )}
+                                    )}
+                                </div>
+                            </Box>
+                            <hr/>
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    width: "100%",
+                                    typography: "body1",
+                                    textAlign: "center",
+                                    height: "100px",
+                                }}
+                            >
+                                <div className="w-[50%] flex justify-center">
+                                    <div className="balance-start">
+                                        <p className="title-balance" style={{fontSize: "14px"}}>
+                                            Income
+                                        </p>
+                                        <p className="balance text-blue-500">{Number(data?.balance)?.toLocaleString('en-US', {
+                                            style: 'decimal',
+                                            currency: 'USD',
+                                        })} đ</p>
+                                    </div>
+                                </div>
+                                <div className="w-[50%] flex justify-center">
+                                    <div className="balance-end">
+                                        <p className="title-balance" style={{fontSize: "14px"}}>
+                                            Expense
+                                        </p>
+                                        <p className="balance text-red-500">{trans?.toLocaleString('en-US', {
+                                            style: 'decimal',
+                                            currency: 'USD',
+                                        })} đ</p>
+                                    </div>
+                                </div>
+                            </Box>
+                        </Container>
                     </div>
-                </Box>
-                <hr/>
-                <Box
-                    sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        width: "100%",
-                        typography: "body1",
-                        textAlign: "center",
-                        height: "100px",
-                    }}
-                >
-                    <div className="w-[50%] flex justify-center">
-                        <div className="balance-start">
-                            <p className="title-balance" style={{ fontSize: "14px" }}>
-                                Income
-                            </p>
-                            <p className="balance text-blue-500">{Number(data?.balance)?.toLocaleString('en-US', {
-                                style: 'decimal',
-                                currency: 'USD',
-                            })} đ</p>
-                        </div>
-                    </div>
-                    <div className="w-[50%] flex justify-center">
-                        <div className="balance-end">
-                            <p className="title-balance" style={{ fontSize: "14px" }}>
-                                Expense
-                            </p>
-                            <p className="balance text-red-500">{trans?.toLocaleString('en-US', {
-                                style: 'decimal',
-                                currency: 'USD',
-                            })} đ</p>
-                        </div>
-                    </div>
-                </Box>
-            </Container>
-        </Master>
+                </div>
+            </div>
+        </>
     );
 };
 

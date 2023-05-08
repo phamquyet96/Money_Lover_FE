@@ -6,7 +6,7 @@ const Layout = ({ children }) => {
   return (
     <>
       <NavBar />
-      <div className="flex bg-custom-gray pt-[62px]">
+      <div className="flex bg-custom-gray h-[100vh] pt-[62px]">
         <MenuLeft />
         <div className="w-[100vw] h-fit flex justify-center">
           <div className="shadow-2xl bg-white w-[500px] rounded mt-10">

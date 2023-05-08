@@ -7,6 +7,10 @@ import TabPanel from "@mui/lab/TabPanel";
 import Container from "@mui/material/Container";
 import {useEffect, useLayoutEffect, useRef, useState} from "react";
 import iconWallet from "../../img/iconWallet.png";
+import inIcon from "../../img/category-img/in.png";
+import outIcon from "../../img/category-img/out.png";
+import inWallet from "../../img/category-img/inwallet.png";
+import outWallet from "../../img/category-img/outwallet.png";
 import {useDispatch, useSelector} from "react-redux";
 import TransactionService from "../../../services/transaction.service";
 import Layout from "../Layout/Master";
@@ -16,9 +20,9 @@ import Swal from "sweetalert2";
 
 const date = new Date();
 let y = date.getFullYear();
-let cMonth;
-let m  = date.getMonth();
-cMonth = m;
+let cMonth = date.getMonth();
+let m = date.getMonth();
+
 
 function formatDate(date) {
     return date.toISOString().slice(0, 10)
@@ -60,7 +64,7 @@ function Dashboard() {
     const dispatch = useDispatch()
     const formatTheDate = (dateStr) => {
         const date = new Date(dateStr);
-        const options = { month: 'long', year: 'numeric' };
+        const options = {month: 'long', year: 'numeric'};
         const formattedDate = date.toLocaleDateString('en-US', options);
         const [month, year] = formattedDate.split(' ');
         return month.toUpperCase() + ' - ' + year;
@@ -74,70 +78,71 @@ function Dashboard() {
 
     }, [wallet, showTransactionModal, dateFilter]);
 
-
     const handleChange = (event, newValue) => {
-        if (newValue == 1) {
+
+        if (newValue === "1") {
+            m = cMonth
+            let nameLabel
             for (let i = 0; i < 3; i++) {
-                if (listMonthTab[i].value == value) {
+                if (listMonthTab[i].value === value) {
                     listMonthTab[i].value = "3";
                 }
-                if (listMonthTab[i].value == 1) {
+                if (listMonthTab[i].value === "1") {
                     listMonthTab[i].value = "2";
                 }
             }
-
-            m = m-1;
-            if (m == 0) {
+            m--
+            if (m < 1) {
                 m = 12;
-                y = y -1;
+                y = y - 1;
+                cMonth = 1
             }
-            const nameLabel = `${m}/${y}`
+            nameLabel = `${getMonthName(m - 1)} ${y}`;
             const lastMonth = {
                 label: nameLabel,
                 value: "1"
-            }
-
+            };
             listMonthTab.unshift(lastMonth);
             listMonthTab.pop();
-
-        } else if (newValue == 3){
+            cMonth = m
+        } else if (newValue === "3") {
+            m = cMonth
             for (let i = 0; i < 3; i++) {
-                if (listMonthTab[i].value == value) {
+                if (listMonthTab[i].value === value) {
                     listMonthTab[i].value = "1";
                 }
-                if (listMonthTab[i].value == 3) {
+                if (listMonthTab[i].value === "3") {
                     listMonthTab[i].value = "2";
                 }
             }
-
-            if (m == 12) {
-                m = 1;
-                console.log(m)
+            m++
+            if (m > 10) {
+                m = -1;
                 y = y + 1;
+                cMonth = 12
             }
-
-            m = m + 1
-            const nameLabel = `${m}/${y}`
+            let nameLabel = `${getMonthName(m + 1)} ${y}`;
             const nextMonth = {
                 label: nameLabel,
                 value: "3"
-            }
+            };
             listMonthTab.push(nextMonth);
-            listMonthTab.shift()
-
+            listMonthTab.shift();
+            cMonth = m
         }
 
-
-        setListMonthTab([...listMonthTab])
+        setListMonthTab([...listMonthTab]);
         let newDataFilter = {
             startDate: formatDate(new Date(y, m, 1)),
             endDate: formatDate(new Date(y, m + 1, 0))
-        }
-        setDateFilter({...dateFilter, startDate: newDataFilter.startDate, endDate: newDataFilter.endDate})
-
-        //setValue(newValue);
+        };
+        setDateFilter({...dateFilter, startDate: newDataFilter.startDate, endDate: newDataFilter.endDate});
     };
 
+    function getMonthName(monthIndex) {
+        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        return months[monthIndex];
+    }
 
     useLayoutEffect(() => {
         const incomeNumberDiv = incomeRef.current;
@@ -197,15 +202,12 @@ function Dashboard() {
                                         <div className="grid gap-2">
                                             <div className="flex justify-between">
                                                 <div>Inflow</div>
-
                                                 <div
                                                     className='text-inflow'>+ {(wallet.currentWallet.balance + totalMoneyOutcome)?.toLocaleString('en-US', {
                                                     style: 'decimal',
                                                     currency: 'USD',
                                                 })}đ
                                                 </div>
-
-
                                             </div>
                                             <div className="flex justify-between">
                                                 <div>Outflow</div>
@@ -234,7 +236,7 @@ function Dashboard() {
                                                 <div> {formatTheDate(data[0].date)}</div>)}
                                             <div className="border-t-2 border-gray-300 ml-auto"></div>
                                         </div>
-                                        <div className="overflow-scroll scrollbar-hide h-[650px]">
+                                        {data.length > 0 ? (<div className="overflow-scroll scrollbar-hide min-h-[10rem]">
                                             {data.length > 0 && data.map((item) => (
                                                 <button key={item.id} className='hover:bg-green-300 w-full'
                                                         onClick={(e) => {
@@ -244,8 +246,21 @@ function Dashboard() {
                                                     <div className="">
                                                         <div className="flex my-3 justify-between">
                                                             <div className="flex">
-                                                                <div
-                                                                    className="ml-1.5 rounded-full bg-gray-100 w-11 h-11"></div>
+                                                                {item.subCategory.category.id == 1 ? (
+                                                                    <div
+                                                                        className="ml-1.5 rounded-full bg-gray-100 w-11 h-11">
+                                                                        <img className='w-20 flex justify-center'
+                                                                             src={inIcon}
+                                                                             alt={iconWallet}
+                                                                        />
+                                                                    </div>) : (
+                                                                    <div
+                                                                        className="ml-1.5 rounded-full bg-gray-100 w-11 h-11">
+                                                                        <img className='w-20 flex justify-center'
+                                                                             src={outIcon}
+                                                                             alt={iconWallet}
+                                                                        />
+                                                                    </div>)}
                                                                 <div className="grid grid-rows-2 mt-1 ml-3">
                                                                     <div
                                                                         className="font-semibold text-left text-sm">{item.subCategory.name}</div>
@@ -277,7 +292,11 @@ function Dashboard() {
                                                     </div>
                                                 </button>
                                             ))}
-                                        </div>
+                                        </div>) : (<div className="text-center">
+                                            <div className="text-9xl mb-10">:-)</div>
+                                            <div className="text-2xl text-gray-600">No Transaction</div>
+                                        </div>)}
+
 
                                     </TabPanel>
                                 </TabContext>
@@ -314,11 +333,12 @@ function Dashboard() {
                                 <div className='grid grid-cols-5'>
                                     <div></div>
                                     <div></div>
-                                    <button onClick={()=>setShowDeleteModal(true)}
+                                    <button onClick={() => setShowDeleteModal(true)}
                                             className='text-rose-400 font-roboto font-semibold rounded hover:bg-rose-100'
                                     >DELETE
                                     </button>
-                                    <UpdateTransactionModal selectedItem={selectedItem} setShowTransactionModal={setShowTransactionModal}/>
+                                    <UpdateTransactionModal selectedItem={selectedItem}
+                                                            setShowTransactionModal={setShowTransactionModal}/>
                                     <div></div>
                                 </div>
                             </div>
@@ -326,10 +346,15 @@ function Dashboard() {
                                 <div className='flex grid grid-rows-2'>
                                     <div className='flex justify-center grid grid-cols-2 mt-4'>
                                         <div className='flex justify-center'>
-                                            <img className='w-20 flex justify-center'
-                                                 src={iconWallet}
-                                                 alt={iconWallet}
-                                            />
+                                            {selectedItem.subCategory.category.id == 1 ? (
+                                                <img className='w-20 flex justify-center'
+                                                     src={inWallet}
+                                                     alt={iconWallet}
+                                                />) : (
+                                                <img className='w-20 flex justify-center'
+                                                     src={outWallet}
+                                                     alt={iconWallet}
+                                                />)}
                                         </div>
                                         <div className='grid grid-rows-2'>
                                             <div className='text-2xl mt-1.5'>{selectedItem.subCategory.name}</div>
