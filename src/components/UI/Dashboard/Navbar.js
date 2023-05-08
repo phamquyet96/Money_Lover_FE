@@ -121,10 +121,11 @@ export default function NavBar() {
                                     </svg>
                                 </div>
                                 <div
-                                    className='text-lg text-black font-bold italic'>{ Number(wallet.currentWallet?.balance)?.toLocaleString('en-US', {
+                                    className='text-lg text-black font-bold italic'>{ wallet.currentWallet?.balance == null ? ("Create a wallet first!") : (
+                                     Number(wallet.currentWallet?.balance)?.toLocaleString('en-US', {
                                     style: 'decimal',
                                     currency: 'USD',
-                                })} VND
+                                }) + '\xa0' +"VND")}
                                 </div>
                             </button>
                             {openDropDown && (
@@ -192,9 +193,9 @@ export default function NavBar() {
                             )}
                         </div>
                     </div>
+                    <AddTransactionModal/>
                     <div className="flex items-center gap-4">
                         <div className="mr-4 hidden lg:block">{navList}</div>
-                        <AddTransactionModal/>
                         <IconButton
                             variant="text"
                             className="ml-auto  h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"

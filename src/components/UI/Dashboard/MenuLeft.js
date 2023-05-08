@@ -28,7 +28,7 @@ function MenuLeft() {
         UserService.getProfile().then(res => {
             setUser(res.data.data)
         })
-    }, [])
+    }, [user])
     const toggle = () => {
         collapseSidebar();
     };
@@ -46,6 +46,14 @@ function MenuLeft() {
                 defaultCollapsed={true}
                 style={{height: "100%"}}>
                 <Menu>
+                    <MenuItem
+                        icon={<SavingsOutlinedIcon />}
+                        onClick={() => {
+                            toggle();
+                        }}
+                    >
+                        Menu
+                    </MenuItem>
                     <Link to={'/account/profile'}>
                         {user.image == null ? (
                             <MenuItem icon={<PeopleOutlinedIcon/>}>

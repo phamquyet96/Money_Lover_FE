@@ -88,7 +88,11 @@ const ChangePassword = () => {
             </button>
             {open ? (<div id="changePasswordModal"
                           className={`fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] h-full`}>
-                <div className='w-[100vw] h-[100vh] flex justify-center'>
+                <div
+                    className="fixed inset-0 w-full h-full bg-black opacity-40"
+                    onClick={() => setOpen(false)}
+                ></div>
+                <div className='w-[100vw] h-[100vh] flex justify-center absolute top-[150px]'>
                     <div className='shadow-2xl bg-white rounded-md w-[500px] h-[64px] mt-10'>
                         <div className='border-b rounded-t-md bg-white w-[500px] h-[64px] flex '>
                             <div className="flex items-start w-[500px] justify-between p-4 border-b rounded-t">
@@ -119,7 +123,7 @@ const ChangePassword = () => {
                                 </div>
                                 <div className='grid grid-cols-2'>
                                     <span className='p-1 text-center'>New Password:</span>
-                                    <input className='border rounded p-1 hover:border-gray-400' name='newPassword'
+                                    <input className='border rounded p-1 hover:border-gray-400' name='newPassword' type='password'
                                            value={formik.values.newPassword}
                                            onChange={formik.handleChange}
                                            error={
@@ -129,7 +133,7 @@ const ChangePassword = () => {
                                 </div>
                                 <div className='grid grid-cols-2'>
                                     <span className='p-1 text-center'>Re Password:</span>
-                                    <input className='border rounded p-1 hover:border-gray-400' name='confirmPassword'
+                                    <input className='border rounded p-1 hover:border-gray-400' name='confirmPassword' type='password'
                                            value={formik.values.confirmPassword}
                                            onChange={formik.handleChange}
                                            error={

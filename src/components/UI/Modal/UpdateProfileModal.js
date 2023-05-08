@@ -59,7 +59,11 @@ const UpdateProfileModal = () => {
             </button>
             {open ? (<div id="updateProfileModal"
                           className={`fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] h-full`}>
-                    <div className='w-[100vw] h-[100vh] flex justify-center'>
+                    <div
+                        className="fixed inset-0 w-full h-full bg-black opacity-40"
+                        onClick={() => setOpen(false)}
+                    ></div>
+                    <div className='w-[100vw] h-[100vh] flex justify-center absolute top-[150px]' >
                         <div className='shadow-2xl bg-white rounded-md w-[800px] h-[64px] mt-10'>
                             <div className='border-b rounded-t-md bg-white w-[800px] h-[64px] flex '>
                                 <div className="flex items-start w-[800px] justify-between p-4 border-b rounded-t">

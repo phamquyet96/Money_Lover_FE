@@ -24,7 +24,6 @@ let cMonth = date.getMonth();
 let m = date.getMonth();
 
 
-
 function formatDate(date) {
     return date.toISOString().slice(0, 10)
 }
@@ -72,85 +71,12 @@ function Dashboard() {
     };
 
     useEffect(() => {
-        console.log(m)
         TransactionService.getTransaction(wallet.currentWallet?.id, dateFilter.startDate, dateFilter.endDate).then(res => {
             setData(res.data.transactions)
             setTotalMoneyOutcome(res.data.totalMoneyOutcome)
         })
 
     }, [wallet, showTransactionModal, dateFilter]);
-
-    // const handleChange = (event, newValue) => {
-    //     if (newValue === "1") {
-    //         for (let i = 0; i < 3; i++) {
-    //             if (listMonthTab[i].value == value) {
-    //                 listMonthTab[i].value = "3";
-    //             }
-    //             if (listMonthTab[i].value == 1) {
-    //                 listMonthTab[i].value = "2";
-    //             }
-    //         }
-    //
-    //         m = m-1;
-    //         if (m == 0) {
-    //             m = 12;
-    //             y = y -1;
-    //         }
-    //         cMonth = m - 1;
-    //         if (cMonth < 0) {
-    //             cMonth = 11;
-    //             y -= 1;
-    //         }
-    //         const nameLabel = `${m}/${y}`
-    //         const lastMonth = {
-    //             label: nameLabel,
-    //             value: "1"
-    //         }
-    //
-    //         listMonthTab.unshift(lastMonth);
-    //         listMonthTab.pop();
-    //
-    //     } else if (newValue === "3"){
-    //         for (let i = 0; i < 3; i++) {
-    //             if (listMonthTab[i].value == value) {
-    //                 listMonthTab[i].value = "1";
-    //             }
-    //             if (listMonthTab[i].value == 3) {
-    //                 listMonthTab[i].value = "2";
-    //             }
-    //         }
-    //
-    //         if (m == 12) {
-    //             m = 1;
-    //             console.log(m)
-    //             y = y + 1;
-    //         }
-    //         cMonth = m + 1;
-    //         if (cMonth > 11) {
-    //             cMonth = 0;
-    //             y += 1;
-    //         }
-    //         m = m + 1
-    //         const nameLabel = `${m}/${y}`
-    //         const nextMonth = {
-    //             label: nameLabel,
-    //             value: "3"
-    //         }
-    //         listMonthTab.push(nextMonth);
-    //         listMonthTab.shift()
-    //
-    //     }
-    //
-    //
-    //     setListMonthTab([...listMonthTab])
-    //     let newDataFilter = {
-    //         startDate: formatDate(new Date(y, m, 1)),
-    //         endDate: formatDate(new Date(y, m + 1, 0))
-    //     }
-    //     setDateFilter({...dateFilter, startDate: newDataFilter.startDate, endDate: newDataFilter.endDate})
-    //
-    //     //setValue(newValue);
-    // };
 
     const handleChange = (event, newValue) => {
 
@@ -310,7 +236,7 @@ function Dashboard() {
                                                 <div> {formatTheDate(data[0].date)}</div>)}
                                             <div className="border-t-2 border-gray-300 ml-auto"></div>
                                         </div>
-                                        <div className="overflow-scroll scrollbar-hide h-[650px]">
+                                        {data.length > 0 ? (<div className="overflow-scroll scrollbar-hide min-h-[10rem]">
                                             {data.length > 0 && data.map((item) => (
                                                 <button key={item.id} className='hover:bg-green-300 w-full'
                                                         onClick={(e) => {
@@ -366,7 +292,11 @@ function Dashboard() {
                                                     </div>
                                                 </button>
                                             ))}
-                                        </div>
+                                        </div>) : (<div className="text-center">
+                                            <div className="text-9xl mb-10">:-)</div>
+                                            <div className="text-2xl text-gray-600">No Transaction</div>
+                                        </div>)}
+
 
                                     </TabPanel>
                                 </TabContext>
@@ -379,84 +309,65 @@ function Dashboard() {
                 <div
                     transaction={selectedItem}>
                     <div
-                        transaction={selectedItem}>
-                        <div
-                            className="fixed inset-0 w-full z-10 h-full bg-black opacity-40"
-                            onClick={() => setShowTransactionModal(false)}
-                        ></div>
-                        <div className="fixed flex justify-center top-1/4 inset-0 z-10 overflow-y-auto">
-                            <div className='shadow-2xl h-fit bg-white w-fit z-30 mt-4 rounded-md'>
-                                <div className='border-b h-14 bg-white grid grid-cols-2 content-center'>
-                                    <div className='grid grid-cols-2 gap-2'>
-                                        <button type="button"
-                                                onClick={(e) => setShowTransactionModal(false)}
-                                                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 mx-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                                        >
-                                            <svg aria-hidden="true" className="w-5 h-5" fill="currentColor"
-                                                 viewBox="0 0 20 20">
-                                                <path fillRule="evenodd"
-                                                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                                      clipRule="evenodd"></path>
-                                            </svg>
-                                        </button>
-                                        <div><p className='h-fit mt-1 text-2xl font-roboto '>Transaction Details</p>
-                                        </div>
-                                    </div>
-                                    <div className='grid grid-cols-5'>
-                                        <div></div>
-                                        <div></div>
-                                        <button onClick={() => setShowDeleteModal(true)}
-                                                className='text-rose-400 font-roboto font-semibold rounded hover:bg-rose-100'
-                                        >DELETE
-                                        </button>
-                                        <UpdateTransactionModal selectedItem={selectedItem}
-                                                                setShowTransactionModal={setShowTransactionModal}/>
-                                        <div></div>
+                        className="fixed inset-0 w-full z-10 h-full bg-black opacity-40"
+                        onClick={() => setShowTransactionModal(false)}
+                    ></div>
+                    <div className="fixed flex justify-center top-1/4 inset-0 z-10 overflow-y-auto">
+                        <div className='shadow-2xl h-fit bg-white w-fit z-30 mt-4 rounded-md'>
+                            <div className='border-b h-14 bg-white grid grid-cols-2 content-center'>
+                                <div className='grid grid-cols-2 gap-2'>
+                                    <button type="button"
+                                            onClick={(e) => setShowTransactionModal(false)}
+                                            className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 mx-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                    >
+                                        <svg aria-hidden="true" className="w-5 h-5" fill="currentColor"
+                                             viewBox="0 0 20 20">
+                                            <path fillRule="evenodd"
+                                                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                  clipRule="evenodd"></path>
+                                        </svg>
+                                    </button>
+                                    <div><p className='h-fit mt-1 text-2xl font-roboto '>Transaction Details</p>
                                     </div>
                                 </div>
-                                <div className=' shadow-2xl bg-white rounded-b-md grid grid-cols-2'>
-                                    <div className='flex grid grid-rows-2'>
-                                        <div className='flex justify-center grid grid-cols-2 mt-4'>
-                                            <div className='flex justify-center'>
-                                                {selectedItem.subCategory.category.id == 1 ? (
+                                <div className='grid grid-cols-5'>
+                                    <div></div>
+                                    <div></div>
+                                    <button onClick={() => setShowDeleteModal(true)}
+                                            className='text-rose-400 font-roboto font-semibold rounded hover:bg-rose-100'
+                                    >DELETE
+                                    </button>
+                                    <UpdateTransactionModal selectedItem={selectedItem}
+                                                            setShowTransactionModal={setShowTransactionModal}/>
+                                    <div></div>
+                                </div>
+                            </div>
+                            <div className=' shadow-2xl bg-white rounded-b-md grid grid-cols-2'>
+                                <div className='flex grid grid-rows-2'>
+                                    <div className='flex justify-center grid grid-cols-2 mt-4'>
+                                        <div className='flex justify-center'>
+                                            {selectedItem.subCategory.category.id == 1 ? (
                                                 <img className='w-20 flex justify-center'
                                                      src={inWallet}
                                                      alt={iconWallet}
                                                 />) : (
-                                                    <img className='w-20 flex justify-center'
-                                                         src={outWallet}
-                                                         alt={iconWallet}
-                                                    />)}
-                                            </div>
-                                            <div className='grid grid-rows-2'>
-                                                <div className='text-2xl mt-1.5'>{selectedItem.subCategory.name}</div>
-                                                <div className='text-sm font-roboto mt-1'>{wallet.currentWallet.name}</div>
-                                            </div>
+                                                <img className='w-20 flex justify-center'
+                                                     src={outWallet}
+                                                     alt={iconWallet}
+                                                />)}
                                         </div>
                                         <div className='grid grid-rows-2'>
                                             <div className='text-2xl mt-1.5'>{selectedItem.subCategory.name}</div>
                                             <div className='text-sm font-roboto mt-1'>{wallet.currentWallet.name}</div>
                                         </div>
                                     </div>
-                                    <div className='grid mt-6 ml-40'>
-                                        {selectedItem.subCategory.category.id == 1 ? (
-                                            <div
-                                                className="text-left text-green-500 grid mr-4 mt-2 text-4xl font-roboto font-semibold">
-                                                + {selectedItem.money.toLocaleString('en-US', {
-                                                style: 'decimal',
-                                                currency: 'USD',
-                                            })}đ
-                                            </div>
-                                        ) : (
-                                            <div
-                                                className="text-left text-red-600 grid mr-4 mt-2 text-4xl font-roboto font-semibold">
-                                                - {selectedItem.money.toLocaleString('en-US', {
-                                                style: 'decimal',
-                                                currency: 'USD',
-                                            })}đ
-                                            </div>
-                                        )
-                                        }
+                                    <div className='grid grid-cols-2'>
+                                        <div></div>
+                                        <div className=''>
+                                            <div className='text-xs text-gray-500 '>{selectedItem.date}</div>
+                                            <div className='border-t-2 mt-3 w-28 mb-1.5'></div>
+                                            <div className='flex'>{selectedItem.note}</div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div className='grid mt-6 ml-40'>

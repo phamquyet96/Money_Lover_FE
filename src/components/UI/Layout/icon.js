@@ -7,7 +7,7 @@ const AvatarIcon = () => {
         UserService.getProfile().then(res => {
             setUser(res.data.data)
         })
-    }, [])
+    }, [user])
     return (
         <div className='border-2 rounded-full border-black '>
             <img className='w-[25px] h-[25px] rounded-full' src={user.image}/>

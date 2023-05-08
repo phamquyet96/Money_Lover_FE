@@ -148,7 +148,7 @@ const WalletDetail = () => {
                                         className='w-[40px] h-[40px] rounded-full bg-blue-600 text-center leading-10 text-white text-xl '>{user.name?.split("", 1)}
                                     </div>
                                 </div>
-                                <div className='w-fit mb-4 h-fit ml-5 font-roboto'>
+                                <div className='w-fit mb-4 h-fit ml-10 font-roboto'>
                                     <div className='flex flex-row items-center'>
                                         <div className=''>{user?.name}</div>
                                         <div
@@ -159,12 +159,14 @@ const WalletDetail = () => {
                                 </div>
                             </div>
                         </div>
+                        <Link to='/my-wallet'>
                         <div className='flex shadow-2xl
                         justify-center bg-white rounded-b-md hover:bg-green-100'>
                             <div className=' my-4 text-green-400 font-roboto font-semibold'>
-                                <button>ADJUST BALANCE</button>
+                                <button>RETURN</button>
                             </div>
                         </div>
+                        </Link>
                         {openDelete ? (
                             <>
                                 <div className="fixed inset-0 z-10 overflow-y-auto">
@@ -242,6 +244,13 @@ const WalletDetail = () => {
                                             <form onSubmit={handleSubmit}>
                                                 <div className="pl-5 pt-5 relative flex content-center mx-auto">
                                                     <div className="border-2 w-[103px] h-[64px] rounded-lg">
+                                                        <div className=" flex justify-center mt-1.5">
+                                                            <img
+                                                                className="w-12"
+                                                                src={iconWallet}
+                                                                alt={iconWallet}
+                                                            />
+                                                        </div>
                                                     </div>
                                                     <div
                                                         className="ml-8 h-[64px] border rounded-lg hover:border-gray-600 border-gray-300">
@@ -262,7 +271,19 @@ const WalletDetail = () => {
                                                 </div>
                                                 <div className="p-5 mx-auto relative flex content-center">
                                                     <div className='border-2 w-[256px] h-[64px] rounded-lg'>
-
+                                                        <p className="text-left text-xs mt-1 font-light ml-3">
+                                                            Currency
+                                                        </p>
+                                                        <div className="w-[240px] h-[48px] rounded-lg">
+                                                            <select
+                                                                style={{ border: "none", outline: "none" }}
+                                                                name="currency"
+                                                                id="currency"
+                                                                className="text-black text-xl focus:ring-0 rounded-lg w-full pt-1 pl-3 placeholder-gray-300"
+                                                            >
+                                                                <option>VND</option>
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                     <div
                                                         className="ml-8 h-[64px] border rounded-lg hover:border-gray-600 border-gray-300">
