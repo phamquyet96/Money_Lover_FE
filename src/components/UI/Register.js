@@ -7,6 +7,7 @@ import axios from "axios";
 import GoogleButton from "../Share/GoogleButton";
 import Swal from "sweetalert2";
 import {Link, useNavigate} from "react-router-dom";
+import {myAxios} from "../config/axios";
 
 
 const Register = () => {
@@ -79,7 +80,7 @@ const Register = () => {
                                             onSubmit= {(values) => {
                                                 console.log(values)
                                                 try {
-                                                    axios.post('http://localhost:8000/api/auth/register', values)
+                                                    myAxios.post(`/auth/register`, values)
                                                         .then(Swal.fire({
                                                             position: 'center',
                                                             icon: 'success',
