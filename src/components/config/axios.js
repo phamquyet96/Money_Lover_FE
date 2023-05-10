@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const myAxios = axios.create({
-    baseURL: `https://money-lover.onrender.com/api`
+    baseURL: `https://money-lover-web.onrender.com/api`
 });
 
 myAxios.interceptors.request.use(
