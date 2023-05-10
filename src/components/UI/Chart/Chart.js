@@ -12,12 +12,10 @@ import {
     Tooltip,
     Legend,
 } from "chart.js";
-import Master from "../Layout/Master";
 import {myAxios} from "../../config/axios";
 import {useDispatch, useSelector} from "react-redux";
 import WalletService from "../../../services/wallet.service";
 import {walletActions} from "../../../feature/walletSlice";
-import {Pie} from 'react-chartjs-2';
 import NavBar from "../Dashboard/Navbar";
 import MenuLeft from "../Dashboard/MenuLeft";
 
@@ -30,13 +28,6 @@ ChartJS.register(
     Tooltip,
     Legend
 );
-
-
-const labels = [];
-
-function getDaysInMonth(year, month) {
-    return new Date(year, month, 0).getDate();
-}
 
 export const options = {
     responsive: true,
@@ -61,16 +52,12 @@ export const options = {
 };
 const RevenueChart = () => {
     const wallet = useSelector((state) => state.wallet);
-    // TransactionService.getTransaction(wallet.currentWallet?.id, dateFilter.startDate, dateFilter.endDate).then(res => {
-
     const [labels, setLabels] = useState([]);
     const [loading, setloading] = useState(true);
     const [chartData, setChartData] = useState(null);
     const [data, setData] = useState([]);
     const [trans, setTrans] = useState([]);
     const dispatch = useDispatch();
-    // chamar o api:
-    //
 
     useEffect(() => {
         const today = new Date();
@@ -97,8 +84,6 @@ const RevenueChart = () => {
 
             })
             .then((res) => {
-                console.log(res.data, 555)
-
                 setTrans(res.data.totalMoneyOutcome)
                 const transactions = res.data.transactions;
                 let maptransactionsExpense = {};
@@ -165,7 +150,7 @@ const RevenueChart = () => {
             <div className="flex bg-custom-gray h-[100vh] pt-[62px]">
                 <MenuLeft/>
                 <div className="w-[100vw] h-fit flex justify-center">
-                    <div className="shadow-2xl bg-white w-[800px] rounded mt-10">
+                    <div className="shadow-2xl bg-white w-[600px] rounded mt-10">
                         <Container maxWidth="xl" style={{marginTop: "1rem"}}>
                             <div className="w-full bg-white rounded-b-md h-fit flex justify-center relative ">
                                 <Box

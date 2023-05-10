@@ -36,8 +36,8 @@ function HomePage(){
                         </div>
                         <div className='flex'>
                             <div className="flex gap-x-4 my-9 ml-auto mr-auto">
-                                <Link to='/auth/register' ><button className=" text-green-500 rounded-lg border border-green-500 text-16 mb-4 w-[194px] h-[48px]">Sign Up</button></Link>
-                                <Link to='/auth/login' ><button className="text-white rounded-lg text-16 bg-green-500 mb-4 w-[194px] h-[48px]">Sign In</button></Link>
+                                <Link to='/api/auth/register' ><button className=" text-green-500 rounded-lg border border-green-500 text-16 mb-4 w-[194px] h-[48px]">Sign Up</button></Link>
+                                <Link to='/api/auth/login' ><button className="text-white rounded-lg text-16 bg-green-500 mb-4 w-[194px] h-[48px]">Sign In</button></Link>
                             </div>
                         </div>
                     </div>

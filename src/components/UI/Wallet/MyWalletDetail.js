@@ -2,7 +2,6 @@ import React from 'react';
 import { useEffect, useState } from "react";
 import {Link} from 'react-router-dom';
 import iconWallet from '../../img/iconWallet.png';
-import {myAxios} from "../../config/axios";
 import WalletService from "../../../services/wallet.service";
 
 const MyWalletDetail = ({statusFinal}) => {

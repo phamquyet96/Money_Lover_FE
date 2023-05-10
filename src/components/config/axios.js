@@ -1,8 +1,7 @@
 import axios from "axios";
-const PORT = 8000;
 
 const myAxios = axios.create({
-    baseURL: `http://localhost:${PORT}/api`
+    baseURL: `https://money-lover.onrender.com/api`
 });
 
 myAxios.interceptors.request.use(
