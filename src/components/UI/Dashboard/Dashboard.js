@@ -22,8 +22,6 @@ const date = new Date();
 let y = date.getFullYear();
 let cMonth = date.getMonth();
 let m = date.getMonth();
-
-
 function formatDate(date) {
     return date.toISOString().slice(0, 10)
 }
@@ -52,7 +50,6 @@ function Dashboard() {
     const [showTransactionModal, setShowTransactionModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
-    const transaction = useSelector(state => state.transaction)
     const [dateFilter, setDateFilter] = useState({
         startDate: formatDate(new Date(y, m, 1)),
         endDate: formatDate(new Date(y, m + 1, 0))
@@ -236,7 +233,7 @@ function Dashboard() {
                                                 <div> {formatTheDate(data[0].date)}</div>)}
                                             <div className="border-t-2 border-gray-300 ml-auto"></div>
                                         </div>
-                                        {data.length > 0 ? (<div className="overflow-scroll scrollbar-hide min-h-[10rem]">
+                                        {data.length > 0 ? (<div className="overflow-scroll scrollbar-hide min-h-[10rem] max-h-[20rem]">
                                             {data.length > 0 && data.map((item) => (
                                                 <button key={item.id} className='hover:bg-green-300 w-full'
                                                         onClick={(e) => {

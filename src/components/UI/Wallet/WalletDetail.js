@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 import iconWallet from "../../img/iconWallet.png";
 import {useParams, useNavigate, Link} from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import Swal from "sweetalert2";
 import { walletActions} from "../../../feature/walletSlice";
 import {myAxios} from "../../config/axios";
@@ -26,8 +26,10 @@ const WalletDetail = () => {
 
     useEffect(() => {
         myAxios.get('/wallet/info/' + id, {headers: {'Authorization': `Bearer ${localStorage.getItem("accessToken")}`}})
-            .then(res =>
-                setData(res.data))
+            .then(res =>{
+                console.log(res.data,222)
+                setData(res.data)
+            })
             .catch(err => console.error(err))
     }, [id])
 
@@ -60,6 +62,7 @@ const WalletDetail = () => {
         event.preventDefault();
         myAxios.put('/wallet/update', Data, {headers: {'Authorization': `Bearer ${localStorage.getItem("accessToken")}`}})
             .then(res => {
+                console.log(Data,111)
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
@@ -294,7 +297,7 @@ const WalletDetail = () => {
                                                                 type="number"
                                                                 name="balance"
                                                                 className="text-black text-xl border-none outline-none focus:ring-0 rounded-lg w-full pt-1 pl-3 "
-                                                                value={Data?.initialBalance}
+                                                                value={Number(Data?.initialBalance)}
                                                                 onChange={e => setData({
                                                                     ...Data,
                                                                     initialBalance: e.target.value

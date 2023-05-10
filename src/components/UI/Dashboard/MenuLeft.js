@@ -21,7 +21,7 @@ import UserService from "../../../services/user.service";
 import AvatarIcon from "../Layout/icon";
 
 function MenuLeft() {
-    const {collapseSidebar, toggleSidebar, toggled} = useProSidebar();
+    const {collapseSidebar} = useProSidebar();
     const [user, setUser] = useState({});
 
     useEffect(() => {
